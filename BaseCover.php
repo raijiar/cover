@@ -10,18 +10,22 @@ use cover\log\Logger;
 
 /**
  * Gets the application start timestamp.
+ * 获取程序开始运行的毫秒级时间戳
  */
 defined('COVER_BEGIN_TIME') or define('COVER_BEGIN_TIME', microtime(true));
 /**
  * This constant defines the framework installation directory.
+ * 框架安装目录
  */
 defined('COVER_PATH') or define('COVER_PATH', __DIR__);
 /**
  * This constant defines whether the application should be in debug mode or not. Defaults to false.
+ * 程序是否开启DEBUG,默认关闭
  */
 defined('COVER_DEBUG') or define('COVER_DEBUG', false);
 /**
  * This constant defines in which environment the application is running. Defaults to 'prod', meaning production environment.
+ * 程序运行的环境,默认为生产环境.
  * You may define this constant in the bootstrap script. The value could be 'prod' (production), 'dev' (development), 'test', 'staging', etc.
  */
 defined('COVER_ENV') or define('COVER_ENV', 'prod');
@@ -40,6 +44,7 @@ defined('COVER_ENV_TEST') or define('COVER_ENV_TEST', COVER_ENV === 'test');
 
 /**
  * This constant defines whether error handling should be enabled. Defaults to true.
+ * 定义是否应该启用错误处理,默认开启
  */
 defined('COVER_ENABLE_ERROR_HANDLER') or define('COVER_ENABLE_ERROR_HANDLER', true);
 
@@ -81,8 +86,9 @@ class BaseCover
 
 
     /**
-     * Returns a string representing the current version of the Yii framework.
-     * @return string the version of Yii framework
+     * Returns a string representing the current version of the Cover framework.
+     * @return string the version of Cover framework
+	 * 框架版本号
      */
     public static function getVersion()
     {
