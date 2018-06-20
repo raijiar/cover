@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\Component;
-use yii\base\NotSupportedException;
+use Cover;
+use cover\base\Component;
+use cover\base\NotSupportedException;
 
 /**
  * Validator is the base class for all validators.
@@ -22,7 +17,7 @@ use yii\base\NotSupportedException;
  * be referenced using short names. They are listed as follows:
  *
  * - `boolean`: [[BooleanValidator]]
- * - `captcha`: [[\yii\captcha\CaptchaValidator]]
+ * - `captcha`: [[\cover\captcha\CaptchaValidator]]
  * - `compare`: [[CompareValidator]]
  * - `date`: [[DateValidator]]
  * - `datetime`: [[DateValidator]]
@@ -59,44 +54,44 @@ class Validator extends Component
      * @var array list of built-in validators (name => class or configuration)
      */
     public static $builtInValidators = [
-        'boolean' => 'yii\validators\BooleanValidator',
-        'captcha' => 'yii\captcha\CaptchaValidator',
-        'compare' => 'yii\validators\CompareValidator',
-        'date' => 'yii\validators\DateValidator',
+        'boolean' => 'cover\validators\BooleanValidator',
+        'captcha' => 'cover\captcha\CaptchaValidator',
+        'compare' => 'cover\validators\CompareValidator',
+        'date' => 'cover\validators\DateValidator',
         'datetime' => [
-            'class' => 'yii\validators\DateValidator',
+            'class' => 'cover\validators\DateValidator',
             'type' => DateValidator::TYPE_DATETIME,
         ],
         'time' => [
-            'class' => 'yii\validators\DateValidator',
+            'class' => 'cover\validators\DateValidator',
             'type' => DateValidator::TYPE_TIME,
         ],
-        'default' => 'yii\validators\DefaultValueValidator',
-        'double' => 'yii\validators\NumberValidator',
-        'each' => 'yii\validators\EachValidator',
-        'email' => 'yii\validators\EmailValidator',
-        'exist' => 'yii\validators\ExistValidator',
-        'file' => 'yii\validators\FileValidator',
-        'filter' => 'yii\validators\FilterValidator',
-        'image' => 'yii\validators\ImageValidator',
-        'in' => 'yii\validators\RangeValidator',
+        'default' => 'cover\validators\DefaultValueValidator',
+        'double' => 'cover\validators\NumberValidator',
+        'each' => 'cover\validators\EachValidator',
+        'email' => 'cover\validators\EmailValidator',
+        'exist' => 'cover\validators\ExistValidator',
+        'file' => 'cover\validators\FileValidator',
+        'filter' => 'cover\validators\FilterValidator',
+        'image' => 'cover\validators\ImageValidator',
+        'in' => 'cover\validators\RangeValidator',
         'integer' => [
-            'class' => 'yii\validators\NumberValidator',
+            'class' => 'cover\validators\NumberValidator',
             'integerOnly' => true,
         ],
-        'match' => 'yii\validators\RegularExpressionValidator',
-        'number' => 'yii\validators\NumberValidator',
-        'required' => 'yii\validators\RequiredValidator',
-        'safe' => 'yii\validators\SafeValidator',
-        'string' => 'yii\validators\StringValidator',
+        'match' => 'cover\validators\RegularExpressionValidator',
+        'number' => 'cover\validators\NumberValidator',
+        'required' => 'cover\validators\RequiredValidator',
+        'safe' => 'cover\validators\SafeValidator',
+        'string' => 'cover\validators\StringValidator',
         'trim' => [
-            'class' => 'yii\validators\FilterValidator',
+            'class' => 'cover\validators\FilterValidator',
             'filter' => 'trim',
             'skipOnArray' => true,
         ],
-        'unique' => 'yii\validators\UniqueValidator',
-        'url' => 'yii\validators\UrlValidator',
-        'ip' => 'yii\validators\IpValidator',
+        'unique' => 'cover\validators\UniqueValidator',
+        'url' => 'cover\validators\UrlValidator',
+        'ip' => 'cover\validators\IpValidator',
     ];
     /**
      * @var array|string attributes to be validated by this validator. For multiple attributes,
@@ -198,7 +193,7 @@ class Validator extends Component
      *  * a method name of the model class;
      *  * an anonymous function;
      *  * a validator class name.
-     * @param \yii\base\Model $model the data model to be validated.
+     * @param \cover\base\Model $model the data model to be validated.
      * @param array|string $attributes list of attributes to be validated. This can be either an array of
      * the attribute names or a string of comma-separated attribute names.
      * @param array $params initial values to be applied to the validator properties.
@@ -239,7 +234,7 @@ class Validator extends Component
 
     /**
      * Validates the specified object.
-     * @param \yii\base\Model $model the data model being validated
+     * @param \cover\base\Model $model the data model being validated
      * @param array|null $attributes the list of attributes to be validated.
      * Note that if an attribute is not associated with the validator - it will be
      * ignored. If this parameter is null, every attribute listed in [[attributes]] will be validated.
@@ -273,7 +268,7 @@ class Validator extends Component
     /**
      * Validates a single attribute.
      * Child classes must implement this method to provide the actual validation logic.
-     * @param \yii\base\Model $model the data model to be validated
+     * @param \cover\base\Model $model the data model to be validated
      * @param string $attribute the name of the attribute to be validated.
      */
     public function validateAttribute($model, $attribute)
@@ -299,7 +294,7 @@ class Validator extends Component
         }
 
         list($message, $params) = $result;
-        $params['attribute'] = Yii::t('yii', 'the input value');
+        $params['attribute'] = Yii::t('cover', 'the input value');
         if (is_array($value)) {
             $params['value'] = 'array()';
         } elseif (is_object($value)) {
@@ -363,14 +358,14 @@ class Validator extends Component
      * - `error`: the jQuery selector of the error tag under the context of the container
      * - `status`: status of the input field, 0: empty, not entered before, 1: validated, 2: pending validation, 3: validating
      *
-     * @param \yii\base\Model $model the data model being validated
+     * @param \cover\base\Model $model the data model being validated
      * @param string $attribute the name of the attribute to be validated.
-     * @param \yii\web\View $view the view object that is going to be used to render views or view files
+     * @param \cover\web\View $view the view object that is going to be used to render views or view files
      * containing a model form with this validator applied.
      * @return string|null the client-side validation script. Null if the validator does not support
      * client-side validation.
      * @see getClientOptions()
-     * @see \yii\widgets\ActiveForm::enableClientValidation
+     * @see \cover\widgets\ActiveForm::enableClientValidation
      */
     public function clientValidateAttribute($model, $attribute, $view)
     {
@@ -381,7 +376,7 @@ class Validator extends Component
      * Returns the client-side validation options.
      * This method is usually called from [[clientValidateAttribute()]]. You may override this method to modify options
      * that will be passed to the client-side validation.
-     * @param \yii\base\Model $model the model being validated
+     * @param \cover\base\Model $model the model being validated
      * @param string $attribute the attribute name being validated
      * @return array the client-side validation options
      * @since 2.0.11
@@ -410,7 +405,7 @@ class Validator extends Component
     /**
      * Adds an error about the specified attribute to the model object.
      * This is a helper method that performs message selection and internationalization.
-     * @param \yii\base\Model $model the data model being validated
+     * @param \cover\base\Model $model the data model being validated
      * @param string $attribute the attribute being validated
      * @param string $message the error message
      * @param array $params values for the placeholders in the error message
