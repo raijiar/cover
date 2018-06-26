@@ -1,17 +1,12 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\mail;
+namespace cover\mail;
 
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\base\ViewContextInterface;
-use yii\web\View;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidConfigException;
+use cover\base\ViewContextInterface;
+use cover\web\View;
 
 /**
  * BaseMailer serves as a base class that implements the basic functions required by [[MailerInterface]].
