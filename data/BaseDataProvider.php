@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidArgumentException;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidArgumentException;
 
 /**
  * BaseDataProvider provides a base class that implements the [[DataProviderInterface]].
@@ -27,8 +22,6 @@ use yii\base\InvalidArgumentException;
  * the type of this property differs in getter and setter. See [[getSort()]] and [[setSort()]] for details.
  * @property int $totalCount Total number of possible data models.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 abstract class BaseDataProvider extends Component implements DataProviderInterface
 {
@@ -202,7 +195,7 @@ abstract class BaseDataProvider extends Component implements DataProviderInterfa
      * This can be one of the following:
      *
      * - a configuration array for creating the pagination object. The "class" element defaults
-     *   to 'yii\data\Pagination'
+     *   to 'cover\data\Pagination'
      * - an instance of [[Pagination]] or its subclass
      * - false, if pagination needs to be disabled.
      *
@@ -216,7 +209,7 @@ abstract class BaseDataProvider extends Component implements DataProviderInterfa
                 $config['pageParam'] = $this->id . '-page';
                 $config['pageSizeParam'] = $this->id . '-per-page';
             }
-            $this->_pagination = Yii::createObject(array_merge($config, $value));
+            $this->_pagination = Cover::createObject(array_merge($config, $value));
         } elseif ($value instanceof Pagination || $value === false) {
             $this->_pagination = $value;
         } else {
@@ -243,7 +236,7 @@ abstract class BaseDataProvider extends Component implements DataProviderInterfa
      * This can be one of the following:
      *
      * - a configuration array for creating the sort definition object. The "class" element defaults
-     *   to 'yii\data\Sort'
+     *   to 'cover\data\Sort'
      * - an instance of [[Sort]] or its subclass
      * - false, if sorting needs to be disabled.
      *
@@ -256,7 +249,7 @@ abstract class BaseDataProvider extends Component implements DataProviderInterfa
             if ($this->id !== null) {
                 $config['sortParam'] = $this->id . '-sort';
             }
-            $this->_sort = Yii::createObject(array_merge($config, $value));
+            $this->_sort = Cover::createObject(array_merge($config, $value));
         } elseif ($value instanceof Sort || $value === false) {
             $this->_sort = $value;
         } else {

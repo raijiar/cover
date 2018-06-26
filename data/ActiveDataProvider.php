@@ -1,21 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\db\ActiveQueryInterface;
-use yii\db\Connection;
-use yii\db\QueryInterface;
-use yii\di\Instance;
+use cover\base\InvalidConfigException;
+use cover\base\Model;
+use cover\db\ActiveQueryInterface;
+use cover\db\Connection;
+use cover\db\QueryInterface;
+use cover\di\Instance;
 
 /**
- * ActiveDataProvider implements a data provider based on [[\yii\db\Query]] and [[\yii\db\ActiveQuery]].
+ * ActiveDataProvider implements a data provider based on [[\cover\db\Query]] and [[\cover\db\ActiveQuery]].
  *
  * ActiveDataProvider provides data by performing DB queries using [[query]].
  *
@@ -50,8 +45,6 @@ use yii\di\Instance;
  *
  * For more details and usage information on ActiveDataProvider, see the [guide article on data providers](guide:output-data-providers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 class ActiveDataProvider extends BaseDataProvider
 {
@@ -66,7 +59,7 @@ class ActiveDataProvider extends BaseDataProvider
      *
      * If this is not set, the following rules will be used to determine the keys of the data models:
      *
-     * - If [[query]] is an [[\yii\db\ActiveQuery]] instance, the primary keys of [[\yii\db\ActiveQuery::modelClass]] will be used.
+     * - If [[query]] is an [[\cover\db\ActiveQuery]] instance, the primary keys of [[\cover\db\ActiveQuery::modelClass]] will be used.
      * - Otherwise, the keys of the [[models]] array will be used.
      *
      * @see getKeys()
@@ -99,7 +92,7 @@ class ActiveDataProvider extends BaseDataProvider
     protected function prepareModels()
     {
         if (!$this->query instanceof QueryInterface) {
-            throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. yii\db\Query or its subclasses.');
+            throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. cover\db\Query or its subclasses.');
         }
         $query = clone $this->query;
         if (($pagination = $this->getPagination()) !== false) {
@@ -133,7 +126,7 @@ class ActiveDataProvider extends BaseDataProvider
 
             return $keys;
         } elseif ($this->query instanceof ActiveQueryInterface) {
-            /* @var $class \yii\db\ActiveRecordInterface */
+            /* @var $class \cover\db\ActiveRecordInterface */
             $class = $this->query->modelClass;
             $pks = $class::primaryKey();
             if (count($pks) === 1) {
@@ -163,7 +156,7 @@ class ActiveDataProvider extends BaseDataProvider
     protected function prepareTotalCount()
     {
         if (!$this->query instanceof QueryInterface) {
-            throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. yii\db\Query or its subclasses.');
+            throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. cover\db\Query or its subclasses.');
         }
         $query = clone $this->query;
         return (int) $query->limit(-1)->offset(-1)->orderBy([])->count('*', $this->db);
