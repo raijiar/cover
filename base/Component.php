@@ -83,7 +83,7 @@ use cover\helpers\StringHelper;
  * ]
  * ```
  *
- * where `as tree` stands for attaching a behavior named `tree`, and the array will be passed to [[\Yii::createObject()]]
+ * where `as tree` stands for attaching a behavior named `tree`, and the array will be passed to [[\Cover::createObject()]]
  * to create the behavior object.
  *
  * For more details and usage information on Component, see the [guide article on components](guide:concept-components).
@@ -183,7 +183,7 @@ class Component extends BaseObject
         } elseif (strncmp($name, 'as ', 3) === 0) {
             // as behavior: attach behavior
             $name = trim(substr($name, 3));
-            $this->attachBehavior($name, $value instanceof Behavior ? $value : Yii::createObject($value));
+            $this->attachBehavior($name, $value instanceof Behavior ? $value : Cover::createObject($value));
 
             return;
         }
@@ -493,7 +493,7 @@ class Component extends BaseObject
      *
      * ```php
      * $component->on('event.group.*', function ($event) {
-     *     Yii::trace($event->name . ' is triggered.');
+     *     Cover::trace($event->name . ' is triggered.');
      * });
      * ```
      *
@@ -662,7 +662,7 @@ class Component extends BaseObject
      *
      *  - a [[Behavior]] object
      *  - a string specifying the behavior class
-     *  - an object configuration array that will be passed to [[Yii::createObject()]] to create the behavior object.
+     *  - an object configuration array that will be passed to [[Cover::createObject()]] to create the behavior object.
      *
      * @return Behavior the behavior object
      * @see detachBehavior()
@@ -742,7 +742,7 @@ class Component extends BaseObject
     private function attachBehaviorInternal($name, $behavior)
     {
         if (!($behavior instanceof Behavior)) {
-            $behavior = Yii::createObject($behavior);
+            $behavior = Cover::createObject($behavior);
         }
         if (is_int($name)) {
             $behavior->attach($this);
