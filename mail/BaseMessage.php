@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\mail;
+namespace cover\mail;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\base\ErrorHandler;
+use Cover;
+use cover\base\BaseObject;
+use cover\base\ErrorHandler;
 
 /**
  * BaseMessage serves as a base class that implements the [[send()]] method required by [[MessageInterface]].
@@ -19,8 +14,6 @@ use yii\base\ErrorHandler;
  *
  * @see BaseMailer
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0
  */
 abstract class BaseMessage extends BaseObject implements MessageInterface
 {
@@ -41,7 +34,7 @@ abstract class BaseMessage extends BaseObject implements MessageInterface
     public function send(MailerInterface $mailer = null)
     {
         if ($mailer === null && $this->mailer === null) {
-            $mailer = Yii::$app->getMailer();
+            $mailer = Cover::$app->getMailer();
         } elseif ($mailer === null) {
             $mailer = $this->mailer;
         }

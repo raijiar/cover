@@ -70,7 +70,7 @@ abstract class BaseMailer extends Component implements MailerInterface, ViewCont
     /**
      * @var string the default class name of the new message instances created by [[createMessage()]]
      */
-    public $messageClass = 'yii\mail\BaseMessage';
+    public $messageClass = 'cover\mail\BaseMessage';
     /**
      * @var bool whether to save email messages as files under [[fileTransportPath]] instead of sending them
      * to the actual recipients. This is usually used during development for debugging purpose.
@@ -95,7 +95,7 @@ abstract class BaseMailer extends Component implements MailerInterface, ViewCont
     public $fileTransportCallback;
 
     /**
-     * @var \yii\base\View|array view instance or its array configuration.
+     * @var \cover\base\View|array view instance or its array configuration.
      */
     private $_view = [];
     /**
