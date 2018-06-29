@@ -14,12 +14,12 @@ use cover\base\InvalidConfigException;
  * [
  *     'components' => [
  *         'db' => [
- *             'class' => 'yii\db\Connection',
+ *             'class' => 'cover\db\Connection',
  *             'dsn' => 'oci:dbname=LOCAL_XE',
  *              ...
  *         ]
  *         'mutex' => [
- *             'class' => 'yii\mutex\OracleMutex',
+ *             'class' => 'cover\mutex\OracleMutex',
  *             'lockMode' => 'NL_MODE',
  *             'releaseOnCommit' => true,
  *              ...
@@ -82,7 +82,7 @@ class OracleMutex extends DbMutex
 
         // inside pl/sql scopes pdo binding not working correctly :(
         $this->db->useMaster(function ($db) use ($name, $timeout, $releaseOnCommit, &$lockStatus) {
-            /** @var \yii\db\Connection $db */
+            /** @var \cover\db\Connection $db */
             $db->createCommand(
                 'DECLARE
     handle VARCHAR2(128);
@@ -109,7 +109,7 @@ END;',
     {
         $releaseStatus = null;
         $this->db->useMaster(function ($db) use ($name, &$releaseStatus) {
-            /** @var \yii\db\Connection $db */
+            /** @var \cover\db\Connection $db */
             $db->createCommand(
                 'DECLARE
     handle VARCHAR2(128);

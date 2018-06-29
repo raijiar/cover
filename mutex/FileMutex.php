@@ -17,7 +17,7 @@ use cover\helpers\FileHelper;
  * [
  *     'components' => [
  *         'mutex' => [
- *             'class' => 'yii\mutex\FileMutex'
+ *             'class' => 'cover\mutex\FileMutex'
  *         ],
  *     ],
  * ]

@@ -14,11 +14,11 @@ use cover\base\InvalidConfigException;
  * [
  *     'components' => [
  *         'db' => [
- *             'class' => 'yii\db\Connection',
+ *             'class' => 'cover\db\Connection',
  *             'dsn' => 'pgsql:host=127.0.0.1;dbname=demo',
  *         ]
  *         'mutex' => [
- *             'class' => 'yii\mutex\PgsqlMutex',
+ *             'class' => 'cover\mutex\PgsqlMutex',
  *         ],
  *     ],
  * ]
@@ -65,7 +65,7 @@ class PgsqlMutex extends DbMutex
         }
         list($key1, $key2) = $this->getKeysFromName($name);
         return $this->db->useMaster(function ($db) use ($key1, $key2) {
-            /** @var \yii\db\Connection $db */
+            /** @var \cover\db\Connection $db */
             return (bool) $db->createCommand(
                 'SELECT pg_try_advisory_lock(:key1, :key2)',
                 [':key1' => $key1, ':key2' => $key2]
@@ -83,7 +83,7 @@ class PgsqlMutex extends DbMutex
     {
         list($key1, $key2) = $this->getKeysFromName($name);
         return $this->db->useMaster(function ($db) use ($key1, $key2) {
-            /** @var \yii\db\Connection $db */
+            /** @var \cover\db\Connection $db */
             return (bool) $db->createCommand(
                 'SELECT pg_advisory_unlock(:key1, :key2)',
                 [':key1' => $key1, ':key2' => $key2]

@@ -11,8 +11,6 @@ use cover\di\Instance;
  *
  * @see Mutex
  *
- * @author resurtm <resurtm@gmail.com>
- * @since 2.0
  */
 abstract class DbMutex extends Mutex
 {
