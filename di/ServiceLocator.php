@@ -42,8 +42,6 @@ use cover\base\InvalidConfigException;
  * @property array $components The list of the component definitions or the loaded component instances (ID =>
  * definition or instance).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 class ServiceLocator extends Component
 {

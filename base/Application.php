@@ -38,8 +38,6 @@ use Cover;
  * @property View|\yii\web\View $view The view application component that is used to render various view
  * files. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 abstract class Application extends Module
 {
