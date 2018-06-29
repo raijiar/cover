@@ -21,7 +21,7 @@ use cover\helpers\ArrayHelper;
  * You then call [[get()]] to create a new class object. Container will automatically instantiate
  * dependent objects, inject them into the object being created, configure and finally return the newly created object.
  *
- * By default, [[\Yii::$container]] refers to a Container instance which is used by [[\Yii::createObject()]]
+ * By default, [[\Cover::$container]] refers to a Container instance which is used by [[\Cover::createObject()]]
  * to create new object instances. You may use this method to replace the `new` operator
  * when creating a new object, which gives you the benefit of automatic dependency resolution and default
  * property configuration.
@@ -478,7 +478,7 @@ class Container extends Component
      * $formatString = function($string, \yii\i18n\Formatter $formatter) {
      *    // ...
      * }
-     * Yii::$container->invoke($formatString, ['string' => 'Hello World!']);
+     * Cover::$container->invoke($formatString, ['string' => 'Hello World!']);
      * ```
      *
      * This will pass the string `'Hello World!'` as the first param, and a formatter instance created

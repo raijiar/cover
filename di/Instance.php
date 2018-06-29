@@ -45,8 +45,6 @@ use cover\base\InvalidConfigException;
  * }
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 class Instance
 {
@@ -81,14 +79,14 @@ class Instance
      * The reference may be specified as a string or an Instance object. If the former,
      * it will be treated as a component ID, a class/interface name or an alias, depending on the container type.
      *
-     * If you do not specify a container, the method will first try `Yii::$app` followed by `Yii::$container`.
+     * If you do not specify a container, the method will first try `Cover::$app` followed by `Cover::$container`.
      *
      * For example,
      *
      * ```php
      * use yii\db\Connection;
      *
-     * // returns Yii::$app->db
+     * // returns Cover::$app->db
      * $db = Instance::ensure('db', Connection::className());
      * // returns an instance of Connection using the given configuration
      * $db = Instance::ensure(['dsn' => 'sqlite:path/to/my.db'], Connection::className());

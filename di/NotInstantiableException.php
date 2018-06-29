@@ -8,8 +8,6 @@ use cover\base\InvalidConfigException;
  * NotInstantiableException represents an exception caused by incorrect dependency injection container
  * configuration or usage.
  *
- * @author Sam Mousa <sam@mousa.nl>
- * @since 2.0.9
  */
 class NotInstantiableException extends InvalidConfigException
 {
