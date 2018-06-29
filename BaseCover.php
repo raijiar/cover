@@ -1,6 +1,6 @@
 <?php
 
-namespace Cover;
+namespace cover;
 
 use cover\base\InvalidArgumentException;
 use cover\base\InvalidConfigException;
