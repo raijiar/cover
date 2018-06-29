@@ -46,8 +46,6 @@ use yii\web\User;
  * }
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 class AccessControl extends ActionFilter
 {

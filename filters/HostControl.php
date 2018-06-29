@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\ActionFilter;
-use yii\helpers\StringHelper;
-use yii\web\NotFoundHttpException;
+use Cover;
+use cover\base\ActionFilter;
+use cover\helpers\StringHelper;
+use cover\web\NotFoundHttpException;
 
 /**
  * HostControl provides simple control over requested host name.
@@ -61,8 +56,6 @@ use yii\web\NotFoundHttpException;
  * > Note: the best way to restrict allowed host names is usage of the web server 'virtual hosts' configuration.
  * This filter should be used only if this configuration is not available or compromised.
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0.11
  */
 class HostControl extends ActionFilter
 {

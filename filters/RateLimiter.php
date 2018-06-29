@@ -1,17 +1,12 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\ActionFilter;
-use yii\web\Request;
-use yii\web\Response;
-use yii\web\TooManyRequestsHttpException;
+use Cover;
+use cover\base\ActionFilter;
+use cover\web\Request;
+use cover\web\Response;
+use cover\web\TooManyRequestsHttpException;
 
 /**
  * RateLimiter implements a rate limiting algorithm based on the [leaky bucket algorithm](http://en.wikipedia.org/wiki/Leaky_bucket).

@@ -1,23 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters\auth;
+namespace cover\filters\auth;
 
-use yii\web\IdentityInterface;
-use yii\web\Request;
-use yii\web\Response;
-use yii\web\UnauthorizedHttpException;
-use yii\web\User;
+use cover\web\IdentityInterface;
+use cover\web\Request;
+use cover\web\Response;
+use cover\web\UnauthorizedHttpException;
+use cover\web\User;
 
 /**
  * AuthInterface is the interface that should be implemented by auth method classes.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 interface AuthInterface
 {
