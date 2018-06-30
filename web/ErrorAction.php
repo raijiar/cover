@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\web;
+namespace cover\web;
 
-use Yii;
-use yii\base\Action;
-use yii\base\Exception;
-use yii\base\UserException;
+use Cover;
+use cover\base\Action;
+use cover\base\Exception;
+use cover\base\UserException;
 
 /**
  * ErrorAction displays application errors using a specified view.
@@ -24,7 +19,7 @@ use yii\base\UserException;
  * public function actions()
  * {
  *     return [
- *         'error' => ['class' => 'yii\web\ErrorAction'],
+ *         'error' => ['class' => 'cover\web\ErrorAction'],
  *     ];
  * }
  * ```
@@ -44,9 +39,6 @@ use yii\base\UserException;
  * ]
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Dmitry Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0
  */
 class ErrorAction extends Action
 {
