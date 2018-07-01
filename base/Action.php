@@ -28,8 +28,6 @@ use Cover;
  * @property string $uniqueId The unique ID of this action among the whole application. This property is
  * read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
 class Action extends Component
 {
