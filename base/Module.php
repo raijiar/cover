@@ -133,7 +133,7 @@ class Module extends ServiceLocator
      *
      * If not set, [[defaultVersion()]] will be used to determine actual value.
      *
-     * @since 2.0.11
+     * @since 1.0
      */
     private $_version;
 
