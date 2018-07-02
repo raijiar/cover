@@ -66,8 +66,7 @@ use Cover;
  * That is, a `$config` parameter (defaults to `[]`) should be declared as the last parameter
  * of the constructor, and the parent implementation should be called at the end of the constructor.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0.13
+ * @since 1.0
  */
 class BaseObject implements Configurable
 {

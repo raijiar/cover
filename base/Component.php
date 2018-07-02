@@ -90,8 +90,7 @@ use cover\helpers\StringHelper;
  *
  * @property Behavior[] $behaviors List of behaviors attached to this component. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Component extends BaseObject
 {

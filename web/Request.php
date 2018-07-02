@@ -1,10 +1,10 @@
 <?php
 
-namespace yii\web;
+namespace cover\web;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\validators\IpValidator;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\validators\IpValidator;
 
 /**
  * The web Request class represents an HTTP request.
@@ -83,11 +83,10 @@ use yii\validators\IpValidator;
  * @property string|null $userHost User host name, null if not available. This property is read-only.
  * @property string|null $userIP User IP address, null if not available. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  * @SuppressWarnings(PHPMD.SuperGlobals)
  */
-class Request extends \yii\base\Request
+class Request extends \cover\base\Request
 {
     /**
      * The name of the HTTP header for sending CSRF token.
@@ -201,7 +200,7 @@ class Request extends \yii\base\Request
      * and [[IpValidator::networks]] for advanced matching.
      *
      * @see $secureHeaders
-     * @since 2.0.13
+     * @since 1.0
      */
     public $trustedHosts = [];
     /**
