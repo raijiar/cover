@@ -7,8 +7,7 @@ namespace cover\data;
  *
  * @see DataFilter
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0.13
+ * @since 1.0
  */
 class ActiveDataFilter extends DataFilter
 {

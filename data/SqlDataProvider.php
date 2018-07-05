@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\Connection;
-use yii\db\Expression;
-use yii\db\Query;
-use yii\di\Instance;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\db\Connection;
+use cover\db\Expression;
+use cover\db\Query;
+use cover\di\Instance;
 
 /**
  * SqlDataProvider implements a data provider based on a plain SQL statement.
@@ -27,7 +22,7 @@ use yii\di\Instance;
  * SqlDataProvider may be used in the following way:
  *
  * ```php
- * $count = Yii::$app->db->createCommand('
+ * $count = Cover::$app->db->createCommand('
  *     SELECT COUNT(*) FROM user WHERE status=:status
  * ', [':status' => 1])->queryScalar();
  *
@@ -61,8 +56,7 @@ use yii\di\Instance;
  *
  * For more details and usage information on SqlDataProvider, see the [guide article on data providers](guide:output-data-providers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class SqlDataProvider extends BaseDataProvider
 {
