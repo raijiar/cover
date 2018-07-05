@@ -45,8 +45,7 @@ use cover\base\NotSupportedException;
  *
  * @property array $attributeNames Attribute names. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Validator extends Component
 {

@@ -106,7 +106,7 @@ class BaseCover
      *    the corresponding registered path.
      * 3. Throw an exception or return false, depending on the `$throwException` parameter.
      *
-     * For example, by default '@yii' is registered as the alias to the Yii framework directory,
+     * For example, by default '@yii' is registered as the alias to the Cover framework directory,
      * say '/path/to/yii'. The alias '@yii/web' would then be translated into '/path/to/yii/web'.
      *
      * If you have registered two aliases '@foo' and '@foo/bar'. Then translating '@foo/bar/config'
@@ -187,7 +187,7 @@ class BaseCover
      * Registers a path alias.
      *
      * A path alias is a short name representing a long path (a file path, a URL, etc.)
-     * For example, we use '@yii' as the alias of the path to the Yii framework directory.
+     * For example, we use '@yii' as the alias of the path to the Cover framework directory.
      *
      * A path alias must start with the character '@' so that it can be easily differentiated
      * from non-alias paths.
@@ -307,10 +307,10 @@ class BaseCover
      *
      * ```php
      * // create an object using a class name
-     * $object = Yii::createObject('yii\db\Connection');
+     * $object = Cover::createObject('yii\db\Connection');
      *
      * // create an object using a configuration array
-     * $object = Yii::createObject([
+     * $object = Cover::createObject([
      *     'class' => 'yii\db\Connection',
      *     'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
      *     'username' => 'root',
@@ -319,7 +319,7 @@ class BaseCover
      * ]);
      *
      * // create an object with two constructor parameters
-     * $object = \Yii::createObject('MyClass', [$param1, $param2]);
+     * $object = \Cover::createObject('MyClass', [$param1, $param2]);
      * ```
      *
      * Using [[\yii\di\Container|dependency injection container]], this method can also identify
@@ -453,12 +453,12 @@ class BaseCover
      * The begin- and end- calls must also be properly nested. For example,
      *
      * ```php
-     * \Yii::beginProfile('block1');
+     * \Cover::beginProfile('block1');
      * // some code to be profiled
-     *     \Yii::beginProfile('block2');
+     *     \Cover::beginProfile('block2');
      *     // some other code to be profiled
-     *     \Yii::endProfile('block2');
-     * \Yii::endProfile('block1');
+     *     \Cover::endProfile('block2');
+     * \Cover::endProfile('block1');
      * ```
      * @param string $token token for the code block
      * @param string $category the category of this log message
@@ -482,15 +482,15 @@ class BaseCover
     }
 
     /**
-     * Returns an HTML hyperlink that can be displayed on your Web page showing "Powered by Yii Framework" information.
-     * @return string an HTML hyperlink that can be displayed on your Web page showing "Powered by Yii Framework" information
-     * @deprecated since 2.0.14, this method will be removed in 2.1.0.
+     * Returns an HTML hyperlink that can be displayed on your Web page showing "Powered by Cover Framework" information.
+     * @return string an HTML hyperlink that can be displayed on your Web page showing "Powered by Cover Framework" information
+     * @deprecated since 1.0, this method will be removed in 2.1.0.
      */
     public static function powered()
     {
-        return \Yii::t('yii', 'Powered by {yii}', [
-            'yii' => '<a href="http://www.yiiframework.com/" rel="external">' . \Yii::t('yii',
-                    'Yii Framework') . '</a>',
+        return \Cover::t('yii', 'Powered by {yii}', [
+            'yii' => '<a href="http://www.yiiframework.com/" rel="external">' . \Cover::t('yii',
+                    'Cover Framework') . '</a>',
         ]);
     }
 
@@ -506,7 +506,7 @@ class BaseCover
      *
      * ```php
      * $username = 'Alexander';
-     * echo \Yii::t('app', 'Hello, {username}!', ['username' => $username]);
+     * echo \Cover::t('app', 'Hello, {username}!', ['username' => $username]);
      * ```
      *
      * Further formatting of message parameters is supported using the [PHP intl extensions](http://www.php.net/manual/en/intro.intl.php)

@@ -300,7 +300,7 @@ class Module extends ServiceLocator
      * Returns current module version.
      * If version is not explicitly set, [[defaultVersion()]] method will be used to determine its value.
      * @return string the version of this module.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function getVersion()
     {
@@ -327,7 +327,7 @@ class Module extends ServiceLocator
      * }
      * ```
      *
-     * @since 2.0.11
+     * @since 1.0
      */
     public function setVersion($version)
     {
@@ -338,7 +338,7 @@ class Module extends ServiceLocator
      * Returns default module version.
      * Child class may override this method to provide more specific version detection.
      * @return string the version of this module.
-     * @since 2.0.11
+     * @since 1.0
      */
     protected function defaultVersion()
     {
@@ -726,7 +726,7 @@ class Module extends ServiceLocator
     /**
      * {@inheritdoc}
      *
-     * Since version 2.0.13, if a component isn't defined in the module, it will be looked up in the parent module.
+     * Since version 1.0, if a component isn't defined in the module, it will be looked up in the parent module.
      * The parent module may be the application.
      */
     public function get($id, $throwException = true)
@@ -745,7 +745,7 @@ class Module extends ServiceLocator
     /**
      * {@inheritdoc}
      *
-     * Since version 2.0.13, if a component isn't defined in the module, it will be looked up in the parent module.
+     * Since version 1.0, if a component isn't defined in the module, it will be looked up in the parent module.
      * The parent module may be the application.
      */
     public function has($id, $checkInstance = false)

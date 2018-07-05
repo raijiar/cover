@@ -10,8 +10,7 @@ use Cover;
  * Possible boolean values can be configured via the [[trueValue]] and [[falseValue]] properties.
  * And the comparison can be either [[strict]] or not.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class BooleanValidator extends Validator
 {

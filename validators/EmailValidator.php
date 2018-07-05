@@ -1,22 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Json;
-use yii\web\JsExpression;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Json;
+use cover\web\JsExpression;
 
 /**
  * EmailValidator validates that the attribute value is a valid email address.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class EmailValidator extends Validator
 {

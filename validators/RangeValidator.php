@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\ArrayHelper;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\ArrayHelper;
 
 /**
  * RangeValidator validates that the attribute value is among a list of values.
@@ -18,8 +13,7 @@ use yii\helpers\ArrayHelper;
  * If the [[not]] property is set true, the validator will ensure the attribute value
  * is NOT among the specified range.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class RangeValidator extends Validator
 {

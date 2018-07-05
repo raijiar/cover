@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console;
+namespace cover\console;
 
 /**
  * The console Request represents the environment information for a console application.
@@ -15,10 +10,9 @@ namespace yii\console;
  *
  * @property array $params The command line arguments. It does not include the entry script name.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class Request extends \yii\base\Request
+class Request extends \cover\base\Request
 {
     private $_params;
 

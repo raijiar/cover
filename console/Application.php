@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console;
+namespace cover\console;
 
-use Yii;
-use yii\base\InvalidRouteException;
+use Cover;
+use cover\base\InvalidRouteException;
 
 // define STDIN, STDOUT and STDERR if the PHP SAPI did not define them (e.g. creating console application in web env)
 // http://php.net/manual/en/features.commandline.io-streams.php
@@ -54,10 +49,9 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
  * @property Request $request The request component. This property is read-only.
  * @property Response $response The response component. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class Application extends \yii\base\Application
+class Application extends \cover\base\Application
 {
     /**
      * The option name for specifying the application configuration file path.
