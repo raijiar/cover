@@ -1,24 +1,19 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\web\Link;
-use yii\web\Linkable;
-use yii\web\Request;
+use Cover;
+use cover\base\BaseObject;
+use cover\web\Link;
+use cover\web\Linkable;
+use cover\web\Request;
 
 /**
  * Pagination represents information relevant to pagination of data items.
  *
  * When data needs to be rendered in multiple pages, Pagination can be used to
  * represent information such as [[totalCount|total item count]], [[pageSize|page size]],
- * [[page|current page]], etc. These information can be passed to [[\yii\widgets\LinkPager|pagers]]
+ * [[page|current page]], etc. These information can be passed to [[\cover\widgets\LinkPager|pagers]]
  * to render pagination buttons or links.
  *
  * The following example shows how to create a pagination object and feed it
@@ -70,8 +65,7 @@ use yii\web\Request;
  * @property int $pageSize The number of items per page. If it is less than 1, it means the page size is
  * infinite, and thus a single page contains all items.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Pagination extends BaseObject implements Linkable
 {
@@ -111,7 +105,7 @@ class Pagination extends BaseObject implements Linkable
      */
     public $params;
     /**
-     * @var \yii\web\UrlManager the URL manager used for creating pagination URLs. If not set,
+     * @var \cover\web\UrlManager the URL manager used for creating pagination URLs. If not set,
      * the "urlManager" application component will be used.
      */
     public $urlManager;
@@ -261,7 +255,7 @@ class Pagination extends BaseObject implements Linkable
         $page = (int) $page;
         $pageSize = (int) $pageSize;
         if (($params = $this->params) === null) {
-            $request = Yii::$app->getRequest();
+            $request = Cover::$app->getRequest();
             $params = $request instanceof Request ? $request->getQueryParams() : [];
         }
         if ($page > 0 || $page == 0 && $this->forcePageParam) {
@@ -277,8 +271,8 @@ class Pagination extends BaseObject implements Linkable
         } else {
             unset($params[$this->pageSizeParam]);
         }
-        $params[0] = $this->route === null ? Yii::$app->controller->getRoute() : $this->route;
-        $urlManager = $this->urlManager === null ? Yii::$app->getUrlManager() : $this->urlManager;
+        $params[0] = $this->route === null ? Cover::$app->controller->getRoute() : $this->route;
+        $urlManager = $this->urlManager === null ? Cover::$app->getUrlManager() : $this->urlManager;
         if ($absolute) {
             return $urlManager->createAbsoluteUrl($params);
         }
@@ -344,7 +338,7 @@ class Pagination extends BaseObject implements Linkable
     protected function getQueryParam($name, $defaultValue = null)
     {
         if (($params = $this->params) === null) {
-            $request = Yii::$app->getRequest();
+            $request = Cover::$app->getRequest();
             $params = $request instanceof Request ? $request->getQueryParams() : [];
         }
 

@@ -1,22 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
 /**
  * DataProviderInterface is the interface that must be implemented by data provider classes.
  *
  * Data providers are components that sort and paginate data, and provide them to widgets
- * such as [[\yii\grid\GridView]], [[\yii\widgets\ListView]].
+ * such as [[\cover\grid\GridView]], [[\cover\widgets\ListView]].
  *
  * For more details and usage information on DataProviderInterface, see the [guide article on data providers](guide:output-data-providers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 interface DataProviderInterface
 {

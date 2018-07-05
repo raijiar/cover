@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\base\InvalidConfigException;
-use yii\helpers\Html;
-use yii\helpers\Inflector;
-use yii\web\Request;
+use Cover;
+use cover\base\BaseObject;
+use cover\base\InvalidConfigException;
+use cover\helpers\Html;
+use cover\helpers\Inflector;
+use cover\web\Request;
 
 /**
  * Sort represents information relevant to sorting.
@@ -72,10 +67,9 @@ use yii\web\Request;
  * `SORT_ASC` for ascending order or `SORT_DESC` for descending order. Note that the type of this property
  * differs in getter and setter. See [[getAttributeOrders()]] and [[setAttributeOrders()]] for details.
  * @property array $orders The columns (keys) and their corresponding sort directions (values). This can be
- * passed to [[\yii\db\Query::orderBy()]] to construct a DB query. This property is read-only.
+ * passed to [[\cover\db\Query::orderBy()]] to construct a DB query. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Sort extends BaseObject
 {
@@ -181,7 +175,7 @@ class Sort extends BaseObject
      */
     public $params;
     /**
-     * @var \yii\web\UrlManager the URL manager used for creating sort URLs. If not set,
+     * @var \cover\web\UrlManager the URL manager used for creating sort URLs. If not set,
      * the `urlManager` application component will be used.
      */
     public $urlManager;
@@ -215,7 +209,7 @@ class Sort extends BaseObject
      * Returns the columns and their corresponding sort directions.
      * @param bool $recalculate whether to recalculate the sort directions
      * @return array the columns (keys) and their corresponding sort directions (values).
-     * This can be passed to [[\yii\db\Query::orderBy()]] to construct a DB query.
+     * This can be passed to [[\cover\db\Query::orderBy()]] to construct a DB query.
      */
     public function getOrders($recalculate = false)
     {
@@ -253,7 +247,7 @@ class Sort extends BaseObject
         if ($this->_attributeOrders === null || $recalculate) {
             $this->_attributeOrders = [];
             if (($params = $this->params) === null) {
-                $request = Yii::$app->getRequest();
+                $request = Cover::$app->getRequest();
                 $params = $request instanceof Request ? $request->getQueryParams() : [];
             }
             if (isset($params[$this->sortParam])) {
@@ -355,7 +349,7 @@ class Sort extends BaseObject
      * @param array $options additional HTML attributes for the hyperlink tag.
      * There is one special attribute `label` which will be used as the label of the hyperlink.
      * If this is not set, the label defined in [[attributes]] will be used.
-     * If no label is defined, [[\yii\helpers\Inflector::camel2words()]] will be called to get a label.
+     * If no label is defined, [[\cover\helpers\Inflector::camel2words()]] will be called to get a label.
      * Note that it will not be HTML-encoded.
      * @return string the generated hyperlink
      * @throws InvalidConfigException if the attribute is unknown
@@ -403,12 +397,12 @@ class Sort extends BaseObject
     public function createUrl($attribute, $absolute = false)
     {
         if (($params = $this->params) === null) {
-            $request = Yii::$app->getRequest();
+            $request = Cover::$app->getRequest();
             $params = $request instanceof Request ? $request->getQueryParams() : [];
         }
         $params[$this->sortParam] = $this->createSortParam($attribute);
-        $params[0] = $this->route === null ? Yii::$app->controller->getRoute() : $this->route;
-        $urlManager = $this->urlManager === null ? Yii::$app->getUrlManager() : $this->urlManager;
+        $params[0] = $this->route === null ? Cover::$app->controller->getRoute() : $this->route;
+        $urlManager = $this->urlManager === null ? Cover::$app->getUrlManager() : $this->urlManager;
         if ($absolute) {
             return $urlManager->createAbsoluteUrl($params);
         }

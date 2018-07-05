@@ -1,22 +1,17 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\data;
+namespace cover\data;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\helpers\ArrayHelper;
-use yii\validators\BooleanValidator;
-use yii\validators\EachValidator;
-use yii\validators\NumberValidator;
-use yii\validators\StringValidator;
-use yii\validators\DateValidator;
-use yii\validators\Validator;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\base\Model;
+use cover\helpers\ArrayHelper;
+use cover\validators\BooleanValidator;
+use cover\validators\EachValidator;
+use cover\validators\NumberValidator;
+use cover\validators\StringValidator;
+use cover\validators\DateValidator;
+use cover\validators\Validator;
 
 /**
  * DataFilter is a special [[Model]] for processing query filtering specification.
@@ -63,17 +58,17 @@ use yii\validators\Validator;
  * You may populate it from request data via [[load()]] method:
  *
  * ```php
- * use yii\data\DataFilter;
+ * use cover\data\DataFilter;
  *
  * $dataFilter = new DataFilter();
- * $dataFilter->load(Yii::$app->request->getBodyParams());
+ * $dataFilter->load(Cover::$app->request->getBodyParams());
  * ```
  *
  * In order to function this class requires a search model specified via [[searchModel]]. This search model should declare
  * all available search attributes and their validation rules. For example:
  *
  * ```php
- * class SearchModel extends \yii\base\Model
+ * class SearchModel extends \cover\base\Model
  * {
  *     public $id;
  *     public $name;
@@ -89,12 +84,12 @@ use yii\validators\Validator;
  * }
  * ```
  *
- * In order to reduce amount of classes, you may use [[\yii\base\DynamicModel]] instance as a [[searchModel]].
+ * In order to reduce amount of classes, you may use [[\cover\base\DynamicModel]] instance as a [[searchModel]].
  * In this case you should specify [[searchModel]] using a PHP callable:
  *
  * ```php
  * function () {
- *     return (new \yii\base\DynamicModel(['id' => null, 'name' => null]))
+ *     return (new \cover\base\DynamicModel(['id' => null, 'name' => null]))
  *         ->addRule(['id', 'name'], 'trim')
  *         ->addRule('id', 'integer')
  *         ->addRule('name', 'string');
@@ -281,7 +276,7 @@ class DataFilter extends Model
     public function getSearchModel()
     {
         if (!is_object($this->_searchModel) || $this->_searchModel instanceof \Closure) {
-            $model = Yii::createObject($this->_searchModel);
+            $model = Cover::createObject($this->_searchModel);
             if (!$model instanceof Model) {
                 throw new InvalidConfigException('`' . get_class($this) . '::$searchModel` should be an instance of `' . Model::className() . '` or its DI compatible configuration.');
             }
@@ -423,12 +418,12 @@ class DataFilter extends Model
     protected function defaultErrorMessages()
     {
         return [
-            'invalidFilter' => Yii::t('yii', 'The format of {filter} is invalid.'),
-            'operatorRequireMultipleOperands' => Yii::t('yii', 'Operator "{operator}" requires multiple operands.'),
-            'unknownAttribute' => Yii::t('yii', 'Unknown filter attribute "{attribute}"'),
-            'invalidAttributeValueFormat' => Yii::t('yii', 'Condition for "{attribute}" should be either a value or valid operator specification.'),
-            'operatorRequireAttribute' => Yii::t('yii', 'Operator "{operator}" must be used with a search attribute.'),
-            'unsupportedOperatorType' => Yii::t('yii', '"{attribute}" does not support operator "{operator}".'),
+            'invalidFilter' => Cover::t('cover', 'The format of {filter} is invalid.'),
+            'operatorRequireMultipleOperands' => Cover::t('cover', 'Operator "{operator}" requires multiple operands.'),
+            'unknownAttribute' => Cover::t('cover', 'Unknown filter attribute "{attribute}"'),
+            'invalidAttributeValueFormat' => Cover::t('cover', 'Condition for "{attribute}" should be either a value or valid operator specification.'),
+            'operatorRequireAttribute' => Cover::t('cover', 'Operator "{operator}" must be used with a search attribute.'),
+            'unsupportedOperatorType' => Cover::t('cover', '"{attribute}" does not support operator "{operator}".'),
         ];
     }
 
@@ -444,7 +439,7 @@ class DataFilter extends Model
         if (isset($messages[$messageKey])) {
             $message = $messages[$messageKey];
         } else {
-            $message = Yii::t('yii', 'The format of {filter} is invalid.');
+            $message = Cover::t('cover', 'The format of {filter} is invalid.');
         }
 
         $params = array_merge(
@@ -454,7 +449,7 @@ class DataFilter extends Model
             $params
         );
 
-        return Yii::$app->getI18n()->format($message, $params, Yii::$app->language);
+        return Cover::$app->getI18n()->format($message, $params, Cover::$app->language);
     }
 
     // Model specific:
