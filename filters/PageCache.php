@@ -1,21 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\Action;
-use yii\base\ActionFilter;
-use yii\base\DynamicContentAwareInterface;
-use yii\base\DynamicContentAwareTrait;
-use yii\caching\CacheInterface;
-use yii\caching\Dependency;
-use yii\di\Instance;
-use yii\web\Response;
+use Cover;
+use cover\base\Action;
+use cover\base\ActionFilter;
+use cover\base\DynamicContentAwareInterface;
+use cover\base\DynamicContentAwareTrait;
+use cover\caching\CacheInterface;
+use cover\caching\Dependency;
+use cover\di\Instance;
+use cover\web\Response;
 
 /**
  * PageCache implements server-side caching of whole pages.
@@ -32,24 +27,22 @@ use yii\web\Response;
  * {
  *     return [
  *         'pageCache' => [
- *             'class' => 'yii\filters\PageCache',
+ *             'class' => 'cover\filters\PageCache',
  *             'only' => ['index'],
  *             'duration' => 60,
  *             'dependency' => [
- *                 'class' => 'yii\caching\DbDependency',
+ *                 'class' => 'cover\caching\DbDependency',
  *                 'sql' => 'SELECT COUNT(*) FROM post',
  *             ],
  *             'variations' => [
- *                 \Yii::$app->language,
+ *                 \Cover::$app->language,
  *             ]
  *         ],
  *     ];
  * }
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0
+ * @since 1.0
  */
 class PageCache extends ActionFilter implements DynamicContentAwareInterface
 {
@@ -85,7 +78,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
      *
      * ```php
      * [
-     *     'class' => 'yii\caching\DbDependency',
+     *     'class' => 'cover\caching\DbDependency',
      *     'sql' => 'SELECT MAX(updated_at) FROM post',
      * ]
      * ```
@@ -93,7 +86,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
      * would make the output cache depend on the last modified time of all posts.
      * If any post has its modification time changed, the cached content would be invalidated.
      *
-     * If [[cacheCookies]] or [[cacheHeaders]] is enabled, then [[\yii\caching\Dependency::reusable]] should be enabled as well to save performance.
+     * If [[cacheCookies]] or [[cacheHeaders]] is enabled, then [[\cover\caching\Dependency::reusable]] should be enabled as well to save performance.
      * This is because the cookies and headers are currently stored separately from the actual page content, causing the dependency to be evaluated twice.
      */
     public $dependency;
@@ -105,7 +98,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
      *
      * ```php
      * [
-     *     Yii::$app->language,
+     *     Cover::$app->language,
      * ]
      * ```
      */
@@ -116,8 +109,8 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
      */
     public $enabled = true;
     /**
-     * @var \yii\base\View the view component to use for caching. If not set, the default application view component
-     * [[\yii\web\Application::view]] will be used.
+     * @var \cover\base\View the view component to use for caching. If not set, the default application view component
+     * [[\cover\web\Application::view]] will be used.
      */
     public $view;
     /**
@@ -143,7 +136,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
     {
         parent::init();
         if ($this->view === null) {
-            $this->view = Yii::$app->getView();
+            $this->view = Cover::$app->getView();
         }
     }
 
@@ -159,25 +152,25 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
             return true;
         }
 
-        $this->cache = Instance::ensure($this->cache, 'yii\caching\CacheInterface');
+        $this->cache = Instance::ensure($this->cache, 'cover\caching\CacheInterface');
 
         if (is_array($this->dependency)) {
-            $this->dependency = Yii::createObject($this->dependency);
+            $this->dependency = Cover::createObject($this->dependency);
         }
 
-        $response = Yii::$app->getResponse();
+        $response = Cover::$app->getResponse();
         $data = $this->cache->get($this->calculateCacheKey());
         if (!is_array($data) || !isset($data['cacheVersion']) || $data['cacheVersion'] !== static::PAGE_CACHE_VERSION) {
             $this->view->pushDynamicContent($this);
             ob_start();
             ob_implicit_flush(false);
             $response->on(Response::EVENT_AFTER_SEND, [$this, 'cacheResponse']);
-            Yii::debug('Valid page content is not found in the cache.', __METHOD__);
+            Cover::debug('Valid page content is not found in the cache.', __METHOD__);
             return true;
         }
 
         $this->restoreResponse($response, $data);
-        Yii::debug('Valid page content is found in the cache.', __METHOD__);
+        Cover::debug('Valid page content is found in the cache.', __METHOD__);
         return false;
     }
 
@@ -238,7 +231,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
             return;
         }
 
-        $response = Yii::$app->getResponse();
+        $response = Cover::$app->getResponse();
         $data = [
             'cacheVersion' => static::PAGE_CACHE_VERSION,
             'cacheData' => is_array($beforeCacheResponseResult) ? $beforeCacheResponseResult : null,
@@ -296,7 +289,7 @@ class PageCache extends ActionFilter implements DynamicContentAwareInterface
     {
         $key = [__CLASS__];
         if ($this->varyByRoute) {
-            $key[] = Yii::$app->requestedRoute;
+            $key[] = Cover::$app->requestedRoute;
         }
         return array_merge($key, (array)$this->variations);
     }

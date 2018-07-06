@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\ActionFilter;
-use yii\web\Request;
-use yii\web\Response;
+use Cover;
+use cover\base\ActionFilter;
+use cover\web\Request;
+use cover\web\Response;
 
 /**
  * Cors filter implements [Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
@@ -25,7 +20,7 @@ use yii\web\Response;
  * {
  *     return [
  *         'corsFilter' => [
- *             'class' => \yii\filters\Cors::className(),
+ *             'class' => \cover\filters\Cors::className(),
  *         ],
  *     ];
  * }
@@ -39,7 +34,7 @@ use yii\web\Response;
  * {
  *     return [
  *         'corsFilter' => [
- *             'class' => \yii\filters\Cors::className(),
+ *             'class' => \cover\filters\Cors::className(),
  *             'cors' => [
  *                 // restrict access to
  *                 'Origin' => ['http://www.myserver.com', 'https://www.myserver.com'],
@@ -62,8 +57,7 @@ use yii\web\Response;
  * For more information on how to add the CORS filter to a controller, see
  * the [Guide on REST controllers](guide:rest-controllers#cors).
  *
- * @author Philippe Gaultier <pgaultier@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Cors extends ActionFilter
 {
@@ -97,8 +91,8 @@ class Cors extends ActionFilter
      */
     public function beforeAction($action)
     {
-        $this->request = $this->request ?: Yii::$app->getRequest();
-        $this->response = $this->response ?: Yii::$app->getResponse();
+        $this->request = $this->request ?: Cover::$app->getRequest();
+        $this->response = $this->response ?: Cover::$app->getResponse();
 
         $this->overrideDefaultSettings($action);
 
@@ -117,7 +111,7 @@ class Cors extends ActionFilter
 
     /**
      * Override settings for specific action.
-     * @param \yii\base\Action $action the action settings to override
+     * @param \cover\base\Action $action the action settings to override
      */
     public function overrideDefaultSettings($action)
     {

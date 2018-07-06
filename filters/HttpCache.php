@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\Action;
-use yii\base\ActionFilter;
+use Cover;
+use cover\base\Action;
+use cover\base\ActionFilter;
 
 /**
  * HttpCache implements client-side caching by utilizing the `Last-Modified` and `ETag` HTTP headers.
@@ -25,10 +20,10 @@ use yii\base\ActionFilter;
  * {
  *     return [
  *         [
- *             'class' => 'yii\filters\HttpCache',
+ *             'class' => 'cover\filters\HttpCache',
  *             'only' => ['index'],
  *             'lastModified' => function ($action, $params) {
- *                 $q = new \yii\db\Query();
+ *                 $q = new \cover\db\Query();
  *                 return $q->from('user')->max('updated_at');
  *             },
  * //            'etagSeed' => function ($action, $params) {
@@ -39,9 +34,7 @@ use yii\base\ActionFilter;
  * }
  * ```
  *
- * @author Da:Sourcerer <webmaster@dasourcerer.net>
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class HttpCache extends ActionFilter
 {
@@ -119,7 +112,7 @@ class HttpCache extends ActionFilter
             return true;
         }
 
-        $verb = Yii::$app->getRequest()->getMethod();
+        $verb = Cover::$app->getRequest()->getMethod();
         if ($verb !== 'GET' && $verb !== 'HEAD' || $this->lastModified === null && $this->etagSeed === null) {
             return true;
         }
@@ -137,7 +130,7 @@ class HttpCache extends ActionFilter
 
         $this->sendCacheControlHeader();
 
-        $response = Yii::$app->getResponse();
+        $response = Cover::$app->getResponse();
         if ($etag !== null) {
             $response->getHeaders()->set('Etag', $etag);
         }
@@ -165,12 +158,12 @@ class HttpCache extends ActionFilter
      */
     protected function validateCache($lastModified, $etag)
     {
-        if (Yii::$app->request->headers->has('If-None-Match')) {
+        if (Cover::$app->request->headers->has('If-None-Match')) {
             // HTTP_IF_NONE_MATCH takes precedence over HTTP_IF_MODIFIED_SINCE
             // http://tools.ietf.org/html/rfc7232#section-3.3
-            return $etag !== null && in_array($etag, Yii::$app->request->getETags(), true);
-        } elseif (Yii::$app->request->headers->has('If-Modified-Since')) {
-            return $lastModified !== null && @strtotime(Yii::$app->request->headers->get('If-Modified-Since')) >= $lastModified;
+            return $etag !== null && in_array($etag, Cover::$app->request->getETags(), true);
+        } elseif (Cover::$app->request->headers->has('If-Modified-Since')) {
+            return $lastModified !== null && @strtotime(Cover::$app->request->headers->get('If-Modified-Since')) >= $lastModified;
         }
 
         return false;
@@ -183,17 +176,17 @@ class HttpCache extends ActionFilter
     protected function sendCacheControlHeader()
     {
         if ($this->sessionCacheLimiter !== null) {
-            if ($this->sessionCacheLimiter === '' && !headers_sent() && Yii::$app->getSession()->getIsActive()) {
+            if ($this->sessionCacheLimiter === '' && !headers_sent() && Cover::$app->getSession()->getIsActive()) {
                 header_remove('Expires');
                 header_remove('Cache-Control');
                 header_remove('Last-Modified');
                 header_remove('Pragma');
             }
 
-            Yii::$app->getSession()->setCacheLimiter($this->sessionCacheLimiter);
+            Cover::$app->getSession()->setCacheLimiter($this->sessionCacheLimiter);
         }
 
-        $headers = Yii::$app->getResponse()->getHeaders();
+        $headers = Cover::$app->getResponse()->getHeaders();
 
         if ($this->cacheControlHeader !== null) {
             $headers->set('Cache-Control', $this->cacheControlHeader);

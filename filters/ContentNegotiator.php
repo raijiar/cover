@@ -1,19 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\ActionFilter;
-use yii\base\BootstrapInterface;
-use yii\base\InvalidConfigException;
-use yii\web\Request;
-use yii\web\Response;
-use yii\web\UnsupportedMediaTypeHttpException;
+use Cover;
+use cover\base\ActionFilter;
+use cover\base\BootstrapInterface;
+use cover\base\InvalidConfigException;
+use cover\web\Request;
+use cover\web\Response;
+use cover\web\UnsupportedMediaTypeHttpException;
 
 /**
  * ContentNegotiator supports response format negotiation and application language negotiation.
@@ -25,7 +20,7 @@ use yii\web\UnsupportedMediaTypeHttpException;
  *
  * When the [[languages|supported languages]] is specified, ContentNegotiator will support application
  * language negotiation based on the value of the GET parameter [[languageParam]] and the `Accept-Language` HTTP header.
- * If a match is found, the [[\yii\base\Application::language]] property will be set as the chosen language.
+ * If a match is found, the [[\cover\base\Application::language]] property will be set as the chosen language.
  *
  * You may use ContentNegotiator as a bootstrapping component as well as an action filter.
  *
@@ -34,12 +29,12 @@ use yii\web\UnsupportedMediaTypeHttpException;
  *
  * ```php
  * // in application configuration
- * use yii\web\Response;
+ * use cover\web\Response;
  *
  * return [
  *     'bootstrap' => [
  *         [
- *             'class' => 'yii\filters\ContentNegotiator',
+ *             'class' => 'cover\filters\ContentNegotiator',
  *             'formats' => [
  *                 'application/json' => Response::FORMAT_JSON,
  *                 'application/xml' => Response::FORMAT_XML,
@@ -58,13 +53,13 @@ use yii\web\UnsupportedMediaTypeHttpException;
  * specific actions if you configure the `only` or `except` property of the filter.
  *
  * ```php
- * use yii\web\Response;
+ * use cover\web\Response;
  *
  * public function behaviors()
  * {
  *     return [
  *         [
- *             'class' => 'yii\filters\ContentNegotiator',
+ *             'class' => 'cover\filters\ContentNegotiator',
  *             'only' => ['view', 'index'],  // in a controller
  *             // if in a module, use the following IDs for user actions
  *             // 'only' => ['user/view', 'user/index']
@@ -80,8 +75,7 @@ use yii\web\UnsupportedMediaTypeHttpException;
  * }
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ContentNegotiator extends ActionFilter implements BootstrapInterface
 {
@@ -94,7 +88,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      */
     public $formatParam = '_format';
     /**
-     * @var string the name of the GET parameter that specifies the [[\yii\base\Application::language|application language]].
+     * @var string the name of the GET parameter that specifies the [[\cover\base\Application::language|application language]].
      * Note that if the specified language does not match any of [[languages]], the first language in [[languages]]
      * will be used. If the parameter value is empty or if this property is null,
      * the application language will be determined based on the `Accept-Language` HTTP header only.
@@ -104,7 +98,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
     /**
      * @var array list of supported response formats. The keys are MIME types (e.g. `application/json`)
      * while the values are the corresponding formats (e.g. `html`, `json`) which must be supported
-     * as declared in [[\yii\web\Response::formatters]].
+     * as declared in [[\cover\web\Response::formatters]].
      *
      * If this property is empty or not set, response format negotiation will be skipped.
      */
@@ -151,13 +145,13 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      */
     public function negotiate()
     {
-        $request = $this->request ?: Yii::$app->getRequest();
-        $response = $this->response ?: Yii::$app->getResponse();
+        $request = $this->request ?: Cover::$app->getRequest();
+        $response = $this->response ?: Cover::$app->getResponse();
         if (!empty($this->formats)) {
             $this->negotiateContentType($request, $response);
         }
         if (!empty($this->languages)) {
-            Yii::$app->language = $this->negotiateLanguage($request);
+            Cover::$app->language = $this->negotiateLanguage($request);
         }
     }
 

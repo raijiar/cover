@@ -18,7 +18,7 @@ use cover\web\TooManyRequestsHttpException;
  * {
  *     return [
  *         'rateLimiter' => [
- *             'class' => \yii\filters\RateLimiter::className(),
+ *             'class' => \cover\filters\RateLimiter::className(),
  *         ],
  *     ];
  * }
@@ -29,8 +29,7 @@ use cover\web\TooManyRequestsHttpException;
  * Note that RateLimiter requires [[user]] to implement the [[RateLimitInterface]]. RateLimiter will
  * do nothing if [[user]] is not set or does not implement [[RateLimitInterface]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class RateLimiter extends ActionFilter
 {
@@ -44,7 +43,7 @@ class RateLimiter extends ActionFilter
     public $errorMessage = 'Rate limit exceeded.';
     /**
      * @var RateLimitInterface the user object that implements the RateLimitInterface.
-     * If not set, it will take the value of `Yii::$app->user->getIdentity(false)`.
+     * If not set, it will take the value of `Cover::$app->user->getIdentity(false)`.
      */
     public $user;
     /**
@@ -63,10 +62,10 @@ class RateLimiter extends ActionFilter
     public function init()
     {
         if ($this->request === null) {
-            $this->request = Yii::$app->getRequest();
+            $this->request = Cover::$app->getRequest();
         }
         if ($this->response === null) {
-            $this->response = Yii::$app->getResponse();
+            $this->response = Cover::$app->getResponse();
         }
     }
 
@@ -75,17 +74,17 @@ class RateLimiter extends ActionFilter
      */
     public function beforeAction($action)
     {
-        if ($this->user === null && Yii::$app->getUser()) {
-            $this->user = Yii::$app->getUser()->getIdentity(false);
+        if ($this->user === null && Cover::$app->getUser()) {
+            $this->user = Cover::$app->getUser()->getIdentity(false);
         }
 
         if ($this->user instanceof RateLimitInterface) {
-            Yii::debug('Check rate limit', __METHOD__);
+            Cover::debug('Check rate limit', __METHOD__);
             $this->checkRateLimit($this->user, $this->request, $this->response, $action);
         } elseif ($this->user) {
-            Yii::info('Rate limit skipped: "user" does not implement RateLimitInterface.', __METHOD__);
+            Cover::info('Rate limit skipped: "user" does not implement RateLimitInterface.', __METHOD__);
         } else {
-            Yii::info('Rate limit skipped: user not logged in.', __METHOD__);
+            Cover::info('Rate limit skipped: user not logged in.', __METHOD__);
         }
 
         return true;
@@ -96,7 +95,7 @@ class RateLimiter extends ActionFilter
      * @param RateLimitInterface $user the current user
      * @param Request $request
      * @param Response $response
-     * @param \yii\base\Action $action the action to be executed
+     * @param \cover\base\Action $action the action to be executed
      * @throws TooManyRequestsHttpException if rate limit exceeds
      */
     public function checkRateLimit($user, $request, $response, $action)

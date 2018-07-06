@@ -1,13 +1,13 @@
 <?php
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\Action;
-use yii\base\ActionFilter;
-use yii\di\Instance;
-use yii\web\ForbiddenHttpException;
-use yii\web\User;
+use Cover;
+use cover\base\Action;
+use cover\base\ActionFilter;
+use cover\di\Instance;
+use cover\web\ForbiddenHttpException;
+use cover\web\User;
 
 /**
  * AccessControl provides simple access control based on a set of rules.

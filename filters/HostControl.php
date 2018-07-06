@@ -18,7 +18,7 @@ use cover\web\NotFoundHttpException;
  * ```php
  * return [
  *     'as hostControl' => [
- *         'class' => 'yii\filters\HostControl',
+ *         'class' => 'cover\filters\HostControl',
  *         'allowedHosts' => [
  *             'example.com',
  *             '*.example.com',
@@ -31,8 +31,8 @@ use cover\web\NotFoundHttpException;
  * Controller configuration example:
  *
  * ```php
- * use yii\web\Controller;
- * use yii\filters\HostControl;
+ * use cover\web\Controller;
+ * use cover\filters\HostControl;
  *
  * class SiteController extends Controller
  * {
@@ -73,12 +73,12 @@ class HostControl extends ActionFilter
      * This field can be specified as a PHP callback of following signature:
      *
      * ```php
-     * function (\yii\base\Action $action) {
+     * function (\cover\base\Action $action) {
      *     //return array of strings
      * }
      * ```
      *
-     * where `$action` is the current [[\yii\base\Action|action]] object.
+     * where `$action` is the current [[\cover\base\Action|action]] object.
      *
      * If this field is not set - no host name check will be performed.
      */
@@ -90,21 +90,21 @@ class HostControl extends ActionFilter
      * The signature of the callback should be as follows:
      *
      * ```php
-     * function (\yii\base\Action $action)
+     * function (\cover\base\Action $action)
      * ```
      *
-     * where `$action` is the current [[\yii\base\Action|action]] object.
+     * where `$action` is the current [[\cover\base\Action|action]] object.
      *
      * > Note: while implementing your own host deny processing, make sure you avoid usage of the current requested
      * host name, creation of absolute URL links, caching page parts and so on.
      */
     public $denyCallback;
     /**
-     * @var string|null fallback host info (e.g. `http://www.yiiframework.com`) used when [[\yii\web\Request::$hostInfo|Request::$hostInfo]] is invalid.
-     * This value will replace [[\yii\web\Request::$hostInfo|Request::$hostInfo]] before [[$denyCallback]] is called to make sure that
-     * an invalid host will not be used for further processing. You can set it to `null` to leave [[\yii\web\Request::$hostInfo|Request::$hostInfo]] untouched.
+     * @var string|null fallback host info (e.g. `http://www.coverframework.com`) used when [[\cover\web\Request::$hostInfo|Request::$hostInfo]] is invalid.
+     * This value will replace [[\cover\web\Request::$hostInfo|Request::$hostInfo]] before [[$denyCallback]] is called to make sure that
+     * an invalid host will not be used for further processing. You can set it to `null` to leave [[\cover\web\Request::$hostInfo|Request::$hostInfo]] untouched.
      * Default value is empty string (this will result creating relative URLs instead of absolute).
-     * @see \yii\web\Request::getHostInfo()
+     * @see \cover\web\Request::getHostInfo()
      */
     public $fallbackHostInfo = '';
 
@@ -126,7 +126,7 @@ class HostControl extends ActionFilter
             $allowedHosts = (array) $allowedHosts;
         }
 
-        $currentHost = Yii::$app->getRequest()->getHostName();
+        $currentHost = Cover::$app->getRequest()->getHostName();
 
         foreach ($allowedHosts as $allowedHost) {
             if (StringHelper::matchWildcard($allowedHost, $currentHost)) {
@@ -136,7 +136,7 @@ class HostControl extends ActionFilter
 
         // replace invalid host info to prevent using it in further processing
         if ($this->fallbackHostInfo !== null) {
-            Yii::$app->getRequest()->setHostInfo($this->fallbackHostInfo);
+            Cover::$app->getRequest()->setHostInfo($this->fallbackHostInfo);
         }
 
         if ($this->denyCallback !== null) {
@@ -153,25 +153,25 @@ class HostControl extends ActionFilter
      * The default implementation will display 404 page right away, terminating the program execution.
      * You may override this method, creating your own deny access handler. While doing so, make sure you
      * avoid usage of the current requested host name, creation of absolute URL links, caching page parts and so on.
-     * @param \yii\base\Action $action the action to be executed.
+     * @param \cover\base\Action $action the action to be executed.
      * @throws NotFoundHttpException
      */
     protected function denyAccess($action)
     {
-        $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+        $exception = new NotFoundHttpException(Cover::t('cover', 'Page not found.'));
 
         // use regular error handling if $this->fallbackHostInfo was set
-        if (!empty(Yii::$app->getRequest()->hostName)) {
+        if (!empty(Cover::$app->getRequest()->hostName)) {
             throw $exception;
         }
 
-        $response = Yii::$app->getResponse();
-        $errorHandler = Yii::$app->getErrorHandler();
+        $response = Cover::$app->getResponse();
+        $errorHandler = Cover::$app->getErrorHandler();
 
         $response->setStatusCode($exception->statusCode, $exception->getMessage());
         $response->data = $errorHandler->renderFile($errorHandler->errorView, ['exception' => $exception]);
         $response->send();
 
-        Yii::$app->end();
+        Cover::$app->end();
     }
 }

@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
-use Yii;
-use yii\base\ActionFilter;
-use yii\web\BadRequestHttpException;
-use yii\web\Request;
+use Cover;
+use cover\base\ActionFilter;
+use cover\web\BadRequestHttpException;
+use cover\web\Request;
 
 /**
  * AjaxFilter allow to limit access only for ajax requests.
@@ -20,15 +15,14 @@ use yii\web\Request;
  * {
  *     return [
  *         [
- *             'class' => 'yii\filters\AjaxFilter',
+ *             'class' => 'cover\filters\AjaxFilter',
  *             'only' => ['index']
  *         ],
  *     ];
  * }
  * ```
  *
- * @author Dmitry Dorogin <dmirogin@ya.ru>
- * @since 2.0.13
+ * @since 1.0
  */
 class AjaxFilter extends ActionFilter
 {

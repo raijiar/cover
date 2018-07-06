@@ -1,26 +1,20 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\filters;
+namespace cover\filters;
 
 use Closure;
-use yii\base\Action;
-use yii\base\Component;
-use yii\base\Controller;
-use yii\base\InvalidConfigException;
-use yii\helpers\StringHelper;
-use yii\web\Request;
-use yii\web\User;
+use cover\base\Action;
+use cover\base\Component;
+use cover\base\Controller;
+use cover\base\InvalidConfigException;
+use cover\helpers\StringHelper;
+use cover\web\Request;
+use cover\web\User;
 
 /**
  * This class represents an access rule defined by the [[AccessControl]] action filter.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class AccessRule extends Component
 {
@@ -36,7 +30,7 @@ class AccessRule extends Component
     /**
      * @var array list of the controller IDs that this rule applies to.
      *
-     * The comparison uses [[\yii\base\Controller::uniqueId]], so each controller ID is prefixed
+     * The comparison uses [[\cover\base\Controller::uniqueId]], so each controller ID is prefixed
      * with the module ID (if any). For a `product` controller in the application, you would specify
      * this property like `['product']` and if that controller is located in a `shop` module, this
      * would be `['shop/product']`.
@@ -45,7 +39,7 @@ class AccessRule extends Component
      *
      * If not set or empty, it means this rule applies to all controllers.
      *
-     * Since version 2.0.12 controller IDs can be specified as wildcards, e.g. `module/*`.
+     * Since version 1.0 controller IDs can be specified as wildcards, e.g. `module/*`.
      */
     public $controllers;
     /**
@@ -70,7 +64,7 @@ class AccessRule extends Component
      * [[User::can()]] will be called to check access.
      * 
      * If this property is not set or empty, it means this rule applies regardless of permissions.
-     * @since 2.0.12
+     * @since 1.0
      * @see $roles
      * @see $roleParams
      */
@@ -83,7 +77,7 @@ class AccessRule extends Component
      * ID from the current request, you may use the following:
      *
      * ```php
-     * ['postId' => Yii::$app->request->get('id')]
+     * ['postId' => Cover::$app->request->get('id')]
      * ```
      *
      * You may also specify a closure that returns an array. This can be used to
@@ -97,7 +91,7 @@ class AccessRule extends Component
      *         'actions' => ['update'],
      *         'roles' => ['updatePost'],
      *         'roleParams' => function($rule) {
-     *             return ['post' => Post::findOne(Yii::$app->request->get('id'))];
+     *             return ['post' => Post::findOne(Cover::$app->request->get('id'))];
      *         },
      *     ],
      * ],
@@ -106,7 +100,7 @@ class AccessRule extends Component
      * A reference to the [[AccessRule]] instance will be passed to the closure as the first parameter.
      *
      * @see $roles
-     * @since 2.0.12
+     * @since 1.0
      */
     public $roleParams = [];
     /**
@@ -120,7 +114,7 @@ class AccessRule extends Component
     /**
      * @var array list of request methods (e.g. `GET`, `POST`) that this rule applies to.
      * If not set or empty, it means this rule applies to all request methods.
-     * @see \yii\web\Request::method
+     * @see \cover\web\Request::method
      */
     public $verbs;
     /**
