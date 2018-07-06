@@ -1,28 +1,22 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
+use Cover;
 
 /**
  * ViewAction implements the API endpoint for returning the detailed information about a model.
  *
  * For more details and usage information on ViewAction, see the [guide article on rest controllers](guide:rest-controllers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ViewAction extends Action
 {
     /**
      * Displays a model.
      * @param string $id the primary key of the model.
-     * @return \yii\db\ActiveRecordInterface the model being displayed
+     * @return \cover\db\ActiveRecordInterface the model being displayed
      */
     public function run($id)
     {

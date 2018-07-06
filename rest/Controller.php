@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\ContentNegotiator;
-use yii\filters\RateLimiter;
-use yii\filters\VerbFilter;
-use yii\web\Response;
+use Cover;
+use cover\filters\auth\CompositeAuth;
+use cover\filters\ContentNegotiator;
+use cover\filters\RateLimiter;
+use cover\filters\VerbFilter;
+use cover\web\Response;
 
 /**
  * Controller is the base class for RESTful API controller classes.
@@ -21,7 +16,7 @@ use yii\web\Response;
  *
  * 1. Resolving response format (see [[ContentNegotiator]]);
  * 2. Validating request method (see [[verbs()]]).
- * 3. Authenticating user (see [[\yii\filters\auth\AuthInterface]]);
+ * 3. Authenticating user (see [[\cover\filters\auth\AuthInterface]]);
  * 4. Rate limiting (see [[RateLimiter]]);
  * 5. Formatting response data (see [[serializeData()]]).
  *
@@ -30,12 +25,12 @@ use yii\web\Response;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class Controller extends \yii\web\Controller
+class Controller extends \cover\web\Controller
 {
     /**
      * @var string|array the configuration for creating the serializer that formats the response data.
      */
-    public $serializer = 'yii\rest\Serializer';
+    public $serializer = 'cover\rest\Serializer';
     /**
      * {@inheritdoc}
      */
@@ -96,6 +91,6 @@ class Controller extends \yii\web\Controller
      */
     protected function serializeData($data)
     {
-        return Yii::createObject($this->serializer)->serialize($data);
+        return Cover::createObject($this->serializer)->serialize($data);
     }
 }

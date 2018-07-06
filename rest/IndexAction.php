@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
-use yii\data\ActiveDataProvider;
-use yii\data\DataFilter;
+use Cover;
+use cover\data\ActiveDataProvider;
+use cover\data\DataFilter;
 
 /**
  * IndexAction implements the API endpoint for listing multiple models.
@@ -52,9 +47,9 @@ class IndexAction extends Action
      *
      * ```php
      * [
-     *     'class' => 'yii\data\ActiveDataFilter',
+     *     'class' => 'cover\data\ActiveDataFilter',
      *     'searchModel' => function () {
-     *         return (new \yii\base\DynamicModel(['id' => null, 'name' => null, 'price' => null]))
+     *         return (new \cover\base\DynamicModel(['id' => null, 'name' => null, 'price' => null]))
      *             ->addRule('id', 'integer')
      *             ->addRule('name', 'trim')
      *             ->addRule('name', 'string')
@@ -88,14 +83,14 @@ class IndexAction extends Action
      */
     protected function prepareDataProvider()
     {
-        $requestParams = Yii::$app->getRequest()->getBodyParams();
+        $requestParams = Cover::$app->getRequest()->getBodyParams();
         if (empty($requestParams)) {
-            $requestParams = Yii::$app->getRequest()->getQueryParams();
+            $requestParams = Cover::$app->getRequest()->getQueryParams();
         }
 
         $filter = null;
         if ($this->dataFilter !== null) {
-            $this->dataFilter = Yii::createObject($this->dataFilter);
+            $this->dataFilter = Cover::createObject($this->dataFilter);
             if ($this->dataFilter->load($requestParams)) {
                 $filter = $this->dataFilter->build();
                 if ($filter === false) {
@@ -108,7 +103,7 @@ class IndexAction extends Action
             return call_user_func($this->prepareDataProvider, $this, $filter);
         }
 
-        /* @var $modelClass \yii\db\BaseActiveRecord */
+        /* @var $modelClass \cover\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
 
         $query = $modelClass::find();
@@ -116,7 +111,7 @@ class IndexAction extends Action
             $query->andWhere($filter);
         }
 
-        return Yii::createObject([
+        return Cover::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
             'pagination' => [

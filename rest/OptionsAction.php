@@ -1,23 +1,17 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
+use Cover;
 
 /**
  * OptionsAction responds to the OPTIONS request by sending back an `Allow` header.
  *
  * For more details and usage information on OptionsAction, see the [guide article on rest controllers](guide:rest-controllers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class OptionsAction extends \yii\base\Action
+class OptionsAction extends \cover\base\Action
 {
     /**
      * @var array the HTTP verbs that are supported by the collection URL

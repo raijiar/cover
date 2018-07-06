@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace yii\validators;
 
@@ -35,8 +30,7 @@ use yii\web\JsExpression;
  * @property array $ranges The IPv4 or IPv6 ranges that are allowed or forbidden. See [[setRanges()]] for
  * detailed description.
  *
- * @author Dmitry Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.7
+ * @since 1.0
  */
 class IpValidator extends Validator
 {

@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Inflector;
-use yii\web\CompositeUrlRule;
-use yii\web\UrlRule as WebUrlRule;
-use yii\web\UrlRuleInterface;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Inflector;
+use cover\web\CompositeUrlRule;
+use cover\web\UrlRule as WebUrlRule;
+use cover\web\UrlRuleInterface;
 
 /**
  * UrlRule is provided to simplify the creation of URL rules for RESTful API support.
@@ -21,7 +16,7 @@ use yii\web\UrlRuleInterface;
  *
  * ```php
  * [
- *     'class' => 'yii\rest\UrlRule',
+ *     'class' => 'cover\rest\UrlRule',
  *     'controller' => 'user',
  * ]
  * ```
@@ -43,7 +38,7 @@ use yii\web\UrlRuleInterface;
  *
  * ```php
  * [
- *     'class' => 'yii\rest\UrlRule',
+ *     'class' => 'cover\rest\UrlRule',
  *     'controller' => ['user', 'post'],
  *     'except' => ['delete'],
  * ]
@@ -56,8 +51,7 @@ use yii\web\UrlRuleInterface;
  *
  * For more details and usage information on UrlRule, see the [guide article on rest routing](guide:rest-routing).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class UrlRule extends CompositeUrlRule
 {
@@ -66,7 +60,7 @@ class UrlRule extends CompositeUrlRule
      */
     public $prefix;
     /**
-     * @var string the suffix that will be assigned to [[\yii\web\UrlRule::suffix]] for every generated rule.
+     * @var string the suffix that will be assigned to [[\cover\web\UrlRule::suffix]] for every generated rule.
      */
     public $suffix;
     /**
@@ -129,7 +123,7 @@ class UrlRule extends CompositeUrlRule
      * @var array the default configuration for creating each URL rule contained by this rule.
      */
     public $ruleConfig = [
-        'class' => 'yii\web\UrlRule',
+        'class' => 'cover\web\UrlRule',
     ];
     /**
      * @var bool whether to automatically pluralize the URL names for controllers.
@@ -210,7 +204,7 @@ class UrlRule extends CompositeUrlRule
         }
         $config['suffix'] = $this->suffix;
 
-        return Yii::createObject($config);
+        return Cover::createObject($config);
     }
 
     /**
@@ -224,8 +218,8 @@ class UrlRule extends CompositeUrlRule
                 foreach ($rules as $rule) {
                     /* @var $rule WebUrlRule */
                     $result = $rule->parseRequest($manager, $request);
-                    if (YII_DEBUG) {
-                        Yii::debug([
+                    if (COVER_DEBUG) {
+                        Cover::debug([
                             'rule' => method_exists($rule, '__toString') ? $rule->__toString() : get_class($rule),
                             'match' => $result !== false,
                             'parent' => self::className(),
