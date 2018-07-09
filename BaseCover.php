@@ -10,22 +10,18 @@ use cover\log\Logger;
 
 /**
  * Gets the application start timestamp.
- * 获取程序开始运行的毫秒级时间戳
  */
 defined('COVER_BEGIN_TIME') or define('COVER_BEGIN_TIME', microtime(true));
 /**
  * This constant defines the framework installation directory.
- * 框架安装目录
  */
 defined('COVER_PATH') or define('COVER_PATH', __DIR__);
 /**
  * This constant defines whether the application should be in debug mode or not. Defaults to false.
- * 程序是否开启DEBUG,默认关闭
  */
 defined('COVER_DEBUG') or define('COVER_DEBUG', false);
 /**
  * This constant defines in which environment the application is running. Defaults to 'prod', meaning production environment.
- * 程序运行的环境,默认为生产环境.
  * You may define this constant in the bootstrap script. The value could be 'prod' (production), 'dev' (development), 'test', 'staging', etc.
  */
 defined('COVER_ENV') or define('COVER_ENV', 'prod');
@@ -44,7 +40,6 @@ defined('COVER_ENV_TEST') or define('COVER_ENV_TEST', COVER_ENV === 'test');
 
 /**
  * This constant defines whether error handling should be enabled. Defaults to true.
- * 定义是否应该启用错误处理,默认开启
  */
 defined('COVER_ENABLE_ERROR_HANDLER') or define('COVER_ENABLE_ERROR_HANDLER', true);
 
@@ -106,8 +101,8 @@ class BaseCover
      *    the corresponding registered path.
      * 3. Throw an exception or return false, depending on the `$throwException` parameter.
      *
-     * For example, by default '@yii' is registered as the alias to the Cover framework directory,
-     * say '/path/to/yii'. The alias '@yii/web' would then be translated into '/path/to/yii/web'.
+     * For example, by default '@cover' is registered as the alias to the Cover framework directory,
+     * say '/path/to/cover'. The alias '@cover/web' would then be translated into '/path/to/cover/web'.
      *
      * If you have registered two aliases '@foo' and '@foo/bar'. Then translating '@foo/bar/config'
      * would replace the part '@foo/bar' (instead of '@foo') with the corresponding registered path.
@@ -187,7 +182,7 @@ class BaseCover
      * Registers a path alias.
      *
      * A path alias is a short name representing a long path (a file path, a URL, etc.)
-     * For example, we use '@yii' as the alias of the path to the Cover framework directory.
+     * For example, we use '@cover' as the alias of the path to the Cover framework directory.
      *
      * A path alias must start with the character '@' so that it can be easily differentiated
      * from non-alias paths.
@@ -199,15 +194,15 @@ class BaseCover
      *
      * See the [guide article on aliases](guide:concept-aliases) for more information.
      *
-     * @param string $alias the alias name (e.g. "@yii"). It must start with a '@' character.
+     * @param string $alias the alias name (e.g. "@cover"). It must start with a '@' character.
      * It may contain the forward slash '/' which serves as boundary character when performing
      * alias translation by [[getAlias()]].
      * @param string $path the path corresponding to the alias. If this is null, the alias will
      * be removed. Trailing '/' and '\' characters will be trimmed. This can be
      *
      * - a directory or a file path (e.g. `/tmp`, `/tmp/main.txt`)
-     * - a URL (e.g. `http://www.yiiframework.com`)
-     * - a path alias (e.g. `@yii/base`). In this case, the path alias will be converted into the
+     * - a URL (e.g. `http://www.coverframework.com`)
+     * - a path alias (e.g. `@cover/base`). In this case, the path alias will be converted into the
      *   actual path first by calling [[getAlias()]].
      *
      * @throws InvalidArgumentException if $path is an invalid alias.
@@ -257,16 +252,16 @@ class BaseCover
      * The method will attempt to include the class file according to the following procedure:
      *
      * 1. Search in [[classMap]];
-     * 2. If the class is namespaced (e.g. `yii\base\Component`), it will attempt
+     * 2. If the class is namespaced (e.g. `cover\base\Component`), it will attempt
      *    to include the file associated with the corresponding path alias
-     *    (e.g. `@yii/base/Component.php`);
+     *    (e.g. `@cover/base/Component.php`);
      *
      * This autoloader allows loading classes that follow the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/)
      * and have its top-level namespace or sub-namespaces defined as path aliases.
      *
-     * Example: When aliases `@yii` and `@yii/bootstrap` are defined, classes in the `yii\bootstrap` namespace
-     * will be loaded using the `@yii/bootstrap` alias which points to the directory where bootstrap extension
-     * files are installed and all classes from other `yii` namespaces will be loaded from the yii framework directory.
+     * Example: When aliases `@cover` and `@cover/bootstrap` are defined, classes in the `cover\bootstrap` namespace
+     * will be loaded using the `@cover/bootstrap` alias which points to the directory where bootstrap extension
+     * files are installed and all classes from other `cover` namespaces will be loaded from the cover framework directory.
      *
      * Also the [guide section on autoloading](guide:concept-autoloading).
      *
@@ -307,11 +302,11 @@ class BaseCover
      *
      * ```php
      * // create an object using a class name
-     * $object = Cover::createObject('yii\db\Connection');
+     * $object = Cover::createObject('cover\db\Connection');
      *
      * // create an object using a configuration array
      * $object = Cover::createObject([
-     *     'class' => 'yii\db\Connection',
+     *     'class' => 'cover\db\Connection',
      *     'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
      *     'username' => 'root',
      *     'password' => '',
@@ -322,7 +317,7 @@ class BaseCover
      * $object = \Cover::createObject('MyClass', [$param1, $param2]);
      * ```
      *
-     * Using [[\yii\di\Container|dependency injection container]], this method can also identify
+     * Using [[\cover\di\Container|dependency injection container]], this method can also identify
      * dependent objects, instantiate them and inject them into the newly created object.
      *
      * @param string|array|callable $type the object type. This can be specified in one of the following forms:
@@ -336,7 +331,7 @@ class BaseCover
      * @param array $params the constructor parameters
      * @return object the created object
      * @throws InvalidConfigException if the configuration is invalid.
-     * @see \yii\di\Container
+     * @see \cover\di\Container
      */
     public static function createObject($type, array $params = [])
     {
@@ -366,7 +361,7 @@ class BaseCover
             return self::$_logger;
         }
 
-        return self::$_logger = static::createObject('yii\log\Logger');
+        return self::$_logger = static::createObject('cover\log\Logger');
     }
 
     /**
@@ -386,7 +381,7 @@ class BaseCover
      * @param string|array $message the message to be logged. This can be a simple string or a more
      * complex data structure, such as array.
      * @param string $category the category of the message.
-     * @since 2.0.14
+     * @since 1.0
      */
     public static function debug($message, $category = 'application')
     {
@@ -400,7 +395,7 @@ class BaseCover
      * @param string|array $message the message to be logged. This can be a simple string or a more
      * complex data structure, such as array.
      * @param string $category the category of the message.
-     * @deprecated since 2.0.14. Use [[debug()]] instead.
+     * @deprecated since 1.0 Use [[debug()]] instead.
      */
     public static function trace($message, $category = 'application')
     {
@@ -488,8 +483,8 @@ class BaseCover
      */
     public static function powered()
     {
-        return \Cover::t('yii', 'Powered by {yii}', [
-            'yii' => '<a href="http://www.yiiframework.com/" rel="external">' . \Cover::t('yii',
+        return \Cover::t('cover', 'Powered by {cover}', [
+            'cover' => '<a href="http://www.coverframework.com/" rel="external">' . \Cover::t('cover',
                     'Cover Framework') . '</a>',
         ]);
     }
@@ -497,7 +492,7 @@ class BaseCover
     /**
      * Translates a message to the specified language.
      *
-     * This is a shortcut method of [[\yii\i18n\I18N::translate()]].
+     * This is a shortcut method of [[\cover\i18n\I18N::translate()]].
      *
      * The translation will be conducted according to the message category and the target language will be used.
      *
@@ -510,13 +505,13 @@ class BaseCover
      * ```
      *
      * Further formatting of message parameters is supported using the [PHP intl extensions](http://www.php.net/manual/en/intro.intl.php)
-     * message formatter. See [[\yii\i18n\I18N::translate()]] for more details.
+     * message formatter. See [[\cover\i18n\I18N::translate()]] for more details.
      *
      * @param string $category the message category.
      * @param string $message the message to be translated.
      * @param array $params the parameters that will be used to replace the corresponding placeholders in the message.
      * @param string $language the language code (e.g. `en-US`, `en`). If this is null, the current
-     * [[\yii\base\Application::language|application language]] will be used.
+     * [[\cover\base\Application::language|application language]] will be used.
      * @return string the translated message.
      */
     public static function t($category, $message, $params = [], $language = null)
