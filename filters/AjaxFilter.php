@@ -42,7 +42,7 @@ class AjaxFilter extends ActionFilter
     public function init()
     {
         if ($this->request === null) {
-            $this->request = Yii::$app->getRequest();
+            $this->request = Cover::$app->getRequest();
         }
     }
 

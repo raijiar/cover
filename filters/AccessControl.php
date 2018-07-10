@@ -26,7 +26,7 @@ use cover\web\User;
  * {
  *     return [
  *         'access' => [
- *             'class' => \yii\filters\AccessControl::className(),
+ *             'class' => \cover\filters\AccessControl::className(),
  *             'only' => ['create', 'update'],
  *             'rules' => [
  *                 // deny all POST requests
@@ -75,7 +75,7 @@ class AccessControl extends ActionFilter
      * @var array the default configuration of access rules. Individual rule configurations
      * specified via [[rules]] will take precedence when the same property of the rule is configured.
      */
-    public $ruleConfig = ['class' => 'yii\filters\AccessRule'];
+    public $ruleConfig = ['class' => 'cover\filters\AccessRule'];
     /**
      * @var array a list of access rule objects or configuration arrays for creating the rule objects.
      * If a rule is specified via a configuration array, it will be merged with [[ruleConfig]] first
@@ -96,7 +96,7 @@ class AccessControl extends ActionFilter
         }
         foreach ($this->rules as $i => $rule) {
             if (is_array($rule)) {
-                $this->rules[$i] = Yii::createObject(array_merge($this->ruleConfig, $rule));
+                $this->rules[$i] = Cover::createObject(array_merge($this->ruleConfig, $rule));
             }
         }
     }
@@ -110,7 +110,7 @@ class AccessControl extends ActionFilter
     public function beforeAction($action)
     {
         $user = $this->user;
-        $request = Yii::$app->getRequest();
+        $request = Cover::$app->getRequest();
         /* @var $rule AccessRule */
         foreach ($this->rules as $rule) {
             if ($allow = $rule->allows($action, $user, $request)) {
@@ -148,7 +148,7 @@ class AccessControl extends ActionFilter
         if ($user !== false && $user->getIsGuest()) {
             $user->loginRequired();
         } else {
-            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+            throw new ForbiddenHttpException(Cover::t('cover', 'You are not allowed to perform this action.'));
         }
     }
 }
