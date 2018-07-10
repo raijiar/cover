@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * Object that represents the removal of array value while performing [[ArrayHelper::merge()]].
@@ -27,10 +22,10 @@ namespace yii\helpers;
  *     'ids' => [
  *         2,
  *     ],
- *     'validDomains' => new \yii\helpers\UnsetArrayValue(),
+ *     'validDomains' => new \cover\helpers\UnsetArrayValue(),
  * ];
  *
- * $result = \yii\helpers\ArrayHelper::merge($array1, $array2);
+ * $result = \cover\helpers\ArrayHelper::merge($array1, $array2);
  * ```
  *
  * The result will be
@@ -44,8 +39,7 @@ namespace yii\helpers;
  * ]
  * ```
  *
- * @author Robert Korulczyk <robert@korulczyk.pl>
- * @since 2.0.10
+ * @since 1.0
  */
 class UnsetArrayValue
 {

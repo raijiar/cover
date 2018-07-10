@@ -1,31 +1,25 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use yii\base\Arrayable;
-use yii\base\InvalidArgumentException;
-use yii\web\JsExpression;
-use yii\base\Model;
+use cover\base\Arrayable;
+use cover\base\InvalidArgumentException;
+use cover\web\JsExpression;
+use cover\base\Model;
 
 /**
  * BaseJson provides concrete implementation for [[Json]].
  *
  * Do not use BaseJson. Use [[Json]] instead.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class BaseJson
 {
     /**
      * List of JSON Error messages assigned to constant names for better handling of version differences.
      * @var array
-     * @since 2.0.7
+     * @since 1.0
      */
     public static $jsonErrorMessages = [
         'JSON_ERROR_DEPTH' => 'The maximum stack depth has been exceeded.',
@@ -81,7 +75,7 @@ class BaseJson
      *
      * @param mixed $value the data to be encoded
      * @return string the encoding result
-     * @since 2.0.4
+     * @since 1.0
      * @throws InvalidArgumentException if there is any encoding error
      */
     public static function htmlEncode($value)
@@ -114,7 +108,7 @@ class BaseJson
      *
      * @param int $lastError error code from [json_last_error()](http://php.net/manual/en/function.json-last-error.php).
      * @throws InvalidArgumentException if there is any encoding/decoding error.
-     * @since 2.0.6
+     * @since 1.0
      */
     protected static function handleJsonError($lastError)
     {
@@ -190,7 +184,7 @@ class BaseJson
      *   only the first error message for each attribute will be shown. Defaults to `false`.
      *
      * @return string the generated error summary
-     * @since 2.0.14
+     * @since 1.0
      */
     public static function errorSummary($models, $options = [])
     {
@@ -206,7 +200,7 @@ class BaseJson
      * @param $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
      * only the first error message for each attribute will be shown.
      * @return array of the validation errors
-     * @since 2.0.14
+     * @since 1.0
      */
     private static function collectErrors($models, $showAllErrors)
     {

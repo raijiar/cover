@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * HtmlPurifier provides an ability to clean up HTML from any harmful code.
@@ -26,8 +21,7 @@ namespace yii\helpers;
  *
  * For more details please refer to [HTMLPurifier documentation](http://htmlpurifier.org/).
  *
- * @author Alexander Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class HtmlPurifier extends BaseHtmlPurifier
 {

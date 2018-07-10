@@ -9,9 +9,7 @@ use Cover;
  *
  * Do not use BaseStringHelper. Use [[StringHelper]] instead.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Alex Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class BaseStringHelper
 {
@@ -94,13 +92,13 @@ class BaseStringHelper
      * @param string $suffix String to append to the end of truncated string.
      * @param string $encoding The charset to use, defaults to charset currently used by application.
      * @param bool $asHtml Whether to treat the string being truncated as HTML and preserve proper HTML tags.
-     * This parameter is available since version 2.0.1.
+     * This parameter is available since version 1.0
      * @return string the truncated string.
      */
     public static function truncate($string, $length, $suffix = '...', $encoding = null, $asHtml = false)
     {
         if ($encoding === null) {
-            $encoding = Yii::$app ? Yii::$app->charset : 'UTF-8';
+            $encoding = Cover::$app ? Cover::$app->charset : 'UTF-8';
         }
         if ($asHtml) {
             return static::truncateHtml($string, $length, $suffix, $encoding);
@@ -120,7 +118,7 @@ class BaseStringHelper
      * @param int $count How many words from original string to include into truncated string.
      * @param string $suffix String to append to the end of truncated string.
      * @param bool $asHtml Whether to treat the string being truncated as HTML and preserve proper HTML tags.
-     * This parameter is available since version 2.0.1.
+     * This parameter is available since version 1.0
      * @return string the truncated string.
      */
     public static function truncateWords($string, $count, $suffix = '...', $asHtml = false)
@@ -145,13 +143,13 @@ class BaseStringHelper
      * @param string $suffix String to append to the end of the truncated string.
      * @param string|bool $encoding
      * @return string
-     * @since 2.0.1
+     * @since 1.0
      */
     protected static function truncateHtml($string, $count, $suffix, $encoding = false)
     {
         $config = \HTMLPurifier_Config::create(null);
-        if (Yii::$app !== null) {
-            $config->set('Cache.SerializerPath', Yii::$app->getRuntimePath());
+        if (Cover::$app !== null) {
+            $config->set('Cache.SerializerPath', Cover::$app->getRuntimePath());
         }
         $lexer = \HTMLPurifier_Lexer::create($config);
         $tokens = $lexer->tokenizeHTML($string, $config, new \HTMLPurifier_Context());
@@ -217,7 +215,7 @@ class BaseStringHelper
             return strncmp($string, $with, $bytes) === 0;
 
         }
-        $encoding = Yii::$app ? Yii::$app->charset : 'UTF-8';
+        $encoding = Cover::$app ? Cover::$app->charset : 'UTF-8';
         return mb_strtolower(mb_substr($string, 0, $bytes, '8bit'), $encoding) === mb_strtolower($with, $encoding);
     }
 
@@ -244,7 +242,7 @@ class BaseStringHelper
             return substr_compare($string, $with, -$bytes, $bytes) === 0;
         }
 
-        $encoding = Yii::$app ? Yii::$app->charset : 'UTF-8';
+        $encoding = Cover::$app ? Cover::$app->charset : 'UTF-8';
         return mb_strtolower(mb_substr($string, -$bytes, mb_strlen($string, '8bit'), '8bit'), $encoding) === mb_strtolower($with, $encoding);
     }
 
@@ -259,7 +257,7 @@ class BaseStringHelper
      *   - callable - will be called for each value instead of trim. Takes the only argument - value.
      * @param bool $skipEmpty Whether to skip empty strings between delimiters. Default is false.
      * @return array
-     * @since 2.0.4
+     * @since 1.0
      */
     public static function explode($string, $delimiter = ',', $trim = true, $skipEmpty = false)
     {
@@ -286,7 +284,7 @@ class BaseStringHelper
 
     /**
      * Counts words in a string.
-     * @since 2.0.8
+     * @since 1.0
      *
      * @param string $string
      * @return int
@@ -301,7 +299,7 @@ class BaseStringHelper
      * of current locale is comma.
      * @param int|float|string $value
      * @return string
-     * @since 2.0.11
+     * @since 1.0
      */
     public static function normalizeNumber($value)
     {
@@ -326,7 +324,7 @@ class BaseStringHelper
      * @see https://tools.ietf.org/html/rfc4648#page-7
      * @param string $input the string to encode.
      * @return string encoded string.
-     * @since 2.0.12
+     * @since 1.0
      */
     public static function base64UrlEncode($input)
     {
@@ -339,7 +337,7 @@ class BaseStringHelper
      * @see https://tools.ietf.org/html/rfc4648#page-7
      * @param string $input encoded string.
      * @return string decoded string.
-     * @since 2.0.12
+     * @since 1.0
      */
     public static function base64UrlDecode($input)
     {
@@ -352,7 +350,7 @@ class BaseStringHelper
      * The decimal separator will always be `.`.
      * @param float|int $number a floating point number or integer.
      * @return string the string representation of the number.
-     * @since 2.0.13
+     * @since 1.0
      */
     public static function floatToString($number)
     {
@@ -373,7 +371,7 @@ class BaseStringHelper
      * - filePath: bool, whether slashes in string only matches slashes in the given pattern. Defaults to `false`.
      *
      * @return bool whether the string matches pattern or not.
-     * @since 2.0.14
+     * @since 1.0
      */
     public static function matchWildcard($pattern, $string, $options = [])
     {

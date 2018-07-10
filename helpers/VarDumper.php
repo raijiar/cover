@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * VarDumper is intended to replace the buggy PHP function var_dump and print_r.
@@ -19,8 +14,7 @@ namespace yii\helpers;
  * VarDumper::dump($var);
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class VarDumper extends BaseVarDumper
 {

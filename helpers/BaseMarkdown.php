@@ -10,8 +10,7 @@ use cover\base\InvalidArgumentException;
  *
  * Do not use BaseMarkdown. Use [[Markdown]] instead.
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class BaseMarkdown
 {

@@ -5,9 +5,7 @@ namespace cover\helpers;
 /**
  * StringHelper.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Alex Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class StringHelper extends BaseStringHelper
 {

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * Markdown provides an ability to transform markdown into HTML.
@@ -25,8 +20,7 @@ namespace yii\helpers;
  * > Note: The Markdown library works with PHPDoc annotations so if you use it together with
  * > PHP `opcache` make sure [it does not strip comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments).
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class Markdown extends BaseMarkdown
 {

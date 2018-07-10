@@ -1,22 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use yii\base\Arrayable;
-use yii\base\InvalidValueException;
+use cover\base\Arrayable;
+use cover\base\InvalidValueException;
 
 /**
  * BaseVarDumper provides concrete implementation for [[VarDumper]].
  *
  * Do not use BaseVarDumper. Use [[VarDumper]] instead.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class BaseVarDumper
 {

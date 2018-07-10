@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * Html provides a set of static methods for generating commonly used HTML tags.
@@ -16,8 +11,7 @@ namespace yii\helpers;
  *
  * For more details and usage information on Html, see the [guide article on html helpers](guide:helper-html).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Html extends BaseHtml
 {
