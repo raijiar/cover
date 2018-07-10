@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\base\Model;
 
 /**
  * EachValidator validates an array by checking each of its elements against an embedded validation rule.
@@ -35,14 +30,13 @@ use yii\base\Model;
  * > Note: EachValidator is meant to be used only in basic cases, you should consider usage of tabular input,
  *   using several models for the more complex case.
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0.4
+ * @since 1.0
  */
 class EachValidator extends Validator
 {
     /**
      * @var array|Validator definition of the validation rule, which should be used on array values.
-     * It should be specified in the same format as at [[\yii\base\Model::rules()]], except it should not
+     * It should be specified in the same format as at [[\cover\base\Model::rules()]], except it should not
      * contain attribute list as the first element.
      * For example:
      *
@@ -51,7 +45,7 @@ class EachValidator extends Validator
      * ['match', 'pattern' => '/[a-z]/is']
      * ```
      *
-     * Please refer to [[\yii\base\Model::rules()]] for more details.
+     * Please refer to [[\cover\base\Model::rules()]] for more details.
      */
     public $rule;
     /**
@@ -66,7 +60,7 @@ class EachValidator extends Validator
      * error messages mya appear: one per each invalid value.
      * Note that this option will affect only [[validateAttribute()]] value, while [[validateValue()]] will
      * not be affected.
-     * @since 2.0.11
+     * @since 1.0
      */
     public $stopOnFirstError = true;
 
@@ -83,7 +77,7 @@ class EachValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} is invalid.');
+            $this->message = Cover::t('cover', '{attribute} is invalid.');
         }
     }
 
@@ -104,7 +98,7 @@ class EachValidator extends Validator
     /**
      * Creates validator object based on the validation rule specified in [[rule]].
      * @param Model|null $model model in which context validator should be created.
-     * @throws \yii\base\InvalidConfigException
+     * @throws \cover\base\InvalidConfigException
      * @return Validator validator instance
      */
     private function createEmbeddedValidator($model)

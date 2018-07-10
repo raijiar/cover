@@ -37,7 +37,7 @@ class BooleanValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} must be either "{true}" or "{false}".');
+            $this->message = Cover::t('cover', '{attribute} must be either "{true}" or "{false}".');
         }
     }
 
@@ -70,7 +70,7 @@ class BooleanValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.boolean(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'cover.validation.boolean(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
     }
 
     /**

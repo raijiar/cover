@@ -1,13 +1,13 @@
 <?php
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Html;
-use yii\helpers\IpHelper;
-use yii\helpers\Json;
-use yii\web\JsExpression;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Html;
+use cover\helpers\IpHelper;
+use cover\helpers\Json;
+use cover\web\JsExpression;
 
 /**
  * The validator checks if the attribute value is a valid IPv4/IPv6 address or subnet.
@@ -209,25 +209,25 @@ class IpValidator extends Validator
             throw new InvalidConfigException('Both IPv4 and IPv6 checks can not be disabled at the same time');
         }
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} must be a valid IP address.');
+            $this->message = Cover::t('cover', '{attribute} must be a valid IP address.');
         }
         if ($this->ipv6NotAllowed === null) {
-            $this->ipv6NotAllowed = Yii::t('yii', '{attribute} must not be an IPv6 address.');
+            $this->ipv6NotAllowed = Cover::t('cover', '{attribute} must not be an IPv6 address.');
         }
         if ($this->ipv4NotAllowed === null) {
-            $this->ipv4NotAllowed = Yii::t('yii', '{attribute} must not be an IPv4 address.');
+            $this->ipv4NotAllowed = Cover::t('cover', '{attribute} must not be an IPv4 address.');
         }
         if ($this->wrongCidr === null) {
-            $this->wrongCidr = Yii::t('yii', '{attribute} contains wrong subnet mask.');
+            $this->wrongCidr = Cover::t('cover', '{attribute} contains wrong subnet mask.');
         }
         if ($this->noSubnet === null) {
-            $this->noSubnet = Yii::t('yii', '{attribute} must be an IP address with specified subnet.');
+            $this->noSubnet = Cover::t('cover', '{attribute} must be an IP address with specified subnet.');
         }
         if ($this->hasSubnet === null) {
-            $this->hasSubnet = Yii::t('yii', '{attribute} must not be a subnet.');
+            $this->hasSubnet = Cover::t('cover', '{attribute} must not be a subnet.');
         }
         if ($this->notInRange === null) {
-            $this->notInRange = Yii::t('yii', '{attribute} is not in the allowed range.');
+            $this->notInRange = Cover::t('cover', '{attribute} is not in the allowed range.');
         }
     }
 
@@ -534,7 +534,7 @@ class IpValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.ip(value, messages, ' . Json::htmlEncode($options) . ');';
+        return 'cover.validation.ip(value, messages, ' . Json::htmlEncode($options) . ');';
     }
 
     /**

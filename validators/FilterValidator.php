@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use yii\base\InvalidConfigException;
+use cover\base\InvalidConfigException;
 
 /**
  * FilterValidator converts the attribute value according to a filter.
@@ -28,8 +23,7 @@ use yii\base\InvalidConfigException;
  *
  * To specify the filter, set [[filter]] property to be the callback.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class FilterValidator extends Validator
 {
@@ -91,7 +85,7 @@ class FilterValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'value = yii.validation.trim($form, attribute, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'value = cover.validation.trim($form, attribute, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
     }
 
     /**

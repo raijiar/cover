@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\helpers\Json;
-use yii\helpers\StringHelper;
-use yii\web\JsExpression;
+use Cover;
+use cover\helpers\Json;
+use cover\helpers\StringHelper;
+use cover\web\JsExpression;
 
 /**
  * NumberValidator validates that the attribute value is a number.
@@ -19,8 +14,7 @@ use yii\web\JsExpression;
  * Optionally, you may configure the [[max]] and [[min]] properties to ensure the number
  * is within certain range.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class NumberValidator extends Validator
 {
@@ -64,14 +58,14 @@ class NumberValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = $this->integerOnly ? Yii::t('yii', '{attribute} must be an integer.')
-                : Yii::t('yii', '{attribute} must be a number.');
+            $this->message = $this->integerOnly ? Cover::t('cover', '{attribute} must be an integer.')
+                : Cover::t('cover', '{attribute} must be a number.');
         }
         if ($this->min !== null && $this->tooSmall === null) {
-            $this->tooSmall = Yii::t('yii', '{attribute} must be no less than {min}.');
+            $this->tooSmall = Cover::t('cover', '{attribute} must be no less than {min}.');
         }
         if ($this->max !== null && $this->tooBig === null) {
-            $this->tooBig = Yii::t('yii', '{attribute} must be no greater than {max}.');
+            $this->tooBig = Cover::t('cover', '{attribute} must be no greater than {max}.');
         }
     }
 
@@ -104,7 +98,7 @@ class NumberValidator extends Validator
     protected function validateValue($value)
     {
         if ($this->isNotNumber($value)) {
-            return [Yii::t('yii', '{attribute} is invalid.'), []];
+            return [Cover::t('cover', '{attribute} is invalid.'), []];
         }
         $pattern = $this->integerOnly ? $this->integerPattern : $this->numberPattern;
         if (!preg_match($pattern, StringHelper::normalizeNumber($value))) {
@@ -136,7 +130,7 @@ class NumberValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.number(value, messages, ' . Json::htmlEncode($options) . ');';
+        return 'cover.validation.number(value, messages, ' . Json::htmlEncode($options) . ');';
     }
 
     /**
@@ -155,7 +149,7 @@ class NumberValidator extends Validator
 
         if ($this->min !== null) {
             // ensure numeric value to make javascript comparison equal to PHP comparison
-            // https://github.com/yiisoft/yii2/issues/3118
+            // https://github.com/coversoft/cover2/issues/3118
             $options['min'] = is_string($this->min) ? (float) $this->min : $this->min;
             $options['tooSmall'] = $this->formatMessage($this->tooSmall, [
                 'attribute' => $label,
@@ -164,7 +158,7 @@ class NumberValidator extends Validator
         }
         if ($this->max !== null) {
             // ensure numeric value to make javascript comparison equal to PHP comparison
-            // https://github.com/yiisoft/yii2/issues/3118
+            // https://github.com/coversoft/cover2/issues/3118
             $options['max'] = is_string($this->max) ? (float) $this->max : $this->max;
             $options['tooBig'] = $this->formatMessage($this->tooBig, [
                 'attribute' => $label,

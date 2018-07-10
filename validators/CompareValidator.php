@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Html;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Html;
 
 /**
  * CompareValidator compares the specified attribute value with another value.
@@ -28,20 +23,19 @@ use yii\helpers\Html;
  * are compared byte by byte. When comparing numbers, make sure to set the [[$type]]
  * to [[TYPE_NUMBER]] to enable numeric comparison.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class CompareValidator extends Validator
 {
     /**
      * Constant for specifying the comparison [[type]] by numeric values.
-     * @since 2.0.11
+     * @since 1.0
      * @see type
      */
     const TYPE_STRING = 'string';
     /**
      * Constant for specifying the comparison [[type]] by numeric values.
-     * @since 2.0.11
+     * @since 1.0
      * @see type
      */
     const TYPE_NUMBER = 'number';
@@ -105,28 +99,28 @@ class CompareValidator extends Validator
         if ($this->message === null) {
             switch ($this->operator) {
                 case '==':
-                    $this->message = Yii::t('yii', '{attribute} must be equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be equal to "{compareValueOrAttribute}".');
                     break;
                 case '===':
-                    $this->message = Yii::t('yii', '{attribute} must be equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be equal to "{compareValueOrAttribute}".');
                     break;
                 case '!=':
-                    $this->message = Yii::t('yii', '{attribute} must not be equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must not be equal to "{compareValueOrAttribute}".');
                     break;
                 case '!==':
-                    $this->message = Yii::t('yii', '{attribute} must not be equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must not be equal to "{compareValueOrAttribute}".');
                     break;
                 case '>':
-                    $this->message = Yii::t('yii', '{attribute} must be greater than "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be greater than "{compareValueOrAttribute}".');
                     break;
                 case '>=':
-                    $this->message = Yii::t('yii', '{attribute} must be greater than or equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be greater than or equal to "{compareValueOrAttribute}".');
                     break;
                 case '<':
-                    $this->message = Yii::t('yii', '{attribute} must be less than "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be less than "{compareValueOrAttribute}".');
                     break;
                 case '<=':
-                    $this->message = Yii::t('yii', '{attribute} must be less than or equal to "{compareValueOrAttribute}".');
+                    $this->message = Cover::t('cover', '{attribute} must be less than or equal to "{compareValueOrAttribute}".');
                     break;
                 default:
                     throw new InvalidConfigException("Unknown operator: {$this->operator}");
@@ -141,7 +135,7 @@ class CompareValidator extends Validator
     {
         $value = $model->$attribute;
         if (is_array($value)) {
-            $this->addError($model, $attribute, Yii::t('yii', '{attribute} is invalid.'));
+            $this->addError($model, $attribute, Cover::t('cover', '{attribute} is invalid.'));
 
             return;
         }
@@ -228,7 +222,7 @@ class CompareValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.compare(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ', $form);';
+        return 'cover.validation.compare(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ', $form);';
     }
 
     /**

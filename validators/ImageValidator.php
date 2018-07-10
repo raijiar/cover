@@ -1,20 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\web\UploadedFile;
+use Cover;
+use cover\web\UploadedFile;
 
 /**
  * ImageValidator verifies if an attribute is receiving a valid image.
  *
- * @author Taras Gudz <gudz.taras@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ImageValidator extends FileValidator
 {
@@ -96,19 +90,19 @@ class ImageValidator extends FileValidator
         parent::init();
 
         if ($this->notImage === null) {
-            $this->notImage = Yii::t('yii', 'The file "{file}" is not an image.');
+            $this->notImage = Cover::t('cover', 'The file "{file}" is not an image.');
         }
         if ($this->underWidth === null) {
-            $this->underWidth = Yii::t('yii', 'The image "{file}" is too small. The width cannot be smaller than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
+            $this->underWidth = Cover::t('cover', 'The image "{file}" is too small. The width cannot be smaller than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
         }
         if ($this->underHeight === null) {
-            $this->underHeight = Yii::t('yii', 'The image "{file}" is too small. The height cannot be smaller than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
+            $this->underHeight = Cover::t('cover', 'The image "{file}" is too small. The height cannot be smaller than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
         }
         if ($this->overWidth === null) {
-            $this->overWidth = Yii::t('yii', 'The image "{file}" is too large. The width cannot be larger than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
+            $this->overWidth = Cover::t('cover', 'The image "{file}" is too large. The width cannot be larger than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
         }
         if ($this->overHeight === null) {
-            $this->overHeight = Yii::t('yii', 'The image "{file}" is too large. The height cannot be larger than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
+            $this->overHeight = Cover::t('cover', 'The image "{file}" is too large. The height cannot be larger than {limit, number} {limit, plural, one{pixel} other{pixels}}.');
         }
     }
 
@@ -166,7 +160,7 @@ class ImageValidator extends FileValidator
     {
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
-        return 'yii.validation.image(attribute, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ', deferred);';
+        return 'cover.validation.image(attribute, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ', deferred);';
     }
 
     /**

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
 /**
  * DefaultValueValidator sets the attribute to be the specified default value.
@@ -13,8 +8,7 @@ namespace yii\validators;
  * DefaultValueValidator is not really a validator. It is provided mainly to allow
  * specifying attribute default values when they are empty.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class DefaultValueValidator extends Validator
 {

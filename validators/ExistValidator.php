@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
-use yii\db\QueryInterface;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\base\Model;
+use cover\db\ActiveQuery;
+use cover\db\ActiveRecord;
+use cover\db\QueryInterface;
 
 /**
  * ExistValidator validates that the attribute value exists in a table.
@@ -38,8 +33,7 @@ use yii\db\QueryInterface;
  * ['a1', 'exist', 'targetAttribute' => ['a2', 'a1' => 'a3']]
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ExistValidator extends Validator
 {
@@ -60,14 +54,14 @@ class ExistValidator extends Validator
     /**
      * @var string the name of the relation that should be used to validate the existence of the current attribute value
      * This param overwrites $targetClass and $targetAttribute
-     * @since 2.0.14
+     * @since 1.0
      */
     public $targetRelation;
     /**
      * @var string|array|\Closure additional filter to be applied to the DB query used to check the existence of the attribute value.
-     * This can be a string or an array representing the additional query condition (refer to [[\yii\db\Query::where()]]
+     * This can be a string or an array representing the additional query condition (refer to [[\cover\db\Query::where()]]
      * on the format of query condition), or an anonymous function with the signature `function ($query)`, where `$query`
-     * is the [[\yii\db\Query|Query]] object that you can modify in the function.
+     * is the [[\cover\db\Query|Query]] object that you can modify in the function.
      */
     public $filter;
     /**
@@ -76,12 +70,12 @@ class ExistValidator extends Validator
     public $allowArray = false;
     /**
      * @var string and|or define how target attributes are related
-     * @since 2.0.11
+     * @since 1.0
      */
     public $targetAttributeJunction = 'and';
     /**
      * @var bool whether this validator is forced to always use master DB
-     * @since 2.0.14
+     * @since 1.0
      */
     public $forceMasterDb = true;
 
@@ -93,7 +87,7 @@ class ExistValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} is invalid.');
+            $this->message = Cover::t('cover', '{attribute} is invalid.');
         }
     }
 
@@ -111,7 +105,7 @@ class ExistValidator extends Validator
 
     /**
      * Validates existence of the current attribute based on relation name
-     * @param \yii\db\ActiveRecord $model the data model to be validated
+     * @param \cover\db\ActiveRecord $model the data model to be validated
      * @param string $attribute the name of the attribute to be validated.
      */
     private function checkTargetRelationExistence($model, $attribute)
@@ -142,7 +136,7 @@ class ExistValidator extends Validator
 
     /**
      * Validates existence of the current attribute based on targetAttribute
-     * @param \yii\base\Model $model the data model to be validated
+     * @param \cover\base\Model $model the data model to be validated
      * @param string $attribute the name of the attribute to be validated.
      */
     private function checkTargetAttributeExistence($model, $attribute)
@@ -154,7 +148,7 @@ class ExistValidator extends Validator
         if (!$this->allowArray) {
             foreach ($params as $key => $value) {
                 if (is_array($value)) {
-                    $this->addError($model, $attribute, Yii::t('yii', '{attribute} is invalid.'));
+                    $this->addError($model, $attribute, Cover::t('cover', '{attribute} is invalid.'));
 
                     return;
                 }
@@ -174,7 +168,7 @@ class ExistValidator extends Validator
 
     /**
      * Processes attributes' relations described in $targetAttribute parameter into conditions, compatible with
-     * [[\yii\db\Query::where()|Query::where()]] key-value format.
+     * [[\cover\db\Query::where()|Query::where()]] key-value format.
      *
      * @param $targetAttribute array|string $attribute the name of the ActiveRecord attribute that should be used to
      * validate the existence of the current attribute value. If not set, it will use the name
@@ -182,9 +176,9 @@ class ExistValidator extends Validator
      * of multiple columns at the same time. The array key is the name of the attribute with the value to validate,
      * the array value is the name of the database field to search.
      * If the key and the value are the same, you can just specify the value.
-     * @param \yii\base\Model $model the data model to be validated
+     * @param \cover\base\Model $model the data model to be validated
      * @param string $attribute the name of the attribute to be validated in the $model
-     * @return array conditions, compatible with [[\yii\db\Query::where()|Query::where()]] key-value format.
+     * @return array conditions, compatible with [[\cover\db\Query::where()|Query::where()]] key-value format.
      * @throws InvalidConfigException
      */
     private function prepareConditions($targetAttribute, $model, $attribute)
@@ -202,7 +196,7 @@ class ExistValidator extends Validator
         }
 
         $targetModelClass = $this->getTargetClass($model);
-        if (!is_subclass_of($targetModelClass, 'yii\db\ActiveRecord')) {
+        if (!is_subclass_of($targetModelClass, 'cover\db\ActiveRecord')) {
             return $conditions;
         }
 
@@ -284,11 +278,11 @@ class ExistValidator extends Validator
      * Creates a query instance with the given condition.
      * @param string $targetClass the target AR class
      * @param mixed $condition query condition
-     * @return \yii\db\ActiveQueryInterface the query instance
+     * @return \cover\db\ActiveQueryInterface the query instance
      */
     protected function createQuery($targetClass, $condition)
     {
-        /* @var $targetClass \yii\db\ActiveRecordInterface */
+        /* @var $targetClass \cover\db\ActiveRecordInterface */
         $query = $targetClass::find()->andWhere($condition);
         if ($this->filter instanceof \Closure) {
             call_user_func($this->filter, $query);

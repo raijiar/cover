@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
 /**
  * InlineValidator represents a validator which is defined as a method in the object being validated.
@@ -18,10 +13,9 @@ namespace yii\validators;
  *
  * where `$attribute` refers to the name of the attribute being validated, while `$params` is an array representing the
  * additional parameters supplied in the validation rule. Parameter `$validator` refers to the related
- * [[InlineValidator]] object and is available since version 2.0.11.
+ * [[InlineValidator]] object and is available since version 1.0.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class InlineValidator extends Validator
 {
@@ -35,7 +29,7 @@ class InlineValidator extends Validator
      *
      * - `$attribute` is the name of the attribute to be validated;
      * - `$params` contains the value of [[params]] that you specify when declaring the inline validation rule;
-     * - `$validator` is a reference to related [[InlineValidator]] object. This parameter is available since version 2.0.11.
+     * - `$validator` is a reference to related [[InlineValidator]] object. This parameter is available since version 1.0.
      */
     public $method;
     /**
