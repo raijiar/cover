@@ -1,19 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\Model;
-use yii\db\ActiveQuery;
-use yii\db\ActiveQueryInterface;
-use yii\db\ActiveRecord;
-use yii\db\ActiveRecordInterface;
-use yii\helpers\Inflector;
+use Cover;
+use cover\base\Model;
+use cover\db\ActiveQuery;
+use cover\db\ActiveQueryInterface;
+use cover\db\ActiveRecord;
+use cover\db\ActiveRecordInterface;
+use cover\helpers\Inflector;
 
 /**
  * UniqueValidator validates that the attribute value is unique in the specified database table.
@@ -36,8 +31,7 @@ use yii\helpers\Inflector;
  * ['a1', 'unique', 'targetAttribute' => ['a2', 'a1' => 'a3']]
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class UniqueValidator extends Validator
 {
@@ -48,7 +42,7 @@ class UniqueValidator extends Validator
      */
     public $targetClass;
     /**
-     * @var string|array the name of the [[\yii\db\ActiveRecord|ActiveRecord]] attribute that should be used to
+     * @var string|array the name of the [[\cover\db\ActiveRecord|ActiveRecord]] attribute that should be used to
      * validate the uniqueness of the current attribute value. If not set, it will use the name
      * of the attribute currently being validated. You may use an array to validate the uniqueness
      * of multiple columns at the same time. The array values are the attributes that will be
@@ -57,9 +51,9 @@ class UniqueValidator extends Validator
     public $targetAttribute;
     /**
      * @var string|array|\Closure additional filter to be applied to the DB query used to check the uniqueness of the attribute value.
-     * This can be a string or an array representing the additional query condition (refer to [[\yii\db\Query::where()]]
+     * This can be a string or an array representing the additional query condition (refer to [[\cover\db\Query::where()]]
      * on the format of query condition), or an anonymous function with the signature `function ($query)`, where `$query`
-     * is the [[\yii\db\Query|Query]] object that you can modify in the function.
+     * is the [[\cover\db\Query|Query]] object that you can modify in the function.
      */
     public $filter;
     /**
@@ -79,19 +73,19 @@ class UniqueValidator extends Validator
     public $message;
     /**
      * @var string
-     * @since 2.0.9
-     * @deprecated since version 2.0.10, to be removed in 2.1. Use [[message]] property
+     * @since 1.0
+     * @deprecated since version 1.0, to be removed in 2.1. Use [[message]] property
      * to setup custom message for multiple target attributes.
      */
     public $comboNotUnique;
     /**
      * @var string and|or define how target attributes are related
-     * @since 2.0.11
+     * @since 1.0
      */
     public $targetAttributeJunction = 'and';
     /**
      * @var bool whether this validator is forced to always use master DB
-     * @since 2.0.14
+     * @since 1.0
      */
     public $forceMasterDb =  true;
 
@@ -108,12 +102,12 @@ class UniqueValidator extends Validator
         if (is_array($this->targetAttribute) && count($this->targetAttribute) > 1) {
             // fallback for deprecated `comboNotUnique` property - use it as message if is set
             if ($this->comboNotUnique === null) {
-                $this->message = Yii::t('yii', 'The combination {values} of {attributes} has already been taken.');
+                $this->message = Cover::t('cover', 'The combination {values} of {attributes} has already been taken.');
             } else {
                 $this->message = $this->comboNotUnique;
             }
         } else {
-            $this->message = Yii::t('yii', '{attribute} "{value}" has already been taken.');
+            $this->message = Cover::t('cover', '{attribute} "{value}" has already been taken.');
         }
     }
 
@@ -130,7 +124,7 @@ class UniqueValidator extends Validator
 
         foreach ($rawConditions as $key => $value) {
             if (is_array($value)) {
-                $this->addError($model, $attribute, Yii::t('yii', '{attribute} is invalid.'));
+                $this->addError($model, $attribute, Cover::t('cover', '{attribute} is invalid.'));
                 return;
             }
             $conditions[] = [$key => $value];
@@ -171,7 +165,7 @@ class UniqueValidator extends Validator
      *
      * @param string $targetClass the name of the ActiveRecord class that should be used to validate the uniqueness
      * of the current attribute value.
-     * @param array $conditions conditions, compatible with [[\yii\db\Query::where()|Query::where()]] key-value format.
+     * @param array $conditions conditions, compatible with [[\cover\db\Query::where()|Query::where()]] key-value format.
      * @param Model $model the data model to be validated
      *
      * @return bool whether the model already exists
@@ -187,7 +181,7 @@ class UniqueValidator extends Validator
             $exists = $query->exists();
         } else {
             // if current $model is in the database already we can't use exists()
-            if ($query instanceof \yii\db\ActiveQuery) {
+            if ($query instanceof \cover\db\ActiveQuery) {
                 // only select primary key to optimize query
                 $columnsCondition = array_flip($targetClass::primaryKey());
                 $query->select(array_flip($this->applyTableAlias($query, $columnsCondition)));
@@ -221,7 +215,7 @@ class UniqueValidator extends Validator
      *
      * @param ActiveRecordInterface $targetClass the name of the ActiveRecord class that should be used to validate
      * the uniqueness of the current attribute value.
-     * @param array $conditions conditions, compatible with [[\yii\db\Query::where()|Query::where()]] key-value format
+     * @param array $conditions conditions, compatible with [[\cover\db\Query::where()|Query::where()]] key-value format
      *
      * @return ActiveQueryInterface|ActiveQuery
      */
@@ -240,9 +234,9 @@ class UniqueValidator extends Validator
 
     /**
      * Processes attributes' relations described in $targetAttribute parameter into conditions, compatible with
-     * [[\yii\db\Query::where()|Query::where()]] key-value format.
+     * [[\cover\db\Query::where()|Query::where()]] key-value format.
      *
-     * @param string|array $targetAttribute the name of the [[\yii\db\ActiveRecord|ActiveRecord]] attribute that
+     * @param string|array $targetAttribute the name of the [[\cover\db\ActiveRecord|ActiveRecord]] attribute that
      * should be used to validate the uniqueness of the current attribute value. You may use an array to validate
      * the uniqueness of multiple columns at the same time. The array values are the attributes that will be
      * used to validate the uniqueness, while the array keys are the attributes whose values are to be validated.
@@ -250,7 +244,7 @@ class UniqueValidator extends Validator
      * @param Model $model the data model to be validated
      * @param string $attribute the name of the attribute to be validated in the $model
      *
-     * @return array conditions, compatible with [[\yii\db\Query::where()|Query::where()]] key-value format.
+     * @return array conditions, compatible with [[\cover\db\Query::where()|Query::where()]] key-value format.
      */
     private function prepareConditions($targetAttribute, $model, $attribute)
     {
@@ -264,7 +258,7 @@ class UniqueValidator extends Validator
         }
 
         $targetModelClass = $this->getTargetClass($model);
-        if (!is_subclass_of($targetModelClass, 'yii\db\ActiveRecord')) {
+        if (!is_subclass_of($targetModelClass, 'cover\db\ActiveRecord')) {
             return $conditions;
         }
 
@@ -274,7 +268,7 @@ class UniqueValidator extends Validator
 
     /**
      * Builds and adds [[comboNotUnique]] error message to the specified model attribute.
-     * @param \yii\base\Model $model the data model.
+     * @param \cover\base\Model $model the data model.
      * @param string $attribute the name of the attribute.
      */
     private function addComboNotUniqueError($model, $attribute)

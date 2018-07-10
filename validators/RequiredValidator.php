@@ -1,19 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
+use Cover;
 
 /**
  * RequiredValidator validates that the specified attribute does not have null or empty value.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class RequiredValidator extends Validator
 {
@@ -57,8 +51,8 @@ class RequiredValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = $this->requiredValue === null ? Yii::t('yii', '{attribute} cannot be blank.')
-                : Yii::t('yii', '{attribute} must be "{requiredValue}".');
+            $this->message = $this->requiredValue === null ? Cover::t('cover', '{attribute} cannot be blank.')
+                : Cover::t('cover', '{attribute} must be "{requiredValue}".');
         }
     }
 
@@ -91,7 +85,7 @@ class RequiredValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.required(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'cover.validation.required(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
     }
 
     /**

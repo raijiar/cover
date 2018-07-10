@@ -1,25 +1,19 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Html;
-use yii\helpers\Json;
-use yii\web\JsExpression;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Html;
+use cover\helpers\Json;
+use cover\web\JsExpression;
 
 /**
  * RegularExpressionValidator validates that the attribute value matches the specified [[pattern]].
  *
  * If the [[not]] property is set true, the validator will ensure the attribute value do NOT match the [[pattern]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class RegularExpressionValidator extends Validator
 {
@@ -44,7 +38,7 @@ class RegularExpressionValidator extends Validator
             throw new InvalidConfigException('The "pattern" property must be set.');
         }
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} is invalid.');
+            $this->message = Cover::t('cover', '{attribute} is invalid.');
         }
     }
 
@@ -68,7 +62,7 @@ class RegularExpressionValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.regularExpression(value, messages, ' . Json::htmlEncode($options) . ');';
+        return 'cover.validation.regularExpression(value, messages, ' . Json::htmlEncode($options) . ');';
     }
 
     /**

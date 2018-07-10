@@ -217,7 +217,7 @@ class Validator extends Component
             }
         }
 
-        return Yii::createObject($params);
+        return Cover::createObject($params);
     }
 
     /**
@@ -293,7 +293,7 @@ class Validator extends Component
         }
 
         list($message, $params) = $result;
-        $params['attribute'] = Yii::t('cover', 'the input value');
+        $params['attribute'] = Cover::t('cover', 'the input value');
         if (is_array($value)) {
             $params['value'] = 'array()';
         } elseif (is_object($value)) {
@@ -315,7 +315,7 @@ class Validator extends Component
      * if (!$valid) {
      *     return [$this->message, [
      *         'param1' => $this->param1,
-     *         'formattedLimit' => Yii::$app->formatter->asShortSize($this->getSizeLimit()),
+     *         'formattedLimit' => Cover::$app->formatter->asShortSize($this->getSizeLimit()),
      *         'mimeTypes' => implode(', ', $this->mimeTypes),
      *         'param4' => 'etc...',
      *     ]];
@@ -442,7 +442,7 @@ class Validator extends Component
     }
 
     /**
-     * Formats a mesage using the I18N, or simple strtr if `\Yii::$app` is not available.
+     * Formats a mesage using the I18N, or simple strtr if `\Cover::$app` is not available.
      * @param string $message
      * @param array $params
      * @since 2.0.12
@@ -450,8 +450,8 @@ class Validator extends Component
      */
     protected function formatMessage($message, $params)
     {
-        if (Yii::$app !== null) {
-            return \Yii::$app->getI18n()->format($message, $params, Yii::$app->language);
+        if (Cover::$app !== null) {
+            return \Cover::$app->getI18n()->format($message, $params, Cover::$app->language);
         }
 
         $placeholders = [];

@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\Json;
-use yii\web\JsExpression;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\Json;
+use cover\web\JsExpression;
 
 /**
  * UrlValidator validates that the attribute value is a valid http or https URL.
@@ -18,8 +13,7 @@ use yii\web\JsExpression;
  * Note that this validator only checks if the URL scheme and host part are correct.
  * It does not check the remaining parts of a URL.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class UrlValidator extends Validator
 {
@@ -59,7 +53,7 @@ class UrlValidator extends Validator
             throw new InvalidConfigException('In order to use IDN validation intl extension must be installed and enabled.');
         }
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} is not a valid URL.');
+            $this->message = Cover::t('cover', '{attribute} is not a valid URL.');
         }
     }
 
@@ -129,7 +123,7 @@ class UrlValidator extends Validator
         }
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.url(value, messages, ' . Json::htmlEncode($options) . ');';
+        return 'cover.validation.url(value, messages, ' . Json::htmlEncode($options) . ');';
     }
 
     /**

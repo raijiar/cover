@@ -1,21 +1,15 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\validators;
+namespace cover\validators;
 
-use Yii;
+use Cover;
 
 /**
  * StringValidator validates that the attribute value is of certain length.
  *
  * Note, this validator should only be used with string-typed attributes.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class StringValidator extends Validator
 {
@@ -61,7 +55,7 @@ class StringValidator extends Validator
     public $notEqual;
     /**
      * @var string the encoding of the string value to be validated (e.g. 'UTF-8').
-     * If this property is not set, [[\yii\base\Application::charset]] will be used.
+     * If this property is not set, [[\cover\base\Application::charset]] will be used.
      */
     public $encoding;
 
@@ -82,19 +76,19 @@ class StringValidator extends Validator
             $this->length = null;
         }
         if ($this->encoding === null) {
-            $this->encoding = Yii::$app ? Yii::$app->charset : 'UTF-8';
+            $this->encoding = Cover::$app ? Cover::$app->charset : 'UTF-8';
         }
         if ($this->message === null) {
-            $this->message = Yii::t('yii', '{attribute} must be a string.');
+            $this->message = Cover::t('cover', '{attribute} must be a string.');
         }
         if ($this->min !== null && $this->tooShort === null) {
-            $this->tooShort = Yii::t('yii', '{attribute} should contain at least {min, number} {min, plural, one{character} other{characters}}.');
+            $this->tooShort = Cover::t('cover', '{attribute} should contain at least {min, number} {min, plural, one{character} other{characters}}.');
         }
         if ($this->max !== null && $this->tooLong === null) {
-            $this->tooLong = Yii::t('yii', '{attribute} should contain at most {max, number} {max, plural, one{character} other{characters}}.');
+            $this->tooLong = Cover::t('cover', '{attribute} should contain at most {max, number} {max, plural, one{character} other{characters}}.');
         }
         if ($this->length !== null && $this->notEqual === null) {
-            $this->notEqual = Yii::t('yii', '{attribute} should contain {length, number} {length, plural, one{character} other{characters}}.');
+            $this->notEqual = Cover::t('cover', '{attribute} should contain {length, number} {length, plural, one{character} other{characters}}.');
         }
     }
 
@@ -156,7 +150,7 @@ class StringValidator extends Validator
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
 
-        return 'yii.validation.string(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'cover.validation.string(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
     }
 
     /**
