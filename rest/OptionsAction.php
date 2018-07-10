@@ -29,11 +29,11 @@ class OptionsAction extends \cover\base\Action
      */
     public function run($id = null)
     {
-        if (Yii::$app->getRequest()->getMethod() !== 'OPTIONS') {
-            Yii::$app->getResponse()->setStatusCode(405);
+        if (Cover::$app->getRequest()->getMethod() !== 'OPTIONS') {
+            Cover::$app->getResponse()->setStatusCode(405);
         }
         $options = $id === null ? $this->collectionOptions : $this->resourceOptions;
-        $headers = Yii::$app->getResponse()->getHeaders();
+        $headers = Cover::$app->getResponse()->getHeaders();
         $headers->set('Allow', implode(', ', $options));
         $headers->set('Access-Control-Allow-Methods', implode(', ', $options));
     }

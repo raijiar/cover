@@ -1,20 +1,15 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\web\ForbiddenHttpException;
+use cover\base\InvalidConfigException;
+use cover\base\Model;
+use cover\web\ForbiddenHttpException;
 
 /**
  * ActiveController implements a common set of actions for supporting RESTful access to ActiveRecord.
  *
- * The class of the ActiveRecord should be specified via [[modelClass]], which must implement [[\yii\db\ActiveRecordInterface]].
+ * The class of the ActiveRecord should be specified via [[modelClass]], which must implement [[\cover\db\ActiveRecordInterface]].
  * By default, the following actions are supported:
  *
  * - `index`: list of models
@@ -34,8 +29,7 @@ use yii\web\ForbiddenHttpException;
  *
  * For more details and usage information on ActiveController, see the [guide article on rest controllers](guide:rest-controllers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ActiveController extends Controller
 {
@@ -45,12 +39,12 @@ class ActiveController extends Controller
     public $modelClass;
     /**
      * @var string the scenario used for updating a model.
-     * @see \yii\base\Model::scenarios()
+     * @see \cover\base\Model::scenarios()
      */
     public $updateScenario = Model::SCENARIO_DEFAULT;
     /**
      * @var string the scenario used for creating a model.
-     * @see \yii\base\Model::scenarios()
+     * @see \cover\base\Model::scenarios()
      */
     public $createScenario = Model::SCENARIO_DEFAULT;
 
@@ -73,34 +67,34 @@ class ActiveController extends Controller
     {
         return [
             'index' => [
-                'class' => 'yii\rest\IndexAction',
+                'class' => 'cover\rest\IndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'view' => [
-                'class' => 'yii\rest\ViewAction',
+                'class' => 'cover\rest\ViewAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'create' => [
-                'class' => 'yii\rest\CreateAction',
+                'class' => 'cover\rest\CreateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->createScenario,
             ],
             'update' => [
-                'class' => 'yii\rest\UpdateAction',
+                'class' => 'cover\rest\UpdateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->updateScenario,
             ],
             'delete' => [
-                'class' => 'yii\rest\DeleteAction',
+                'class' => 'cover\rest\DeleteAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'options' => [
-                'class' => 'yii\rest\OptionsAction',
+                'class' => 'cover\rest\OptionsAction',
             ],
         ];
     }

@@ -1,24 +1,18 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
-use yii\base\Model;
-use yii\helpers\Url;
-use yii\web\ServerErrorHttpException;
+use Cover;
+use cover\base\Model;
+use cover\helpers\Url;
+use cover\web\ServerErrorHttpException;
 
 /**
  * CreateAction implements the API endpoint for creating a new model from the given data.
  *
  * For more details and usage information on CreateAction, see the [guide article on rest controllers](guide:rest-controllers).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class CreateAction extends Action
 {
@@ -34,7 +28,7 @@ class CreateAction extends Action
 
     /**
      * Creates a new model.
-     * @return \yii\db\ActiveRecordInterface the model newly created
+     * @return \cover\db\ActiveRecordInterface the model newly created
      * @throws ServerErrorHttpException if there is any error when creating the model
      */
     public function run()
@@ -43,14 +37,14 @@ class CreateAction extends Action
             call_user_func($this->checkAccess, $this->id);
         }
 
-        /* @var $model \yii\db\ActiveRecord */
+        /* @var $model \cover\db\ActiveRecord */
         $model = new $this->modelClass([
             'scenario' => $this->scenario,
         ]);
 
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $model->load(Cover::$app->getRequest()->getBodyParams(), '');
         if ($model->save()) {
-            $response = Yii::$app->getResponse();
+            $response = Cover::$app->getResponse();
             $response->setStatusCode(201);
             $id = implode(',', array_values($model->getPrimaryKey(true)));
             $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $id], true));

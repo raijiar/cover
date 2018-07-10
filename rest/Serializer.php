@@ -1,22 +1,17 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\rest;
+namespace cover\rest;
 
-use Yii;
-use yii\base\Arrayable;
-use yii\base\Component;
-use yii\base\Model;
-use yii\data\DataProviderInterface;
-use yii\data\Pagination;
-use yii\helpers\ArrayHelper;
-use yii\web\Link;
-use yii\web\Request;
-use yii\web\Response;
+use Cover;
+use cover\base\Arrayable;
+use cover\base\Component;
+use cover\base\Model;
+use cover\data\DataProviderInterface;
+use cover\data\Pagination;
+use cover\helpers\ArrayHelper;
+use cover\web\Link;
+use cover\web\Request;
+use cover\web\Response;
 
 /**
  * Serializer converts resource objects and collections into array representation.
@@ -27,8 +22,7 @@ use yii\web\Response;
  * The default implementation handles resources as [[Model]] objects and collections as objects
  * implementing [[DataProviderInterface]]. You may override [[serialize()]] to handle more types.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Serializer extends Component
 {
@@ -92,13 +86,13 @@ class Serializer extends Component
     /**
      * @var string the name of the envelope (e.g. `_links`) for returning the links objects.
      * It takes effect only, if `collectionEnvelope` is set.
-     * @since 2.0.4
+     * @since 1.0
      */
     public $linksEnvelope = '_links';
     /**
      * @var string the name of the envelope (e.g. `_meta`) for returning the pagination object.
      * It takes effect only, if `collectionEnvelope` is set.
-     * @since 2.0.4
+     * @since 1.0
      */
     public $metaEnvelope = '_meta';
     /**
@@ -115,7 +109,7 @@ class Serializer extends Component
      * used to index the model objects. The default is to serialize all collections as array, regardless
      * of how the array is indexed.
      * @see serializeDataProvider()
-     * @since 2.0.10
+     * @since 1.0
      */
     public $preserveKeys = false;
 
@@ -126,10 +120,10 @@ class Serializer extends Component
     public function init()
     {
         if ($this->request === null) {
-            $this->request = Yii::$app->getRequest();
+            $this->request = Cover::$app->getRequest();
         }
         if ($this->response === null) {
-            $this->response = Yii::$app->getResponse();
+            $this->response = Cover::$app->getResponse();
         }
     }
 
