@@ -1,22 +1,15 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use Yii;
+use Cover;
 
 /**
  * BaseInflector provides concrete implementation for [[Inflector]].
  *
  * Do not use BaseInflector. Use [[Inflector]] instead.
  *
- * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @author Alexander Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class BaseInflector
 {
@@ -247,7 +240,7 @@ class BaseInflector
      * For detailed information see [unicode normalization forms](http://unicode.org/reports/tr15/#Normalization_Forms_Table)
      * @see http://unicode.org/reports/tr15/#Normalization_Forms_Table
      * @see transliterate()
-     * @since 2.0.7
+     * @since 1.0
      */
     const TRANSLITERATE_STRICT = 'Any-Latin; NFKD';
     /**
@@ -262,7 +255,7 @@ class BaseInflector
      * For detailed information see [unicode normalization forms](http://unicode.org/reports/tr15/#Normalization_Forms_Table)
      * @see http://unicode.org/reports/tr15/#Normalization_Forms_Table
      * @see transliterate()
-     * @since 2.0.7
+     * @since 1.0
      */
     const TRANSLITERATE_MEDIUM = 'Any-Latin; Latin-ASCII';
     /**
@@ -278,7 +271,7 @@ class BaseInflector
      * For detailed information see [unicode normalization forms](http://unicode.org/reports/tr15/#Normalization_Forms_Table)
      * @see http://unicode.org/reports/tr15/#Normalization_Forms_Table
      * @see transliterate()
-     * @since 2.0.7
+     * @since 1.0
      */
     const TRANSLITERATE_LOOSE = 'Any-Latin; Latin-ASCII; [\u0080-\uffff] remove';
 
@@ -495,7 +488,7 @@ class BaseInflector
      * @param string|\Transliterator $transliterator either a [[\Transliterator]] or a string
      * from which a [[\Transliterator]] can be built.
      * @return string
-     * @since 2.0.7 this method is public.
+     * @since 1.0 this method is public.
      */
     public static function transliterate($string, $transliterator = null)
     {
@@ -578,12 +571,12 @@ class BaseInflector
      * @param string $connector the string connecting words other than those connected by
      * $lastWordConnector and $twoWordsConnector
      * @return string the generated sentence
-     * @since 2.0.1
+     * @since 1.0
      */
     public static function sentence(array $words, $twoWordsConnector = null, $lastWordConnector = null, $connector = ', ')
     {
         if ($twoWordsConnector === null) {
-            $twoWordsConnector = Yii::t('yii', ' and ');
+            $twoWordsConnector = Cover::t('cover', ' and ');
         }
         if ($lastWordConnector === null) {
             $lastWordConnector = $twoWordsConnector;

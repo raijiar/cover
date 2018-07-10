@@ -1,19 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
 /**
  * BaseHtmlPurifier provides concrete implementation for [[HtmlPurifier]].
  *
  * Do not use BaseHtmlPurifier. Use [[HtmlPurifier]] instead.
  *
- * @author Alexander Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class BaseHtmlPurifier
 {
@@ -47,7 +41,7 @@ class BaseHtmlPurifier
         $configInstance = \HTMLPurifier_Config::create($config instanceof \Closure ? null : $config);
         $configInstance->autoFinalize = false;
         $purifier = \HTMLPurifier::instance($configInstance);
-        $purifier->config->set('Cache.SerializerPath', \Yii::$app->getRuntimePath());
+        $purifier->config->set('Cache.SerializerPath', \Cover::$app->getRuntimePath());
         $purifier->config->set('Cache.SerializerPermissions', 0775);
 
         static::configure($configInstance);
@@ -61,7 +55,7 @@ class BaseHtmlPurifier
     /**
      * Allow the extended HtmlPurifier class to set some default config options.
      * @param \HTMLPurifier_Config $config
-     * @since 2.0.3
+     * @since 1.0
      */
     protected static function configure($config)
     {

@@ -1,32 +1,26 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\base\Model;
-use yii\db\ActiveRecordInterface;
-use yii\validators\StringValidator;
-use yii\web\Request;
+use Cover;
+use cover\base\InvalidArgumentException;
+use cover\base\Model;
+use cover\db\ActiveRecordInterface;
+use cover\validators\StringValidator;
+use cover\web\Request;
 
 /**
  * BaseHtml provides concrete implementation for [[Html]].
  *
  * Do not use BaseHtml. Use [[Html]] instead.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class BaseHtml
 {
     /**
      * @var string Regular expression used for attribute name validation.
-     * @since 2.0.12
+     * @since 1.0
      */
     public static $attributeRegex = '/(^|.*\])([\w\.\+]+)(\[.*|$)/u';
     /**
@@ -91,14 +85,14 @@ class BaseHtml
      * @var array list of tag attributes that should be specially handled when their values are of array type.
      * In particular, if the value of the `data` attribute is `['name' => 'xyz', 'age' => 13]`, two attributes
      * will be generated instead of one: `data-name="xyz" data-age="13"`.
-     * @since 2.0.3
+     * @since 1.0
      */
     public static $dataAttributes = ['data', 'data-ng', 'ng'];
 
 
     /**
      * Encodes special characters into HTML entities.
-     * The [[\yii\base\Application::charset|application charset]] will be used for encoding.
+     * The [[\cover\base\Application::charset|application charset]] will be used for encoding.
      * @param string $content the content to be encoded
      * @param bool $doubleEncode whether to encode HTML entities in `$content`. If false,
      * HTML entities in `$content` will not be further encoded.
@@ -108,7 +102,7 @@ class BaseHtml
      */
     public static function encode($content, $doubleEncode = true)
     {
-        return htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, Yii::$app ? Yii::$app->charset : 'UTF-8', $doubleEncode);
+        return htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, Cover::$app ? Cover::$app->charset : 'UTF-8', $doubleEncode);
     }
 
     /**
@@ -299,7 +293,7 @@ class BaseHtml
      */
     public static function csrfMetaTags()
     {
-        $request = Yii::$app->getRequest();
+        $request = Cover::$app->getRequest();
         if ($request instanceof Request && $request->enableCsrfValidation) {
             return static::tag('meta', '', ['name' => 'csrf-param', 'content' => $request->csrfParam]) . "\n    "
                 . static::tag('meta', '', ['name' => 'csrf-token', 'content' => $request->getCsrfToken()]) . "\n";
@@ -314,7 +308,7 @@ class BaseHtml
      * @param string $method the form submission method, such as "post", "get", "put", "delete" (case-insensitive).
      * Since most browsers only support "post" and "get", if other methods are given, they will
      * be simulated using "post", and a hidden input will be added which contains the actual method type.
-     * See [[\yii\web\Request::methodParam]] for more details.
+     * See [[\cover\web\Request::methodParam]] for more details.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as
      * the attributes of the resulting tag. The values will be HTML-encoded using [[encode()]].
      * If a value is null, the corresponding attribute will not be rendered.
@@ -333,7 +327,7 @@ class BaseHtml
 
         $hiddenInputs = [];
 
-        $request = Yii::$app->getRequest();
+        $request = Cover::$app->getRequest();
         if ($request instanceof Request) {
             if (strcasecmp($method, 'get') && strcasecmp($method, 'post')) {
                 // simulate PUT, DELETE, etc. via POST
@@ -404,7 +398,7 @@ class BaseHtml
      * If a value is null, the corresponding attribute will not be rendered.
      * See [[renderTagAttributes()]] for details on how attributes are being rendered.
      * @return string the generated hyperlink
-     * @see \yii\helpers\Url::to()
+     * @see \cover\helpers\Url::to()
      */
     public static function a($text, $url = null, $options = [])
     {
@@ -442,7 +436,7 @@ class BaseHtml
      * If a value is null, the corresponding attribute will not be rendered.
      * See [[renderTagAttributes()]] for details on how attributes are being rendered.
      *
-     * Since version 2.0.12 It is possible to pass the `srcset` option as an array which keys are
+     * Since version 1.0 It is possible to pass the `srcset` option as an array which keys are
      * descriptors and values are URLs. All URLs will be processed by [[Url::to()]].
      * @return string the generated image tag.
      */
@@ -688,7 +682,7 @@ class BaseHtml
      * The following special options are recognized:
      *
      * - `doubleEncode`: whether to double encode HTML entities in `$value`. If `false`, HTML entities in `$value` will not
-     *   be further encoded. This option is available since version 2.0.11.
+     *   be further encoded. This option is available since version 1.0.
      *
      * @return string the generated text area tag
      */
@@ -747,7 +741,7 @@ class BaseHtml
      * See [[renderTagAttributes()]] for details on how attributes are being rendered.
      *
      * @return string the generated checkbox tag
-     * @since 2.0.9
+     * @since 1.0
      */
     protected static function booleanInput($type, $name, $checked = false, $options = [])
     {
@@ -783,13 +777,13 @@ class BaseHtml
      * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
      * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
      * If you have a list of data models, you may convert them into the format described above using
-     * [[\yii\helpers\ArrayHelper::map()]].
+     * [[\cover\helpers\ArrayHelper::map()]].
      *
      * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
      * the labels will also be HTML-encoded.
      * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
      *
-     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 1.0 you can use an array
      *   to override the value and to set other tag attributes:
      *
      *   ```php
@@ -811,7 +805,7 @@ class BaseHtml
      * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
      *   Defaults to false.
      * - encode: bool, whether to encode option prompt and option value characters.
-     *   Defaults to `true`. This option is available since 2.0.3.
+     *   Defaults to `true`. This option is available since 1.0.
      *
      * The rest of the options will be rendered as the attributes of the resulting tag. The values will
      * be HTML-encoded using [[encode()]]. If a value is null, the corresponding attribute will not be rendered.
@@ -838,13 +832,13 @@ class BaseHtml
      * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
      * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
      * If you have a list of data models, you may convert them into the format described above using
-     * [[\yii\helpers\ArrayHelper::map()]].
+     * [[\cover\helpers\ArrayHelper::map()]].
      *
      * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
      * the labels will also be HTML-encoded.
      * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
      *
-     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 1.0 you can use an array
      *   to override the value and to set other tag attributes:
      *
      *   ```php
@@ -869,7 +863,7 @@ class BaseHtml
      * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
      *   Defaults to false.
      * - encode: bool, whether to encode option prompt and option value characters.
-     *   Defaults to `true`. This option is available since 2.0.3.
+     *   Defaults to `true`. This option is available since 1.0.
      *
      * The rest of the options will be rendered as the attributes of the resulting tag. The values will
      * be HTML-encoded using [[encode()]]. If a value is null, the corresponding attribute will not be rendered.
@@ -1066,7 +1060,7 @@ class BaseHtml
      * - encode: boolean, whether to HTML-encode the items. Defaults to true.
      *   This option is ignored if the `item` option is specified.
      * - separator: string, the HTML code that separates items. Defaults to a simple newline (`"\n"`).
-     *   This option is available since version 2.0.7.
+     *   This option is available since version 1.0.
      * - itemOptions: array, the HTML attributes for the `li` tags. This option is ignored if the `item` option is specified.
      * - item: callable, a callback that is used to generate each individual list item.
      *   The signature of this callback must be:
@@ -1185,7 +1179,7 @@ class BaseHtml
      * See [[renderTagAttributes()]] for details on how attributes are being rendered.
      *
      * @return string the generated hint tag
-     * @since 2.0.4
+     * @since 1.0
      */
     public static function activeHint($model, $attribute, $options = [])
     {
@@ -1210,7 +1204,7 @@ class BaseHtml
      * - encode: boolean, if set to false then the error messages won't be encoded. Defaults to `true`.
      * - showAllErrors: boolean, if set to true every error message for each attribute will be shown otherwise
      *   only the first error message for each attribute will be shown. Defaults to `false`.
-     *   Option is available since 2.0.10.
+     *   Option is available since 1.0.
      *
      * The rest of the options will be rendered as the attributes of the container tag.
      *
@@ -1218,7 +1212,7 @@ class BaseHtml
      */
     public static function errorSummary($models, $options = [])
     {
-        $header = isset($options['header']) ? $options['header'] : '<p>' . Yii::t('yii', 'Please fix the following errors:') . '</p>';
+        $header = isset($options['header']) ? $options['header'] : '<p>' . Cover::t('cover', 'Please fix the following errors:') . '</p>';
         $footer = ArrayHelper::remove($options, 'footer', '');
         $encode = ArrayHelper::remove($options, 'encode', true);
         $showAllErrors = ArrayHelper::remove($options, 'showAllErrors', false);
@@ -1242,7 +1236,7 @@ class BaseHtml
      * @param $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
      * only the first error message for each attribute will be shown.
      * @return array of the validation errors
-     * @since 2.0.14
+     * @since 1.0
      */
     private static function collectErrors($models, $encode, $showAllErrors)
     {
@@ -1282,7 +1276,7 @@ class BaseHtml
      * - tag: this specifies the tag name. If not set, "div" will be used.
      *   See also [[tag()]].
      * - encode: boolean, if set to false then the error message won't be encoded.
-     * - errorSource (since 2.0.14): \Closure|callable, callback that will be called to obtain an error message.
+     * - errorSource (since 1.0): \Closure|callable, callback that will be called to obtain an error message.
      *   The signature of the callback must be: `function ($model, $attribute)` and return a string.
      *   When not set, the `$model->getFirstError()` method will be called.
      *
@@ -1332,7 +1326,7 @@ class BaseHtml
 
     /**
      * If `maxlength` option is set true and the model attribute is validated by a string validator,
-     * the `maxlength` option will take the value of [[\yii\validators\StringValidator::max]].
+     * the `maxlength` option will take the value of [[\cover\validators\StringValidator::max]].
      * @param Model $model the model object
      * @param string $attribute the attribute name or expression.
      * @param array $options the tag options in terms of name-value pairs.
@@ -1364,10 +1358,10 @@ class BaseHtml
      * The following special options are recognized:
      *
      * - maxlength: integer|boolean, when `maxlength` is set true and the model attribute is validated
-     *   by a string validator, the `maxlength` option will take the value of [[\yii\validators\StringValidator::max]].
-     *   This is available since version 2.0.3.
+     *   by a string validator, the `maxlength` option will take the value of [[\cover\validators\StringValidator::max]].
+     *   This is available since version 1.0.
      * - placeholder: string|boolean, when `placeholder` equals `true`, the attribute label from the $model will be used
-     *   as a placeholder (this behavior is available since version 2.0.14).
+     *   as a placeholder (this behavior is available since version 1.0).
      *
      * @return string the generated input tag
      */
@@ -1385,7 +1379,7 @@ class BaseHtml
      * about attribute expression.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as
      * the attributes of the resulting tag. The values will be HTML-encoded using [[encode()]].
-     * @since 2.0.14
+     * @since 1.0
      */
     protected static function setActivePlaceholder($model, $attribute, &$options = [])
     {
@@ -1425,10 +1419,10 @@ class BaseHtml
      * The following special options are recognized:
      *
      * - maxlength: integer|boolean, when `maxlength` is set true and the model attribute is validated
-     *   by a string validator, the `maxlength` option will take the value of [[\yii\validators\StringValidator::max]].
-     *   This option is available since version 2.0.6.
+     *   by a string validator, the `maxlength` option will take the value of [[\cover\validators\StringValidator::max]].
+     *   This option is available since version 1.0.
      * - placeholder: string|boolean, when `placeholder` equals `true`, the attribute label from the $model will be used
-     *   as a placeholder (this behavior is available since version 2.0.14).
+     *   as a placeholder (this behavior is available since version 1.0).
      *
      * @return string the generated input tag
      */
@@ -1482,10 +1476,10 @@ class BaseHtml
      * The following special options are recognized:
      *
      * - maxlength: integer|boolean, when `maxlength` is set true and the model attribute is validated
-     *   by a string validator, the `maxlength` option will take the value of [[\yii\validators\StringValidator::max]].
-     *   This option is available since version 2.0.6.
+     *   by a string validator, the `maxlength` option will take the value of [[\cover\validators\StringValidator::max]].
+     *   This option is available since version 1.0
      * - placeholder: string|boolean, when `placeholder` equals `true`, the attribute label from the $model will be used
-     *   as a placeholder (this behavior is available since version 2.0.14).
+     *   as a placeholder (this behavior is available since version 1.0).
      *
      * @return string the generated textarea tag
      */
@@ -1548,7 +1542,7 @@ class BaseHtml
      * @param array $options the tag options in terms of name-value pairs.
      * See [[booleanInput()]] for details about accepted attributes.
      * @return string the generated input element
-     * @since 2.0.9
+     * @since 1.0
      */
     protected static function activeBooleanInput($type, $model, $attribute, $options = [])
     {
@@ -1588,13 +1582,13 @@ class BaseHtml
      * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
      * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
      * If you have a list of data models, you may convert them into the format described above using
-     * [[\yii\helpers\ArrayHelper::map()]].
+     * [[\cover\helpers\ArrayHelper::map()]].
      *
      * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
      * the labels will also be HTML-encoded.
      * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
      *
-     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 1.0 you can use an array
      *   to override the value and to set other tag attributes:
      *
      *   ```php
@@ -1616,7 +1610,7 @@ class BaseHtml
      * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
      *   Defaults to false.
      * - encode: bool, whether to encode option prompt and option value characters.
-     *   Defaults to `true`. This option is available since 2.0.3.
+     *   Defaults to `true`. This option is available since 1.0
      *
      * The rest of the options will be rendered as the attributes of the resulting tag. The values will
      * be HTML-encoded using [[encode()]]. If a value is null, the corresponding attribute will not be rendered.
@@ -1643,13 +1637,13 @@ class BaseHtml
      * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
      * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
      * If you have a list of data models, you may convert them into the format described above using
-     * [[\yii\helpers\ArrayHelper::map()]].
+     * [[\cover\helpers\ArrayHelper::map()]].
      *
      * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
      * the labels will also be HTML-encoded.
      * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
      *
-     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 1.0 you can use an array
      *   to override the value and to set other tag attributes:
      *
      *   ```php
@@ -1674,7 +1668,7 @@ class BaseHtml
      * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
      *   Defaults to false.
      * - encode: bool, whether to encode option prompt and option value characters.
-     *   Defaults to `true`. This option is available since 2.0.3.
+     *   Defaults to `true`. This option is available since 1.0
      *
      * The rest of the options will be rendered as the attributes of the resulting tag. The values will
      * be HTML-encoded using [[encode()]]. If a value is null, the corresponding attribute will not be rendered.
@@ -1807,7 +1801,7 @@ class BaseHtml
      * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
      * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
      * If you have a list of data models, you may convert them into the format described above using
-     * [[\yii\helpers\ArrayHelper::map()]].
+     * [[\cover\helpers\ArrayHelper::map()]].
      *
      * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
      * the labels will also be HTML-encoded.
@@ -1887,10 +1881,10 @@ class BaseHtml
      *
      * The "data" attribute is specially handled when it is receiving an array value. In this case,
      * the array will be "expanded" and a list data attributes will be rendered. For example,
-     * if `'data' => ['id' => 1, 'name' => 'yii']`, then this will be rendered:
-     * `data-id="1" data-name="yii"`.
-     * Additionally `'data' => ['params' => ['id' => 1, 'name' => 'yii'], 'status' => 'ok']` will be rendered as:
-     * `data-params='{"id":1,"name":"yii"}' data-status="ok"`.
+     * if `'data' => ['id' => 1, 'name' => 'cover']`, then this will be rendered:
+     * `data-id="1" data-name="cover"`.
+     * Additionally `'data' => ['params' => ['id' => 1, 'name' => 'cover'], 'status' => 'ok']` will be rendered as:
+     * `data-params='{"id":1,"name":"cover"}' data-status="ok"`.
      *
      * @param array $attributes attributes to be rendered. The attribute values will be HTML-encoded using [[encode()]].
      * @return string the rendering result. If the attributes are not empty, they will be rendered
@@ -2201,7 +2195,7 @@ class BaseHtml
             }
         }
 
-        // https://github.com/yiisoft/yii2/issues/1457
+        // https://github.com/coversoft/cover2/issues/1457
         if (is_array($value)) {
             foreach ($value as $i => $v) {
                 if ($v instanceof ActiveRecordInterface) {
@@ -2271,7 +2265,7 @@ class BaseHtml
      * Escapes regular expression to use in JavaScript.
      * @param string $regexp the regular expression to be escaped.
      * @return string the escaped result.
-     * @since 2.0.6
+     * @since 1.0
      */
     public static function escapeJsRegularExpression($regexp)
     {
