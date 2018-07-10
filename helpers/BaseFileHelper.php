@@ -1,25 +1,18 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use Yii;
-use yii\base\ErrorException;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
+use Cover;
+use cover\base\ErrorException;
+use cover\base\InvalidArgumentException;
+use cover\base\InvalidConfigException;
 
 /**
  * BaseFileHelper provides concrete implementation for [[FileHelper]].
  *
  * Do not use BaseFileHelper. Use [[FileHelper]] instead.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Alex Makarov <sam@rmcreative.ru>
- * @since 2.0
+ * @since 1.0
  */
 class BaseFileHelper
 {
@@ -32,12 +25,12 @@ class BaseFileHelper
     /**
      * @var string the path (or alias) of a PHP file containing MIME type information.
      */
-    public static $mimeMagicFile = '@yii/helpers/mimeTypes.php';
+    public static $mimeMagicFile = '@cover/helpers/mimeTypes.php';
     /**
      * @var string the path (or alias) of a PHP file containing MIME aliases.
-     * @since 2.0.14
+     * @since 1.0
      */
-    public static $mimeAliasesFile = '@yii/helpers/mimeAliases.php';
+    public static $mimeAliasesFile = '@cover/helpers/mimeAliases.php';
 
 
     /**
@@ -94,19 +87,19 @@ class BaseFileHelper
      *
      * @param string $file the original file
      * @param string $language the target language that the file should be localized to.
-     * If not set, the value of [[\yii\base\Application::language]] will be used.
+     * If not set, the value of [[\cover\base\Application::language]] will be used.
      * @param string $sourceLanguage the language that the original file is in.
-     * If not set, the value of [[\yii\base\Application::sourceLanguage]] will be used.
+     * If not set, the value of [[\cover\base\Application::sourceLanguage]] will be used.
      * @return string the matching localized file, or the original file if the localized version is not found.
      * If the target and the source language codes are the same, the original file will be returned.
      */
     public static function localize($file, $language = null, $sourceLanguage = null)
     {
         if ($language === null) {
-            $language = Yii::$app->language;
+            $language = Cover::$app->language;
         }
         if ($sourceLanguage === null) {
-            $sourceLanguage = Yii::$app->sourceLanguage;
+            $sourceLanguage = Cover::$app->sourceLanguage;
         }
         if ($language === $sourceLanguage) {
             return $file;
@@ -143,7 +136,7 @@ class BaseFileHelper
     public static function getMimeType($file, $magicFile = null, $checkExtension = true)
     {
         if ($magicFile !== null) {
-            $magicFile = Yii::getAlias($magicFile);
+            $magicFile = Cover::getAlias($magicFile);
         }
         if (!extension_loaded('fileinfo')) {
             if ($checkExtension) {
@@ -220,7 +213,7 @@ class BaseFileHelper
         if ($magicFile === null) {
             $magicFile = static::$mimeMagicFile;
         }
-        $magicFile = Yii::getAlias($magicFile);
+        $magicFile = Cover::getAlias($magicFile);
         if (!isset(self::$_mimeTypes[$magicFile])) {
             self::$_mimeTypes[$magicFile] = require $magicFile;
         }
@@ -235,14 +228,14 @@ class BaseFileHelper
      * @param string $aliasesFile the path (or alias) of the file that contains MIME type aliases.
      * If this is not set, the file specified by [[mimeAliasesFile]] will be used.
      * @return array the mapping from file extensions to MIME types
-     * @since 2.0.14
+     * @since 1.0
      */
     protected static function loadMimeAliases($aliasesFile)
     {
         if ($aliasesFile === null) {
             $aliasesFile = static::$mimeAliasesFile;
         }
-        $aliasesFile = Yii::getAlias($aliasesFile);
+        $aliasesFile = Cover::getAlias($aliasesFile);
         if (!isset(self::$_mimeAliases[$aliasesFile])) {
             self::$_mimeAliases[$aliasesFile] = require $aliasesFile;
         }
@@ -290,7 +283,7 @@ class BaseFileHelper
      * - copyEmptyDirectories: boolean, whether to copy empty directories. Set this to false to avoid creating directories
      *   that do not contain files. This affects directories that do not contain files initially as well as directories that
      *   do not contain files at the target destination because files have been filtered via `only` or `except`.
-     *   Defaults to true. This option is available since version 2.0.12. Before 2.0.12 empty directories are always copied.
+     *   Defaults to true. This option is available since version 1.0. Before 1.0 empty directories are always copied.
      * @throws InvalidArgumentException if unable to open directory
      */
     public static function copyDirectory($src, $dst, $options = [])
@@ -397,7 +390,7 @@ class BaseFileHelper
      * @param string $path
      * @return bool
      *
-     * @since 2.0.14
+     * @since 1.0
      */
     public static function unlink($path)
     {
@@ -495,7 +488,7 @@ class BaseFileHelper
      * - `recursive`: boolean, whether the files under the subdirectories should also be looked for. Defaults to `true`.
      * @return array directories found under the directory, in no particular order. Ordering depends on the files system used.
      * @throws InvalidArgumentException if the dir is invalid.
-     * @since 2.0.14
+     * @since 1.0
      */
     public static function findDirectories($dir, $options = [])
     {
@@ -608,7 +601,7 @@ class BaseFileHelper
      * @param int $mode the permission to be set for the created directory.
      * @param bool $recursive whether to create parent directories if they do not exist.
      * @return bool whether the directory is created successfully
-     * @throws \yii\base\Exception if the directory could not be created (i.e. php error due to parallel changes)
+     * @throws \cover\base\Exception if the directory could not be created (i.e. php error due to parallel changes)
      */
     public static function createDirectory($path, $mode = 0775, $recursive = true)
     {
@@ -625,14 +618,14 @@ class BaseFileHelper
                 return false;
             }
         } catch (\Exception $e) {
-            if (!is_dir($path)) {// https://github.com/yiisoft/yii2/issues/9288
-                throw new \yii\base\Exception("Failed to create directory \"$path\": " . $e->getMessage(), $e->getCode(), $e);
+            if (!is_dir($path)) {// https://github.com/coversoft/cover2/issues/9288
+                throw new \cover\base\Exception("Failed to create directory \"$path\": " . $e->getMessage(), $e->getCode(), $e);
             }
         }
         try {
             return chmod($path, $mode);
         } catch (\Exception $e) {
-            throw new \yii\base\Exception("Failed to change permissions for directory \"$path\": " . $e->getMessage(), $e->getCode(), $e);
+            throw new \cover\base\Exception("Failed to change permissions for directory \"$path\": " . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -834,7 +827,7 @@ class BaseFileHelper
     /**
      * @param array $options raw options
      * @return array normalized options
-     * @since 2.0.12
+     * @since 1.0
      */
     protected static function normalizeOptions(array $options)
     {

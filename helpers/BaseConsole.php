@@ -1,22 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\helpers;
+namespace cover\helpers;
 
-use yii\console\Markdown as ConsoleMarkdown;
-use yii\base\Model;
+use cover\console\Markdown as ConsoleMarkdown;
+use cover\base\Model;
 
 /**
  * BaseConsole provides concrete implementation for [[Console]].
  *
  * Do not use BaseConsole. Use [[Console]] instead.
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class BaseConsole
 {
@@ -505,7 +499,7 @@ class BaseConsole
      */
     public static function renderColoredString($string, $colored = true)
     {
-        // TODO rework/refactor according to https://github.com/yiisoft/yii2/issues/746
+        // TODO rework/refactor according to https://github.com/coversoft/cover2/issues/746
         static $conversions = [
             '%y' => [self::FG_YELLOW],
             '%g' => [self::FG_GREEN],
@@ -569,7 +563,7 @@ class BaseConsole
      */
     public static function escape($string)
     {
-        // TODO rework/refactor according to https://github.com/yiisoft/yii2/issues/746
+        // TODO rework/refactor according to https://github.com/coversoft/cover2/issues/746
         return str_replace('%', '%%', $string);
     }
 

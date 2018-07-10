@@ -167,7 +167,7 @@ class BaseArrayHelper
      * @param string|\Closure|array $key key name of the array element, an array of keys or property name of the object,
      * or an anonymous function returning the value. The anonymous function signature should be:
      * `function($array, $defaultValue)`.
-     * The possibility to pass an array of keys is available since version 2.0.4.
+     * The possibility to pass an array of keys is available since version 1.0.
      * @param mixed $default the default value to be returned if the specified array key does not exist. Not used when
      * getting value from an object.
      * @return mixed the value of the element if found, default value otherwise
@@ -257,7 +257,7 @@ class BaseArrayHelper
      * you can also describe the path as an array of keys
      * if the path is null then `$array` will be assigned the `$value`
      * @param mixed $value the value to be written
-     * @since 2.0.13
+     * @since 1.0
      */
     public static function setValue(&$array, $path, $value)
     {
@@ -320,7 +320,7 @@ class BaseArrayHelper
      *
      * ```php
      * $array = ['Bob' => 'Dylan', 'Michael' => 'Jackson', 'Mick' => 'Jagger', 'Janet' => 'Jackson'];
-     * $removed = \yii\helpers\ArrayHelper::removeValue($array, 'Jackson');
+     * $removed = \cover\helpers\ArrayHelper::removeValue($array, 'Jackson');
      * // result:
      * // $array = ['Bob' => 'Dylan', 'Mick' => 'Jagger'];
      * // $removed = ['Michael' => 'Jackson', 'Janet' => 'Jackson'];
@@ -329,7 +329,7 @@ class BaseArrayHelper
      * @param array $array the array where to look the value from
      * @param string $value the value to remove from the array
      * @return array the items that were removed from the array
-     * @since 2.0.11
+     * @since 1.0
      */
     public static function removeValue(&$array, $value)
     {
@@ -443,7 +443,7 @@ class BaseArrayHelper
      * @param string|string[]|\Closure[]|null $groups the array of keys, that will be used to group the input array
      * by one or more keys. If the $key attribute or its value for the particular element is null and $groups is not
      * defined, the array element will be discarded. Otherwise, if $groups is specified, array element will be added
-     * to the result array without any key. This parameter is available since version 2.0.8.
+     * to the result array without any key. This parameter is available since version 1.0
      * @return array the indexed and/or grouped array
      */
     public static function index($array, $key, $groups = [])
@@ -666,14 +666,14 @@ class BaseArrayHelper
      * @param bool $valuesOnly whether to encode array values only. If false,
      * both the array keys and array values will be encoded.
      * @param string $charset the charset that the data is using. If not set,
-     * [[\yii\base\Application::charset]] will be used.
+     * [[\cover\base\Application::charset]] will be used.
      * @return array the encoded data
      * @see http://www.php.net/manual/en/function.htmlspecialchars.php
      */
     public static function htmlEncode($data, $valuesOnly = true, $charset = null)
     {
         if ($charset === null) {
-            $charset = Yii::$app ? Yii::$app->charset : 'UTF-8';
+            $charset = Cover::$app ? Cover::$app->charset : 'UTF-8';
         }
         $d = [];
         foreach ($data as $key => $value) {
@@ -807,7 +807,7 @@ class BaseArrayHelper
      * @return bool `true` if `$needle` was found in `$haystack`, `false` otherwise.
      * @throws InvalidArgumentException if `$haystack` is neither traversable nor an array.
      * @see http://php.net/manual/en/function.in-array.php
-     * @since 2.0.7
+     * @since 1.0
      */
     public static function isIn($needle, $haystack, $strict = false)
     {
@@ -834,7 +834,7 @@ class BaseArrayHelper
      * @param mixed $var The variable being evaluated.
      * @return bool whether $var is array-like
      * @see http://php.net/manual/en/function.is-array.php
-     * @since 2.0.8
+     * @since 1.0
      */
     public static function isTraversable($var)
     {
@@ -851,7 +851,7 @@ class BaseArrayHelper
      * @param bool $strict Whether to enable strict (`===`) comparison.
      * @throws InvalidArgumentException if `$haystack` or `$needles` is neither traversable nor an array.
      * @return bool `true` if `$needles` is a subset of `$haystack`, `false` otherwise.
-     * @since 2.0.7
+     * @since 1.0
      */
     public static function isSubset($needles, $haystack, $strict = false)
     {
@@ -883,20 +883,20 @@ class BaseArrayHelper
      *     'E' => 1,
      * ];
      *
-     * $result = \yii\helpers\ArrayHelper::filter($array, ['A']);
+     * $result = \cover\helpers\ArrayHelper::filter($array, ['A']);
      * // $result will be:
      * // [
      * //     'A' => [1, 2],
      * // ]
      *
-     * $result = \yii\helpers\ArrayHelper::filter($array, ['A', 'B.C']);
+     * $result = \cover\helpers\ArrayHelper::filter($array, ['A', 'B.C']);
      * // $result will be:
      * // [
      * //     'A' => [1, 2],
      * //     'B' => ['C' => 1],
      * // ]
      *
-     * $result = \yii\helpers\ArrayHelper::filter($array, ['B', '!B.C']);
+     * $result = \cover\helpers\ArrayHelper::filter($array, ['B', '!B.C']);
      * // $result will be:
      * // [
      * //     'B' => ['D' => 2],
@@ -910,7 +910,7 @@ class BaseArrayHelper
      * - `var.key` = only `$array['var']['key'] will be left in result.
      * - `!var.key` = `$array['var']['key'] will be removed from result.
      * @return array Filtered array
-     * @since 2.0.9
+     * @since 1.0
      */
     public static function filter($array, $filters)
     {
