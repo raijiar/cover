@@ -83,7 +83,6 @@ class BaseCover
     /**
      * Returns a string representing the current version of the Cover framework.
      * @return string the version of Cover framework
-	 * 框架版本号
      */
     public static function getVersion()
     {

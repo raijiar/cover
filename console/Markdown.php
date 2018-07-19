@@ -1,25 +1,19 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console;
+namespace cover\console;
 
 use cebe\markdown\block\FencedCodeTrait;
 use cebe\markdown\inline\CodeTrait;
 use cebe\markdown\inline\EmphStrongTrait;
 use cebe\markdown\inline\StrikeoutTrait;
-use yii\helpers\Console;
+use cover\helpers\Console;
 
 /**
  * A Markdown parser that enhances markdown for reading in console environments.
  *
  * Based on [cebe/markdown](https://github.com/cebe/markdown).
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class Markdown extends \cebe\markdown\Parser
 {

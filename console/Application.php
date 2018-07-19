@@ -14,12 +14,12 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
 /**
  * Application represents a console application.
  *
- * Application extends from [[\yii\base\Application]] by providing functionalities that are
+ * Application extends from [[\cover\base\Application]] by providing functionalities that are
  * specific to console requests. In particular, it deals with console requests
  * through a command-based approach:
  *
  * - A console application consists of one or several possible user commands;
- * - Each user command is implemented as a class extending [[\yii\console\Controller]];
+ * - Each user command is implemented as a class extending [[\cover\console\Controller]];
  * - User specifies which command to run on the command line;
  * - The command processes the user request with the specified parameters.
  *
@@ -30,7 +30,7 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
  * To run the console application, enter the following on the command line:
  *
  * ```
- * yii <route> [--param1=value1 --param2 ...]
+ * cover <route> [--param1=value1 --param2 ...]
  * ```
  *
  * where `<route>` refers to a controller route in the form of `ModuleID/ControllerID/ActionID`
@@ -42,7 +42,7 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
  * To use this command, simply type:
  *
  * ```
- * yii help
+ * cover help
  * ```
  *
  * @property ErrorHandler $errorHandler The error handler application component. This property is read-only.
@@ -98,7 +98,7 @@ class Application extends \cover\base\Application
             foreach ($_SERVER['argv'] as $param) {
                 if (strpos($param, $option) !== false) {
                     $path = substr($param, strlen($option));
-                    if (!empty($path) && is_file($file = Yii::getAlias($path))) {
+                    if (!empty($path) && is_file($file = Cover::getAlias($path))) {
                         return require $file;
                     }
 
@@ -125,7 +125,7 @@ class Application extends \cover\base\Application
         }
         // ensure we have the 'help' command so that we can list the available commands
         if (!isset($this->controllerMap['help'])) {
-            $this->controllerMap['help'] = 'yii\console\controllers\HelpController';
+            $this->controllerMap['help'] = 'cover\console\controllers\HelpController';
         }
     }
 
@@ -159,7 +159,7 @@ class Application extends \cover\base\Application
      * code should be used:
      *
      * ```php
-     * \Yii::$app->runAction('controller/test', ['option' => 'value', $a, $b]);
+     * \Cover::$app->runAction('controller/test', ['option' => 'value', $a, $b]);
      * ```
      *
      * @param string $route the route that specifies the action.
@@ -185,13 +185,13 @@ class Application extends \cover\base\Application
     public function coreCommands()
     {
         return [
-            'asset' => 'yii\console\controllers\AssetController',
-            'cache' => 'yii\console\controllers\CacheController',
-            'fixture' => 'yii\console\controllers\FixtureController',
-            'help' => 'yii\console\controllers\HelpController',
-            'message' => 'yii\console\controllers\MessageController',
-            'migrate' => 'yii\console\controllers\MigrateController',
-            'serve' => 'yii\console\controllers\ServeController',
+            'asset' => 'cover\console\controllers\AssetController',
+            'cache' => 'cover\console\controllers\CacheController',
+            'fixture' => 'cover\console\controllers\FixtureController',
+            'help' => 'cover\console\controllers\HelpController',
+            'message' => 'cover\console\controllers\MessageController',
+            'migrate' => 'cover\console\controllers\MigrateController',
+            'serve' => 'cover\console\controllers\ServeController',
         ];
     }
 
@@ -228,9 +228,9 @@ class Application extends \cover\base\Application
     public function coreComponents()
     {
         return array_merge(parent::coreComponents(), [
-            'request' => ['class' => 'yii\console\Request'],
-            'response' => ['class' => 'yii\console\Response'],
-            'errorHandler' => ['class' => 'yii\console\ErrorHandler'],
+            'request' => ['class' => 'cover\console\Request'],
+            'response' => ['class' => 'cover\console\Response'],
+            'errorHandler' => ['class' => 'cover\console\ErrorHandler'],
         ]);
     }
 }

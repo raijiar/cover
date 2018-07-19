@@ -23,10 +23,8 @@ namespace cover\console;
  * }
  * ```
  *
- * @author Tom Worster <fsb@thefsb.org>
- * @author Alexander Makarov <sam@rmcreative.ru>
  * @see http://man.openbsd.org/sysexits
- * @since 2.0.13
+ * @since 1.0
  */
 class ExitCode
 {

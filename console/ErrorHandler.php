@@ -1,27 +1,21 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console;
+namespace cover\console;
 
-use Yii;
-use yii\base\ErrorException;
-use yii\base\UserException;
-use yii\helpers\Console;
+use Cover;
+use cover\base\ErrorException;
+use cover\base\UserException;
+use cover\helpers\Console;
 
 /**
  * ErrorHandler handles uncaught PHP errors and exceptions.
  *
- * ErrorHandler is configured as an application component in [[\yii\base\Application]] by default.
- * You can access that instance via `Yii::$app->errorHandler`.
+ * ErrorHandler is configured as an application component in [[\cover\base\Application]] by default.
+ * You can access that instance via `Cover::$app->errorHandler`.
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
-class ErrorHandler extends \yii\base\ErrorHandler
+class ErrorHandler extends \cover\base\ErrorHandler
 {
     /**
      * Renders an exception using ansi format for console output.
@@ -52,7 +46,7 @@ class ErrorHandler extends \yii\base\ErrorHandler
                 . ' with message ' . $this->formatMessage("'{$exception->getMessage()}'", [Console::BOLD]) //. "\n"
                 . "\n\nin " . dirname($exception->getFile()) . DIRECTORY_SEPARATOR . $this->formatMessage(basename($exception->getFile()), [Console::BOLD])
                 . ':' . $this->formatMessage($exception->getLine(), [Console::BOLD, Console::FG_YELLOW]) . "\n";
-            if ($exception instanceof \yii\db\Exception && !empty($exception->errorInfo)) {
+            if ($exception instanceof \cover\db\Exception && !empty($exception->errorInfo)) {
                 $message .= "\n" . $this->formatMessage("Error Info:\n", [Console::BOLD]) . print_r($exception->errorInfo, true);
             }
             $message .= "\n" . $this->formatMessage("Stack trace:\n", [Console::BOLD]) . $exception->getTraceAsString();
@@ -78,8 +72,8 @@ class ErrorHandler extends \yii\base\ErrorHandler
     {
         $stream = (PHP_SAPI === 'cli') ? \STDERR : \STDOUT;
         // try controller first to allow check for --color switch
-        if (Yii::$app->controller instanceof \yii\console\Controller && Yii::$app->controller->isColorEnabled($stream)
-            || Yii::$app instanceof \yii\console\Application && Console::streamSupportsAnsiColors($stream)) {
+        if (Cover::$app->controller instanceof \cover\console\Controller && Cover::$app->controller->isColorEnabled($stream)
+            || Cover::$app instanceof \cover\console\Application && Console::streamSupportsAnsiColors($stream)) {
             $message = Console::ansiFormat($message, $format);
         }
 

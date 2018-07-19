@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use yii\base\InvalidConfigException;
+use cover\base\InvalidConfigException;
 
 /**
  * ApcCache provides APC caching in terms of an application component.
@@ -20,8 +15,7 @@ use yii\base\InvalidConfigException;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ApcCache extends Cache
 {
@@ -30,7 +24,7 @@ class ApcCache extends Cache
      * If true, [apcu](http://pecl.php.net/package/apcu) will be used.
      * If false, [apc](http://pecl.php.net/package/apc) will be used.
      * Defaults to false.
-     * @since 2.0.7
+     * @since 1.0
      */
     public $useApcu = false;
 

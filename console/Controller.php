@@ -1,28 +1,23 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console;
+namespace cover\console;
 
-use Yii;
-use yii\base\Action;
-use yii\base\InlineAction;
-use yii\base\InvalidRouteException;
-use yii\helpers\Console;
-use yii\helpers\Inflector;
+use Cover;
+use cover\base\Action;
+use cover\base\InlineAction;
+use cover\base\InvalidRouteException;
+use cover\helpers\Console;
+use cover\helpers\Inflector;
 
 /**
  * Controller is the base class of console command classes.
  *
  * A console controller consists of one or several actions known as sub-commands.
  * Users call a console command by specifying the corresponding route which identifies a controller action.
- * The `yii` program is used when calling a console command, like the following:
+ * The `cover` program is used when calling a console command, like the following:
  *
  * ```
- * yii <route> [--param1=value1 --param2 ...]
+ * cover <route> [--param1=value1 --param2 ...]
  * ```
  *
  * where `<route>` is a route to a controller action and the params will be populated as properties of a command.
@@ -35,17 +30,16 @@ use yii\helpers\Inflector;
  * @property array $passedOptions The names of the options passed during execution. This property is
  * read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class Controller extends \yii\base\Controller
+class Controller extends \cover\base\Controller
 {
     /**
-     * @deprecated since 2.0.13. Use [[ExitCode::OK]] instead.
+     * @deprecated since 1.0. Use [[ExitCode::OK]] instead.
      */
     const EXIT_CODE_NORMAL = 0;
     /**
-     * @deprecated since 2.0.13. Use [[ExitCode::UNSPECIFIED_ERROR]] instead.
+     * @deprecated since 1.0. Use [[ExitCode::UNSPECIFIED_ERROR]] instead.
      */
     const EXIT_CODE_ERROR = 1;
 
@@ -60,7 +54,7 @@ class Controller extends \yii\base\Controller
     public $color;
     /**
      * @var bool whether to display help information about current command.
-     * @since 2.0.10
+     * @since 1.0
      */
     public $help;
 
@@ -105,7 +99,7 @@ class Controller extends \yii\base\Controller
                     if (array_key_exists($name, $optionAliases)) {
                         $params[$optionAliases[$name]] = $value;
                     } else {
-                        throw new Exception(Yii::t('yii', 'Unknown alias: -{name}', ['name' => $name]));
+                        throw new Exception(Cover::t('cover', 'Unknown alias: -{name}', ['name' => $name]));
                     }
                 }
                 unset($params['_aliases']);
@@ -136,13 +130,13 @@ class Controller extends \yii\base\Controller
                         unset($params[$kebabName]);
                     }
                 } elseif (!is_int($name)) {
-                    throw new Exception(Yii::t('yii', 'Unknown option: --{name}', ['name' => $name]));
+                    throw new Exception(Cover::t('cover', 'Unknown option: --{name}', ['name' => $name]));
                 }
             }
         }
         if ($this->help) {
             $route = $this->getUniqueId() . '/' . $id;
-            return Yii::$app->runAction('help', [$route]);
+            return Cover::$app->runAction('help', [$route]);
         }
 
         return parent::runAction($id, $params);
@@ -183,7 +177,7 @@ class Controller extends \yii\base\Controller
         }
 
         if (!empty($missing)) {
-            throw new Exception(Yii::t('yii', 'Missing required arguments: {params}', ['params' => implode(', ', $missing)]));
+            throw new Exception(Cover::t('cover', 'Missing required arguments: {params}', ['params' => implode(', ', $missing)]));
         }
 
         return $args;
@@ -192,7 +186,7 @@ class Controller extends \yii\base\Controller
     /**
      * Formats a string with ANSI codes.
      *
-     * You may pass additional parameters using the constants defined in [[\yii\helpers\Console]].
+     * You may pass additional parameters using the constants defined in [[\cover\helpers\Console]].
      *
      * Example:
      *
@@ -218,7 +212,7 @@ class Controller extends \yii\base\Controller
      * Prints a string to STDOUT.
      *
      * You may optionally format the string with ANSI codes by
-     * passing additional parameters using the constants defined in [[\yii\helpers\Console]].
+     * passing additional parameters using the constants defined in [[\cover\helpers\Console]].
      *
      * Example:
      *
@@ -244,7 +238,7 @@ class Controller extends \yii\base\Controller
      * Prints a string to STDERR.
      *
      * You may optionally format the string with ANSI codes by
-     * passing additional parameters using the constants defined in [[\yii\helpers\Console]].
+     * passing additional parameters using the constants defined in [[\cover\helpers\Console]].
      *
      * Example:
      *
@@ -368,7 +362,7 @@ class Controller extends \yii\base\Controller
      * @return array the options alias names valid for the action
      * where the keys is alias name for option and value is option name.
      *
-     * @since 2.0.8
+     * @since 1.0
      * @see options()
      */
     public function optionAliases()

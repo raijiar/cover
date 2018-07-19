@@ -11,7 +11,7 @@ use cover\db\BaseActiveRecord;
  * To use TimestampBehavior, insert the following code to your ActiveRecord class:
  *
  * ```php
- * use yii\behaviors\TimestampBehavior;
+ * use cover\behaviors\TimestampBehavior;
  *
  * public function behaviors()
  * {
@@ -26,7 +26,7 @@ use cover\db\BaseActiveRecord;
  * with the timestamp when the AR object is being updated. The timestamp value is obtained by `time()`.
  *
  * Because attribute values will be set automatically by this behavior, they are usually not user input and should therefore
- * not be validated, i.e. `created_at` and `updated_at` should not appear in the [[\yii\base\Model::rules()|rules()]] method of the model.
+ * not be validated, i.e. `created_at` and `updated_at` should not appear in the [[\cover\base\Model::rules()|rules()]] method of the model.
  *
  * For the above implementation to work with MySQL database, please declare the columns(`created_at`, `updated_at`) as int(11) for being UNIX timestamp.
  *
@@ -34,7 +34,7 @@ use cover\db\BaseActiveRecord;
  * you may configure the [[createdAtAttribute]], [[updatedAtAttribute]] and [[value]] properties like the following:
  *
  * ```php
- * use yii\db\Expression;
+ * use cover\db\Expression;
  *
  * public function behaviors()
  * {
@@ -49,9 +49,9 @@ use cover\db\BaseActiveRecord;
  * }
  * ```
  *
- * In case you use an [[\yii\db\Expression]] object as in the example above, the attribute will not hold the timestamp value, but
+ * In case you use an [[\cover\db\Expression]] object as in the example above, the attribute will not hold the timestamp value, but
  * the Expression object itself after the record has been saved. If you need the value from DB afterwards you should call
- * the [[\yii\db\ActiveRecord::refresh()|refresh()]] method of the record.
+ * the [[\cover\db\ActiveRecord::refresh()|refresh()]] method of the record.
  *
  * TimestampBehavior also provides a method named [[touch()]] that allows you to assign the current
  * timestamp to the specified attribute(s) and save them to the database. For example,
@@ -60,9 +60,7 @@ use cover\db\BaseActiveRecord;
  * $model->touch('creation_time');
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Alexander Kochetov <creocoder@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class TimestampBehavior extends AttributeBehavior
 {
