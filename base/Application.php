@@ -9,33 +9,33 @@ use Cover;
  *
  * For more details and usage information on Application, see the [guide article on applications](guide:structure-applications).
  *
- * @property \yii\web\AssetManager $assetManager The asset manager application component. This property is
+ * @property \cover\web\AssetManager $assetManager The asset manager application component. This property is
  * read-only.
- * @property \yii\rbac\ManagerInterface $authManager The auth manager application component. Null is returned
+ * @property \cover\rbac\ManagerInterface $authManager The auth manager application component. Null is returned
  * if auth manager is not configured. This property is read-only.
  * @property string $basePath The root directory of the application.
- * @property \yii\caching\CacheInterface $cache The cache application component. Null if the component is not
+ * @property \cover\caching\CacheInterface $cache The cache application component. Null if the component is not
  * enabled. This property is read-only.
  * @property array $container Values given in terms of name-value pairs. This property is write-only.
- * @property \yii\db\Connection $db The database connection. This property is read-only.
- * @property \yii\web\ErrorHandler|\yii\console\ErrorHandler $errorHandler The error handler application
+ * @property \cover\db\Connection $db The database connection. This property is read-only.
+ * @property \cover\web\ErrorHandler|\cover\console\ErrorHandler $errorHandler The error handler application
  * component. This property is read-only.
- * @property \yii\i18n\Formatter $formatter The formatter application component. This property is read-only.
- * @property \yii\i18n\I18N $i18n The internationalization application component. This property is read-only.
- * @property \yii\log\Dispatcher $log The log dispatcher application component. This property is read-only.
- * @property \yii\mail\MailerInterface $mailer The mailer application component. This property is read-only.
- * @property \yii\web\Request|\yii\console\Request $request The request component. This property is read-only.
- * @property \yii\web\Response|\yii\console\Response $response The response component. This property is
+ * @property \cover\i18n\Formatter $formatter The formatter application component. This property is read-only.
+ * @property \cover\i18n\I18N $i18n The internationalization application component. This property is read-only.
+ * @property \cover\log\Dispatcher $log The log dispatcher application component. This property is read-only.
+ * @property \cover\mail\MailerInterface $mailer The mailer application component. This property is read-only.
+ * @property \cover\web\Request|\cover\console\Request $request The request component. This property is read-only.
+ * @property \cover\web\Response|\cover\console\Response $response The response component. This property is
  * read-only.
  * @property string $runtimePath The directory that stores runtime files. Defaults to the "runtime"
  * subdirectory under [[basePath]].
- * @property \yii\base\Security $security The security application component. This property is read-only.
+ * @property \cover\base\Security $security The security application component. This property is read-only.
  * @property string $timeZone The time zone used by this application.
  * @property string $uniqueId The unique ID of the module. This property is read-only.
- * @property \yii\web\UrlManager $urlManager The URL manager for this application. This property is read-only.
+ * @property \cover\web\UrlManager $urlManager The URL manager for this application. This property is read-only.
  * @property string $vendorPath The directory that stores vendor files. Defaults to "vendor" directory under
  * [[basePath]].
- * @property View|\yii\web\View $view The view application component that is used to render various view
+ * @property View|\cover\web\View $view The view application component that is used to render various view
  * files. This property is read-only.
  *
  */
@@ -129,7 +129,7 @@ abstract class Application extends Module
      */
     public $requestedParams;
     /**
-     * @var array list of installed Yii extensions. Each array element represents a single extension
+     * @var array list of installed Cover extensions. Each array element represents a single extension
      * with the following structure:
      *
      * ```php
@@ -149,7 +149,7 @@ abstract class Application extends Module
      * its [[BootstrapInterface::bootstrap()|bootstrap()]] method will be also be called.
      *
      * If not set explicitly in the application config, this property will be populated with the contents of
-     * `@vendor/yiisoft/extensions.php`.
+     * `@vendor/coversoft/extensions.php`.
      */
     public $extensions;
     /**
@@ -187,7 +187,7 @@ abstract class Application extends Module
      */
     public function __construct($config = [])
     {
-        Yii::$app = $this;
+        Cover::$app = $this;
         static::setInstance($this);
 
         $this->state = self::STATE_BEGIN;
@@ -274,22 +274,22 @@ abstract class Application extends Module
     protected function bootstrap()
     {
         if ($this->extensions === null) {
-            $file = Yii::getAlias('@vendor/yiisoft/extensions.php');
+            $file = Cover::getAlias('@vendor/coversoft/extensions.php');
             $this->extensions = is_file($file) ? include $file : [];
         }
         foreach ($this->extensions as $extension) {
             if (!empty($extension['alias'])) {
                 foreach ($extension['alias'] as $name => $path) {
-                    Yii::setAlias($name, $path);
+                    Cover::setAlias($name, $path);
                 }
             }
             if (isset($extension['bootstrap'])) {
-                $component = Yii::createObject($extension['bootstrap']);
+                $component = Cover::createObject($extension['bootstrap']);
                 if ($component instanceof BootstrapInterface) {
-                    Yii::debug('Bootstrap with ' . get_class($component) . '::bootstrap()', __METHOD__);
+                    Cover::debug('Bootstrap with ' . get_class($component) . '::bootstrap()', __METHOD__);
                     $component->bootstrap($this);
                 } else {
-                    Yii::debug('Bootstrap with ' . get_class($component), __METHOD__);
+                    Cover::debug('Bootstrap with ' . get_class($component), __METHOD__);
                 }
             }
         }
@@ -297,7 +297,7 @@ abstract class Application extends Module
         foreach ($this->bootstrap as $mixed) {
             $component = null;
             if ($mixed instanceof \Closure) {
-                Yii::debug('Bootstrap with Closure', __METHOD__);
+                Cover::debug('Bootstrap with Closure', __METHOD__);
                 if (!$component = call_user_func($mixed, $this)) {
                     continue;
                 }
@@ -312,14 +312,14 @@ abstract class Application extends Module
             }
 
             if (!isset($component)) {
-                $component = Yii::createObject($mixed);
+                $component = Cover::createObject($mixed);
             }
 
             if ($component instanceof BootstrapInterface) {
-                Yii::debug('Bootstrap with ' . get_class($component) . '::bootstrap()', __METHOD__);
+                Cover::debug('Bootstrap with ' . get_class($component) . '::bootstrap()', __METHOD__);
                 $component->bootstrap($this);
             } else {
-                Yii::debug('Bootstrap with ' . get_class($component), __METHOD__);
+                Cover::debug('Bootstrap with ' . get_class($component), __METHOD__);
             }
         }
     }
@@ -361,7 +361,7 @@ abstract class Application extends Module
     public function setBasePath($path)
     {
         parent::setBasePath($path);
-        Yii::setAlias('@app', $this->getBasePath());
+        Cover::setAlias('@app', $this->getBasePath());
     }
 
     /**
@@ -426,8 +426,8 @@ abstract class Application extends Module
      */
     public function setRuntimePath($path)
     {
-        $this->_runtimePath = Yii::getAlias($path);
-        Yii::setAlias('@runtime', $this->_runtimePath);
+        $this->_runtimePath = Cover::getAlias($path);
+        Cover::setAlias('@runtime', $this->_runtimePath);
     }
 
     private $_vendorPath;
@@ -452,10 +452,10 @@ abstract class Application extends Module
      */
     public function setVendorPath($path)
     {
-        $this->_vendorPath = Yii::getAlias($path);
-        Yii::setAlias('@vendor', $this->_vendorPath);
-        Yii::setAlias('@bower', $this->_vendorPath . DIRECTORY_SEPARATOR . 'bower');
-        Yii::setAlias('@npm', $this->_vendorPath . DIRECTORY_SEPARATOR . 'npm');
+        $this->_vendorPath = Cover::getAlias($path);
+        Cover::setAlias('@vendor', $this->_vendorPath);
+        Cover::setAlias('@bower', $this->_vendorPath . DIRECTORY_SEPARATOR . 'bower');
+        Cover::setAlias('@npm', $this->_vendorPath . DIRECTORY_SEPARATOR . 'npm');
     }
 
     /**
@@ -485,7 +485,7 @@ abstract class Application extends Module
 
     /**
      * Returns the database connection component.
-     * @return \yii\db\Connection the database connection.
+     * @return \cover\db\Connection the database connection.
      */
     public function getDb()
     {
@@ -494,7 +494,7 @@ abstract class Application extends Module
 
     /**
      * Returns the log dispatcher component.
-     * @return \yii\log\Dispatcher the log dispatcher application component.
+     * @return \cover\log\Dispatcher the log dispatcher application component.
      */
     public function getLog()
     {
@@ -503,7 +503,7 @@ abstract class Application extends Module
 
     /**
      * Returns the error handler component.
-     * @return \yii\web\ErrorHandler|\yii\console\ErrorHandler the error handler application component.
+     * @return \cover\web\ErrorHandler|\cover\console\ErrorHandler the error handler application component.
      */
     public function getErrorHandler()
     {
@@ -512,7 +512,7 @@ abstract class Application extends Module
 
     /**
      * Returns the cache component.
-     * @return \yii\caching\CacheInterface the cache application component. Null if the component is not enabled.
+     * @return \cover\caching\CacheInterface the cache application component. Null if the component is not enabled.
      */
     public function getCache()
     {
@@ -521,7 +521,7 @@ abstract class Application extends Module
 
     /**
      * Returns the formatter component.
-     * @return \yii\i18n\Formatter the formatter application component.
+     * @return \cover\i18n\Formatter the formatter application component.
      */
     public function getFormatter()
     {
@@ -530,7 +530,7 @@ abstract class Application extends Module
 
     /**
      * Returns the request component.
-     * @return \yii\web\Request|\yii\console\Request the request component.
+     * @return \cover\web\Request|\cover\console\Request the request component.
      */
     public function getRequest()
     {
@@ -539,7 +539,7 @@ abstract class Application extends Module
 
     /**
      * Returns the response component.
-     * @return \yii\web\Response|\yii\console\Response the response component.
+     * @return \cover\web\Response|\cover\console\Response the response component.
      */
     public function getResponse()
     {
@@ -548,7 +548,7 @@ abstract class Application extends Module
 
     /**
      * Returns the view object.
-     * @return View|\yii\web\View the view application component that is used to render various view files.
+     * @return View|\cover\web\View the view application component that is used to render various view files.
      */
     public function getView()
     {
@@ -557,7 +557,7 @@ abstract class Application extends Module
 
     /**
      * Returns the URL manager for this application.
-     * @return \yii\web\UrlManager the URL manager for this application.
+     * @return \cover\web\UrlManager the URL manager for this application.
      */
     public function getUrlManager()
     {
@@ -566,7 +566,7 @@ abstract class Application extends Module
 
     /**
      * Returns the internationalization (i18n) component.
-     * @return \yii\i18n\I18N the internationalization application component.
+     * @return \cover\i18n\I18N the internationalization application component.
      */
     public function getI18n()
     {
@@ -575,7 +575,7 @@ abstract class Application extends Module
 
     /**
      * Returns the mailer component.
-     * @return \yii\mail\MailerInterface the mailer application component.
+     * @return \cover\mail\MailerInterface the mailer application component.
      */
     public function getMailer()
     {
@@ -584,7 +584,7 @@ abstract class Application extends Module
 
     /**
      * Returns the auth manager for this application.
-     * @return \yii\rbac\ManagerInterface the auth manager application component.
+     * @return \cover\rbac\ManagerInterface the auth manager application component.
      * Null is returned if auth manager is not configured.
      */
     public function getAuthManager()
@@ -594,7 +594,7 @@ abstract class Application extends Module
 
     /**
      * Returns the asset manager.
-     * @return \yii\web\AssetManager the asset manager application component.
+     * @return \cover\web\AssetManager the asset manager application component.
      */
     public function getAssetManager()
     {
@@ -603,7 +603,7 @@ abstract class Application extends Module
 
     /**
      * Returns the security component.
-     * @return \yii\base\Security the security application component.
+     * @return \cover\base\Security the security application component.
      */
     public function getSecurity()
     {
@@ -617,14 +617,14 @@ abstract class Application extends Module
     public function coreComponents()
     {
         return [
-            'log' => ['class' => 'yii\log\Dispatcher'],
-            'view' => ['class' => 'yii\web\View'],
-            'formatter' => ['class' => 'yii\i18n\Formatter'],
-            'i18n' => ['class' => 'yii\i18n\I18N'],
-            'mailer' => ['class' => 'yii\swiftmailer\Mailer'],
-            'urlManager' => ['class' => 'yii\web\UrlManager'],
-            'assetManager' => ['class' => 'yii\web\AssetManager'],
-            'security' => ['class' => 'yii\base\Security'],
+            'log' => ['class' => 'cover\log\Dispatcher'],
+            'view' => ['class' => 'cover\web\View'],
+            'formatter' => ['class' => 'cover\i18n\Formatter'],
+            'i18n' => ['class' => 'cover\i18n\I18N'],
+            'mailer' => ['class' => 'cover\swiftmailer\Mailer'],
+            'urlManager' => ['class' => 'cover\web\UrlManager'],
+            'assetManager' => ['class' => 'cover\web\AssetManager'],
+            'security' => ['class' => 'cover\base\Security'],
         ];
     }
 
@@ -657,13 +657,13 @@ abstract class Application extends Module
     }
 
     /**
-     * Configures [[Yii::$container]] with the $config.
+     * Configures [[Cover::$container]] with the $config.
      *
      * @param array $config values given in terms of name-value pairs
-     * @since 2.0.11
+     * @since 1.0
      */
     public function setContainer($config)
     {
-        Yii::configure(Yii::$container, $config);
+        Cover::configure(Cover::$container, $config);
     }
 }
