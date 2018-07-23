@@ -56,8 +56,8 @@ class Application extends \cover\base\Application
     protected function bootstrap()
     {
         $request = $this->getRequest();
-        Yii::setAlias('@webroot', dirname($request->getScriptFile()));
-        Yii::setAlias('@web', $request->getBaseUrl());
+        Cover::setAlias('@webroot', dirname($request->getScriptFile()));
+        Cover::setAlias('@web', $request->getBaseUrl());
 
         parent::bootstrap();
     }
@@ -91,7 +91,7 @@ class Application extends \cover\base\Application
             unset($params[0]);
         }
         try {
-            Yii::debug("Route requested: '$route'", __METHOD__);
+            Cover::debug("Route requested: '$route'", __METHOD__);
             $this->requestedRoute = $route;
             $result = $this->runAction($route, $params);
             if ($result instanceof Response) {
@@ -105,7 +105,7 @@ class Application extends \cover\base\Application
 
             return $response;
         } catch (InvalidRouteException $e) {
-            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'), $e->getCode(), $e);
+            throw new NotFoundHttpException(Cover::t('yii', 'Page not found.'), $e->getCode(), $e);
         }
     }
 

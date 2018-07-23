@@ -14,11 +14,9 @@ use Cover;
  * [UPGRADE notes](https://github.com/yiisoft/yii2/blob/2.0.13/framework/UPGRADE.md#upgrade-from-yii-2012)
  * on how to migrate your application to use [[BaseObject]] class to make your application compatible with PHP 7.2.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- * @deprecated since 2.0.13, the class name `Object` is invalid since PHP 7.2, use [[BaseObject]] instead.
+ * @since 1.0
+ * @deprecated since 1.0, the class name `Object` is invalid since PHP 7.2, use [[BaseObject]] instead.
  * @see https://wiki.php.net/rfc/object-typehint
- * @see https://github.com/yiisoft/yii2/issues/7936#issuecomment-315384669
  */
 class Object extends BaseObject
 {

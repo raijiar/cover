@@ -476,19 +476,6 @@ class BaseCover
     }
 
     /**
-     * Returns an HTML hyperlink that can be displayed on your Web page showing "Powered by Cover Framework" information.
-     * @return string an HTML hyperlink that can be displayed on your Web page showing "Powered by Cover Framework" information
-     * @deprecated since 1.0, this method will be removed in 2.1.0.
-     */
-    public static function powered()
-    {
-        return \Cover::t('cover', 'Powered by {cover}', [
-            'cover' => '<a href="http://www.coverframework.com/" rel="external">' . \Cover::t('cover',
-                    'Cover Framework') . '</a>',
-        ]);
-    }
-
-    /**
      * Translates a message to the specified language.
      *
      * This is a shortcut method of [[\cover\i18n\I18N::translate()]].
