@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\base\Application;
-use yii\console\Controller;
-use yii\console\Exception;
-use yii\helpers\Console;
-use yii\helpers\Inflector;
+use Cover;
+use cover\base\Application;
+use cover\console\Controller;
+use cover\console\Exception;
+use cover\helpers\Console;
+use cover\helpers\Inflector;
 
 /**
  * Provides help information about console commands.
@@ -24,7 +19,7 @@ use yii\helpers\Inflector;
  * This command can be used as follows on command line:
  *
  * ```
- * yii help [command name]
+ * cover help [command name]
  * ```
  *
  * In the above, if the command name is not provided, all
@@ -32,8 +27,7 @@ use yii\helpers\Inflector;
  *
  * @property array $commands All available command names. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class HelpController extends Controller
 {
@@ -49,7 +43,7 @@ class HelpController extends Controller
     public function actionIndex($command = null)
     {
         if ($command !== null) {
-            $result = Yii::$app->createController($command);
+            $result = Cover::$app->createController($command);
             if ($result === false) {
                 $name = $this->ansiFormat($command, Console::FG_YELLOW);
                 throw new Exception("No help for unknown command \"$name\".");
@@ -71,12 +65,12 @@ class HelpController extends Controller
     /**
      * List all available controllers and actions in machine readable format.
      * This is used for shell completion.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function actionList()
     {
         foreach ($this->getCommandDescriptions() as $command => $description) {
-            $result = Yii::$app->createController($command);
+            $result = Cover::$app->createController($command);
             if ($result === false || !($result[0] instanceof Controller)) {
                 continue;
             }
@@ -98,11 +92,11 @@ class HelpController extends Controller
      * This is used for shell completion.
      *
      * @param string $action route to action
-     * @since 2.0.11
+     * @since 1.0
      */
     public function actionListActionOptions($action)
     {
-        $result = Yii::$app->createController($action);
+        $result = Cover::$app->createController($action);
 
         if ($result === false || !($result[0] instanceof Controller)) {
             return;
@@ -131,11 +125,11 @@ class HelpController extends Controller
      * Displays usage information for $action.
      *
      * @param string $action route to action
-     * @since 2.0.11
+     * @since 1.0
      */
     public function actionUsage($action)
     {
-        $result = Yii::$app->createController($action);
+        $result = Cover::$app->createController($action);
 
         if ($result === false || !($result[0] instanceof Controller)) {
             return;
@@ -172,7 +166,7 @@ class HelpController extends Controller
      */
     public function getCommands()
     {
-        $commands = $this->getModuleCommands(Yii::$app);
+        $commands = $this->getModuleCommands(Cover::$app);
         sort($commands);
         return array_unique($commands);
     }
@@ -187,7 +181,7 @@ class HelpController extends Controller
         foreach ($this->getCommands() as $command) {
             $description = '';
 
-            $result = Yii::$app->createController($command);
+            $result = Cover::$app->createController($command);
             if ($result !== false && $result[0] instanceof Controller) {
                 list($controller, $actionID) = $result;
                 /** @var Controller $controller */
@@ -222,7 +216,7 @@ class HelpController extends Controller
 
     /**
      * Returns available commands of a specified module.
-     * @param \yii\base\Module $module the module instance
+     * @param \cover\base\Module $module the module instance
      * @return array the available command names
      */
     protected function getModuleCommands($module)
@@ -279,7 +273,7 @@ class HelpController extends Controller
     {
         if (class_exists($controllerClass)) {
             $class = new \ReflectionClass($controllerClass);
-            return !$class->isAbstract() && $class->isSubclassOf('yii\console\Controller');
+            return !$class->isAbstract() && $class->isSubclassOf('cover\console\Controller');
         }
 
         return false;
@@ -296,7 +290,7 @@ class HelpController extends Controller
             $this->stdout("\nThe following commands are available:\n\n", Console::BOLD);
             $len = 0;
             foreach ($commands as $command => $description) {
-                $result = Yii::$app->createController($command);
+                $result = Cover::$app->createController($command);
                 if ($result !== false && $result[0] instanceof Controller) {
                     /** @var $controller Controller */
                     list($controller, $actionID) = $result;
@@ -323,7 +317,7 @@ class HelpController extends Controller
                 $this->stdout(Console::wrapText($description, $len + 4 + 2), Console::BOLD);
                 $this->stdout("\n");
 
-                $result = Yii::$app->createController($command);
+                $result = Cover::$app->createController($command);
                 if ($result !== false && $result[0] instanceof Controller) {
                     list($controller, $actionID) = $result;
                     $actions = $this->getActions($controller);
@@ -440,7 +434,7 @@ class HelpController extends Controller
         }
 
         $options = $controller->getActionOptionsHelp($action);
-        $options[\yii\console\Application::OPTION_APPCONFIG] = [
+        $options[\cover\console\Application::OPTION_APPCONFIG] = [
             'type' => 'string',
             'default' => null,
             'comment' => "custom application configuration file path.\nIf not set, default application configuration is used.",
@@ -527,7 +521,7 @@ class HelpController extends Controller
      * @param Controller $controller the controller instance
      * @param string $option the option name
      * @return string the formatted string for the alias argument or option
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function formatOptionAliases($controller, $option)
     {
@@ -545,16 +539,16 @@ class HelpController extends Controller
      */
     protected function getScriptName()
     {
-        return basename(Yii::$app->request->scriptFile);
+        return basename(Cover::$app->request->scriptFile);
     }
 
     /**
      * Return a default help header.
      * @return string default help header.
-     * @since 2.0.11
+     * @since 1.0
      */
     protected function getDefaultHelpHeader()
     {
-        return "\nThis is Yii version " . \Yii::getVersion() . ".\n";
+        return "\nThis is Cover version " . \Cover::getVersion() . ".\n";
     }
 }

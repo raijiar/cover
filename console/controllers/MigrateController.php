@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\db\Connection;
-use yii\db\Query;
-use yii\di\Instance;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Console;
+use Cover;
+use cover\db\Connection;
+use cover\db\Query;
+use cover\di\Instance;
+use cover\helpers\ArrayHelper;
+use cover\helpers\Console;
 
 /**
  * Manages application migrations.
@@ -41,23 +36,23 @@ use yii\helpers\Console;
  *
  * ```
  * # creates a new migration named 'create_user_table'
- * yii migrate/create create_user_table
+ * cover migrate/create create_user_table
  *
  * # applies ALL new migrations
- * yii migrate
+ * cover migrate
  *
  * # reverts the last applied migration
- * yii migrate/down
+ * cover migrate/down
  * ```
  *
- * Since 2.0.10 you can use namespaced migrations. In order to enable this feature you should configure [[migrationNamespaces]]
+ * Since 1.0 you can use namespaced migrations. In order to enable this feature you should configure [[migrationNamespaces]]
  * property for the controller at application configuration:
  *
  * ```php
  * return [
  *     'controllerMap' => [
  *         'migrate' => [
- *             'class' => 'yii\console\controllers\MigrateController',
+ *             'class' => 'cover\console\controllers\MigrateController',
  *             'migrationNamespaces' => [
  *                 'app\migrations',
  *                 'some\extension\migrations',
@@ -68,14 +63,13 @@ use yii\helpers\Console;
  * ];
  * ```
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class MigrateController extends BaseMigrateController
 {
     /**
      * Maximum length of a migration name.
-     * @since 2.0.13
+     * @since 1.0
      */
     const MAX_NAME_LENGTH = 180;
 
@@ -86,7 +80,7 @@ class MigrateController extends BaseMigrateController
     /**
      * {@inheritdoc}
      */
-    public $templateFile = '@yii/views/migration.php';
+    public $templateFile = '@cover/views/migration.php';
     /**
      * @var array a set of template paths for generating migration code automatically.
      *
@@ -97,20 +91,20 @@ class MigrateController extends BaseMigrateController
      * - `drop_column`: dropping column template
      * - `create_junction`: create junction template
      *
-     * @since 2.0.7
+     * @since 1.0
      */
     public $generatorTemplateFiles = [
-        'create_table' => '@yii/views/createTableMigration.php',
-        'drop_table' => '@yii/views/dropTableMigration.php',
-        'add_column' => '@yii/views/addColumnMigration.php',
-        'drop_column' => '@yii/views/dropColumnMigration.php',
-        'create_junction' => '@yii/views/createTableMigration.php',
+        'create_table' => '@cover/views/createTableMigration.php',
+        'drop_table' => '@cover/views/dropTableMigration.php',
+        'add_column' => '@cover/views/addColumnMigration.php',
+        'drop_column' => '@cover/views/dropColumnMigration.php',
+        'create_junction' => '@cover/views/createTableMigration.php',
     ];
     /**
      * @var bool indicates whether the table names generated should consider
      * the `tablePrefix` setting of the DB connection. For example, if the table
      * name is `post` the generator wil return `{{%post}}`.
-     * @since 2.0.8
+     * @since 1.0
      */
     public $useTablePrefix = false;
     /**
@@ -123,18 +117,18 @@ class MigrateController extends BaseMigrateController
      * Note: primary key is added automatically and is named id by default.
      * If you want to use another name you may specify it explicitly like
      * `--fields="id_key:primaryKey,name:string(12):notNull:unique"`
-     * @since 2.0.7
+     * @since 1.0
      */
     public $fields = [];
     /**
      * @var Connection|array|string the DB connection object or the application component ID of the DB connection to use
-     * when applying migrations. Starting from version 2.0.3, this can also be a configuration array
+     * when applying migrations. Starting from version 1.0, this can also be a configuration array
      * for creating the object.
      */
     public $db = 'db';
     /**
      * @var string the comment for the table being created.
-     * @since 2.0.14
+     * @since 1.0
      */
     public $comment = '';
 
@@ -155,7 +149,7 @@ class MigrateController extends BaseMigrateController
 
     /**
      * {@inheritdoc}
-     * @since 2.0.8
+     * @since 1.0
      */
     public function optionAliases()
     {
@@ -173,7 +167,7 @@ class MigrateController extends BaseMigrateController
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param \yii\base\Action $action the action to be executed.
+     * @param \cover\base\Action $action the action to be executed.
      * @return bool whether the action should continue to be executed.
      */
     public function beforeAction($action)
@@ -189,13 +183,13 @@ class MigrateController extends BaseMigrateController
     /**
      * Creates a new migration instance.
      * @param string $class the migration class name
-     * @return \yii\db\Migration the migration instance
+     * @return \cover\db\Migration the migration instance
      */
     protected function createMigration($class)
     {
         $this->includeMigrationFile($class);
 
-        return Yii::createObject([
+        return Cover::createObject([
             'class' => $class,
             'db' => $this->db,
             'compact' => $this->compact,
@@ -291,7 +285,7 @@ class MigrateController extends BaseMigrateController
 
     /**
      * {@inheritdoc}
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function truncateDatabase()
     {
@@ -330,7 +324,7 @@ class MigrateController extends BaseMigrateController
 
     /**
      * {@inheritdoc}
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function getMigrationNameLimit()
     {
@@ -347,7 +341,7 @@ class MigrateController extends BaseMigrateController
 
     /**
      * {@inheritdoc}
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function generateMigrationSourceCode($params)
     {
@@ -409,9 +403,9 @@ class MigrateController extends BaseMigrateController
         foreach ($foreignKeys as $column => $foreignKey) {
             $relatedColumn = $foreignKey['column'];
             $relatedTable = $foreignKey['table'];
-            // Since 2.0.11 if related column name is not specified,
+            // Since 1.0 if related column name is not specified,
             // we're trying to get it from table schema
-            // @see https://github.com/yiisoft/yii2/issues/12748
+            // @see https://github.com/coversoft/cover2/issues/12748
             if ($relatedColumn === null) {
                 $relatedColumn = 'id';
                 try {
@@ -439,7 +433,7 @@ class MigrateController extends BaseMigrateController
             ];
         }
 
-        return $this->renderFile(Yii::getAlias($templateFile), array_merge($params, [
+        return $this->renderFile(Cover::getAlias($templateFile), array_merge($params, [
             'table' => $this->generateTableName($table),
             'fields' => $fields,
             'foreignKeys' => $foreignKeys,
@@ -453,7 +447,7 @@ class MigrateController extends BaseMigrateController
      *
      * @param string $tableName the table name to generate.
      * @return string
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function generateTableName($tableName)
     {
@@ -471,7 +465,7 @@ class MigrateController extends BaseMigrateController
      * - fields: array, parsed fields
      * - foreignKeys: array, detected foreign keys
      *
-     * @since 2.0.7
+     * @since 1.0
      */
     protected function parseFields()
     {
@@ -517,7 +511,7 @@ class MigrateController extends BaseMigrateController
     /**
      * Adds default primary key to fields list if there's no primary key specified.
      * @param array $fields parsed fields
-     * @since 2.0.7
+     * @since 1.0
      */
     protected function addDefaultPrimaryKey(&$fields)
     {

@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\console\Controller;
-use yii\helpers\Console;
+use Cover;
+use cover\console\Controller;
+use cover\helpers\Console;
 
 /**
  * Runs PHP built-in web server.
@@ -17,8 +12,7 @@ use yii\helpers\Console;
  * In order to access server from remote machines use 0.0.0.0:8000. That is especially useful when running server in
  * a virtual machine.
  *
- * @author Alexander Makarov <sam@rmcreative.ru>
- * @since 2.0.7
+ * @since 1.0
  */
 class ServeController extends Controller
 {
@@ -51,7 +45,7 @@ class ServeController extends Controller
      */
     public function actionIndex($address = 'localhost')
     {
-        $documentRoot = Yii::getAlias($this->docroot);
+        $documentRoot = Cover::getAlias($this->docroot);
 
         if (strpos($address, ':') === false) {
             $address = $address . ':' . $this->port;
@@ -96,7 +90,7 @@ class ServeController extends Controller
 
     /**
      * {@inheritdoc}
-     * @since 2.0.8
+     * @since 1.0
      */
     public function optionAliases()
     {

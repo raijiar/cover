@@ -1,46 +1,40 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
-use yii\console\Controller;
-use yii\console\Exception;
-use yii\console\ExitCode;
-use yii\helpers\Console;
-use yii\helpers\FileHelper;
-use yii\test\FixtureTrait;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\base\InvalidParamException;
+use cover\console\Controller;
+use cover\console\Exception;
+use cover\console\ExitCode;
+use cover\helpers\Console;
+use cover\helpers\FileHelper;
+use cover\test\FixtureTrait;
 
 /**
  * Manages fixture data loading and unloading.
  *
  * ```
  * #load fixtures from UsersFixture class with default namespace "tests\unit\fixtures"
- * yii fixture/load User
+ * cover fixture/load User
  *
  * #also a short version of this command (generate action is default)
- * yii fixture User
+ * cover fixture User
  *
  * #load all fixtures
- * yii fixture "*"
+ * cover fixture "*"
  *
  * #load all fixtures except User
- * yii fixture "*, -User"
+ * cover fixture "*, -User"
  *
  * #load fixtures with different namespace.
- * yii fixture/load User --namespace=alias\my\custom\namespace\goes\here
+ * cover fixture/load User --namespace=alias\my\custom\namespace\goes\here
  * ```
  *
  * The `unload` sub-command can be used similarly to unload fixtures.
  *
- * @author Mark Jebri <mark.github@yandex.ru>
- * @since 2.0
+ * @since 1.0
  */
 class FixtureController extends Controller
 {
@@ -59,7 +53,7 @@ class FixtureController extends Controller
      * that disables and enables integrity check, so your data can be safely loaded.
      */
     public $globalFixtures = [
-        'yii\test\InitDbFixture',
+        'cover\test\InitDbFixture',
     ];
 
 
@@ -75,7 +69,7 @@ class FixtureController extends Controller
 
     /**
      * {@inheritdoc}
-     * @since 2.0.8
+     * @since 1.0
      */
     public function optionAliases()
     {
@@ -93,13 +87,13 @@ class FixtureController extends Controller
      * ```
      * # load the fixture data specified by User and UserProfile.
      * # any existing fixture data will be removed first
-     * yii fixture/load "User, UserProfile"
+     * cover fixture/load "User, UserProfile"
      *
      * # load all available fixtures found under 'tests\unit\fixtures'
-     * yii fixture/load "*"
+     * cover fixture/load "*"
      *
      * # load all fixtures except User and UserProfile
-     * yii fixture/load "*, -User, -UserProfile"
+     * cover fixture/load "*, -User, -UserProfile"
      * ```
      *
      * @param array $fixturesInput
@@ -111,7 +105,7 @@ class FixtureController extends Controller
         if ($fixturesInput === []) {
             $this->stdout($this->getHelpSummary() . "\n");
 
-            $helpCommand = Console::ansiFormat('yii help fixture', [Console::FG_CYAN]);
+            $helpCommand = Console::ansiFormat('cover help fixture', [Console::FG_CYAN]);
             $this->stdout("Use $helpCommand to get usage info.\n");
 
             return ExitCode::OK;
@@ -173,13 +167,13 @@ class FixtureController extends Controller
      *
      * ```
      * # unload the fixture data specified by User and UserProfile.
-     * yii fixture/unload "User, UserProfile"
+     * cover fixture/unload "User, UserProfile"
      *
      * # unload all fixtures found under 'tests\unit\fixtures'
-     * yii fixture/unload "*"
+     * cover fixture/unload "*"
      *
      * # unload all fixtures except User and UserProfile
-     * yii fixture/unload "*, -User, -UserProfile"
+     * cover fixture/unload "*, -User, -UserProfile"
      * ```
      *
      * @param array $fixturesInput
@@ -239,7 +233,7 @@ class FixtureController extends Controller
     private function notifyLoaded($fixtures)
     {
         $this->stdout("Fixtures were successfully loaded from namespace:\n", Console::FG_YELLOW);
-        $this->stdout("\t\"" . Yii::getAlias($this->namespace) . "\"\n\n", Console::FG_GREEN);
+        $this->stdout("\t\"" . Cover::getAlias($this->namespace) . "\"\n\n", Console::FG_GREEN);
         $this->outputList($fixtures);
     }
 
@@ -294,7 +288,7 @@ class FixtureController extends Controller
     private function notifyUnloaded($fixtures)
     {
         $this->stdout("\nFixtures were successfully unloaded from namespace: ", Console::FG_YELLOW);
-        $this->stdout(Yii::getAlias($this->namespace) . "\"\n\n", Console::FG_GREEN);
+        $this->stdout(Cover::getAlias($this->namespace) . "\"\n\n", Console::FG_GREEN);
         $this->outputList($fixtures);
     }
 
@@ -514,7 +508,7 @@ class FixtureController extends Controller
     private function getFixturePath()
     {
         try {
-            return Yii::getAlias('@' . str_replace('\\', '/', $this->namespace));
+            return Cover::getAlias('@' . str_replace('\\', '/', $this->namespace));
         } catch (InvalidParamException $e) {
             throw new InvalidConfigException('Invalid fixture namespace: "' . $this->namespace . '". Please, check your FixtureController::namespace parameter');
         }

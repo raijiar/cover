@@ -1,34 +1,29 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\caching\ApcCache;
-use yii\caching\CacheInterface;
-use yii\console\Controller;
-use yii\console\Exception;
-use yii\console\ExitCode;
-use yii\helpers\Console;
+use Cover;
+use cover\caching\ApcCache;
+use cover\caching\CacheInterface;
+use cover\console\Controller;
+use cover\console\Exception;
+use cover\console\ExitCode;
+use cover\helpers\Console;
 
 /**
  * Allows you to flush cache.
  *
  * see list of available components to flush:
  *
- *     yii cache
+ *     cover cache
  *
  * flush particular components specified by their names:
  *
- *     yii cache/flush first second third
+ *     cover cache/flush first second third
  *
  * flush all cache components that can be found in the system
  *
- *     yii cache/flush-all
+ *     cover cache/flush-all
  *
  * Note that the command uses cache components defined in your console application configuration file. If components
  * configured are different from web application, web application cache won't be cleared. In order to fix it please
@@ -40,9 +35,7 @@ use yii\helpers\Console;
  * - Putting a php file under web root and calling it via HTTP
  * - Using [Cachetool](http://gordalina.github.io/cachetool/)
  *
- * @author Alexander Makarov <sam@rmcreative.ru>
- * @author Mark Jebri <mark.github@yandex.ru>
- * @since 2.0
+ * @since 1.0
  */
 class CacheController extends Controller
 {
@@ -67,7 +60,7 @@ class CacheController extends Controller
      *
      * ```
      * # flushes caches specified by their id: "first", "second", "third"
-     * yii cache/flush first second third
+     * cover cache/flush first second third
      * ```
      */
     public function actionFlush()
@@ -101,7 +94,7 @@ class CacheController extends Controller
             $cachesInfo[] = [
                 'name' => $name,
                 'class' => $class,
-                'is_flushed' => $this->canBeFlushed($class) ? Yii::$app->get($name)->flush() : false,
+                'is_flushed' => $this->canBeFlushed($class) ? Cover::$app->get($name)->flush() : false,
             ];
         }
 
@@ -125,7 +118,7 @@ class CacheController extends Controller
             $cachesInfo[] = [
                 'name' => $name,
                 'class' => $class,
-                'is_flushed' => $this->canBeFlushed($class) ? Yii::$app->get($name)->flush() : false,
+                'is_flushed' => $this->canBeFlushed($class) ? Cover::$app->get($name)->flush() : false,
             ];
         }
 
@@ -137,26 +130,26 @@ class CacheController extends Controller
      *
      * ```
      * # clears cache schema specified by component id: "db"
-     * yii cache/flush-schema db
+     * cover cache/flush-schema db
      * ```
      *
      * @param string $db id connection component
      * @return int exit code
      * @throws Exception
-     * @throws \yii\base\InvalidConfigException
+     * @throws \cover\base\InvalidConfigException
      *
-     * @since 2.0.1
+     * @since 1.0
      */
     public function actionFlushSchema($db = 'db')
     {
-        $connection = Yii::$app->get($db, false);
+        $connection = Cover::$app->get($db, false);
         if ($connection === null) {
             $this->stdout("Unknown component \"$db\".\n", Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;
         }
 
-        if (!$connection instanceof \yii\db\Connection) {
-            $this->stdout("\"$db\" component doesn't inherit \\yii\\db\\Connection.\n", Console::FG_RED);
+        if (!$connection instanceof \cover\db\Connection) {
+            $this->stdout("\"$db\" component doesn't inherit \\cover\\db\\Connection.\n", Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;
         } elseif (!$this->confirm("Flush cache schema for \"$db\" connection?")) {
             return ExitCode::OK;
@@ -257,7 +250,7 @@ class CacheController extends Controller
     private function findCaches(array $cachesNames = [])
     {
         $caches = [];
-        $components = Yii::$app->getComponents();
+        $components = Cover::$app->getComponents();
         $findAll = ($cachesNames === []);
 
         foreach ($components as $name => $component) {
@@ -272,7 +265,7 @@ class CacheController extends Controller
             } elseif (is_string($component) && $this->isCacheClass($component)) {
                 $caches[$name] = $component;
             } elseif ($component instanceof \Closure) {
-                $cache = Yii::$app->get($name);
+                $cache = Cover::$app->get($name);
                 if ($this->isCacheClass($cache)) {
                     $cacheClass = get_class($cache);
                     $caches[$name] = $cacheClass;
@@ -290,7 +283,7 @@ class CacheController extends Controller
      */
     private function isCacheClass($className)
     {
-        return is_subclass_of($className, 'yii\caching\CacheInterface');
+        return is_subclass_of($className, 'cover\caching\CacheInterface');
     }
 
     /**

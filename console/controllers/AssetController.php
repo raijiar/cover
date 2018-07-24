@@ -1,20 +1,15 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\console\Controller;
-use yii\console\Exception;
-use yii\console\ExitCode;
-use yii\helpers\Console;
-use yii\helpers\FileHelper;
-use yii\helpers\VarDumper;
-use yii\web\AssetBundle;
+use Cover;
+use cover\console\Controller;
+use cover\console\Exception;
+use cover\console\ExitCode;
+use cover\helpers\Console;
+use cover\helpers\FileHelper;
+use cover\helpers\VarDumper;
+use cover\web\AssetBundle;
 
 /**
  * Allows you to combine and compress your JavaScript and CSS files.
@@ -23,12 +18,12 @@ use yii\web\AssetBundle;
  *
  * 1. Create a configuration file using the `template` action:
  *
- *    yii asset/template /path/to/myapp/config.php
+ *    cover asset/template /path/to/myapp/config.php
  *
  * 2. Edit the created config file, adjusting it for your web application needs.
  * 3. Run the 'compress' action, using created config:
  *
- *    yii asset /path/to/myapp/config.php /path/to/myapp/config/assets_compressed.php
+ *    cover asset /path/to/myapp/config.php /path/to/myapp/config/assets_compressed.php
  *
  * 4. Adjust your web application config to use compressed assets.
  *
@@ -38,12 +33,10 @@ use yii\web\AssetBundle;
  * Note: by default this command relies on an external tools to perform actual files compression,
  * check [[jsCompressor]] and [[cssCompressor]] for more details.
  *
- * @property \yii\web\AssetManager $assetManager Asset manager instance. Note that the type of this property
+ * @property \cover\web\AssetManager $assetManager Asset manager instance. Note that the type of this property
  * differs in getter and setter. See [[getAssetManager()]] and [[setAssetManager()]] for details.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class AssetController extends Controller
 {
@@ -82,7 +75,7 @@ class AssetController extends Controller
      *     'css' => 'css/all-shared-{hash}.css',
      *     'depends' => [
      *         // Include all assets shared between 'backend' and 'frontend'
-     *         'yii\web\YiiAsset',
+     *         'cover\web\CoverAsset',
      *         'app\assets\SharedAsset',
      *     ],
      * ],
@@ -124,13 +117,13 @@ class AssetController extends Controller
     public $cssCompressor = 'java -jar yuicompressor.jar --type css {from} -o {to}';
     /**
      * @var bool whether to delete asset source files after compression.
-     * This option affects only those bundles, which have [[\yii\web\AssetBundle::sourcePath]] is set.
-     * @since 2.0.10
+     * This option affects only those bundles, which have [[\cover\web\AssetBundle::sourcePath]] is set.
+     * @since 1.0
      */
     public $deleteSource = false;
 
     /**
-     * @var array|\yii\web\AssetManager [[\yii\web\AssetManager]] instance or its array configuration, which will be used
+     * @var array|\cover\web\AssetManager [[\cover\web\AssetManager]] instance or its array configuration, which will be used
      * for assets processing.
      */
     private $_assetManager = [];
@@ -138,15 +131,15 @@ class AssetController extends Controller
 
     /**
      * Returns the asset manager instance.
-     * @throws \yii\console\Exception on invalid configuration.
-     * @return \yii\web\AssetManager asset manager instance.
+     * @throws \cover\console\Exception on invalid configuration.
+     * @return \cover\web\AssetManager asset manager instance.
      */
     public function getAssetManager()
     {
         if (!is_object($this->_assetManager)) {
             $options = $this->_assetManager;
             if (!isset($options['class'])) {
-                $options['class'] = 'yii\\web\\AssetManager';
+                $options['class'] = 'cover\\web\\AssetManager';
             }
             if (!isset($options['basePath'])) {
                 throw new Exception("Please specify 'basePath' for the 'assetManager' option.");
@@ -159,7 +152,7 @@ class AssetController extends Controller
                 $options['forceCopy'] = true;
             }
 
-            $this->_assetManager = Yii::createObject($options);
+            $this->_assetManager = Cover::createObject($options);
         }
 
         return $this->_assetManager;
@@ -167,8 +160,8 @@ class AssetController extends Controller
 
     /**
      * Sets asset manager instance or configuration.
-     * @param \yii\web\AssetManager|array $assetManager asset manager instance or its array configuration.
-     * @throws \yii\console\Exception on invalid argument type.
+     * @param \cover\web\AssetManager|array $assetManager asset manager instance or its array configuration.
+     * @throws \cover\console\Exception on invalid argument type.
      */
     public function setAssetManager($assetManager)
     {
@@ -212,7 +205,7 @@ class AssetController extends Controller
     /**
      * Applies configuration from the given file to self instance.
      * @param string $configFile configuration file name.
-     * @throws \yii\console\Exception on failure.
+     * @throws \cover\console\Exception on failure.
      */
     protected function loadConfiguration($configFile)
     {
@@ -232,7 +225,7 @@ class AssetController extends Controller
     /**
      * Creates full list of source asset bundles.
      * @param string[] $bundles list of asset bundle names
-     * @return \yii\web\AssetBundle[] list of source asset bundles.
+     * @return \cover\web\AssetBundle[] list of source asset bundles.
      */
     protected function loadBundles($bundles)
     {
@@ -252,7 +245,7 @@ class AssetController extends Controller
 
     /**
      * Loads asset bundle dependencies recursively.
-     * @param \yii\web\AssetBundle $bundle bundle instance
+     * @param \cover\web\AssetBundle $bundle bundle instance
      * @param array $result already loaded bundles list.
      * @throws Exception on failure.
      */
@@ -274,8 +267,8 @@ class AssetController extends Controller
     /**
      * Creates full list of output asset bundles.
      * @param array $targets output asset bundles configuration.
-     * @param \yii\web\AssetBundle[] $bundles list of source asset bundles.
-     * @return \yii\web\AssetBundle[] list of output asset bundles.
+     * @param \cover\web\AssetBundle[] $bundles list of source asset bundles.
+     * @return \cover\web\AssetBundle[] list of output asset bundles.
      * @throws Exception on failure.
      */
     protected function loadTargets($targets, $bundles)
@@ -329,7 +322,7 @@ class AssetController extends Controller
             if (!isset($target['class'])) {
                 $target['class'] = $name;
             }
-            $targets[$name] = Yii::createObject($target);
+            $targets[$name] = Cover::createObject($target);
         }
 
         return $targets;
@@ -337,9 +330,9 @@ class AssetController extends Controller
 
     /**
      * Builds output asset bundle.
-     * @param \yii\web\AssetBundle $target output asset bundle
+     * @param \cover\web\AssetBundle $target output asset bundle
      * @param string $type either 'js' or 'css'.
-     * @param \yii\web\AssetBundle[] $bundles source asset bundles.
+     * @param \cover\web\AssetBundle[] $bundles source asset bundles.
      * @throws Exception on failure.
      */
     protected function buildTarget($target, $type, $bundles)
@@ -382,9 +375,9 @@ class AssetController extends Controller
 
     /**
      * Adjust dependencies between asset bundles in the way source bundles begin to depend on output ones.
-     * @param \yii\web\AssetBundle[] $targets output asset bundles.
-     * @param \yii\web\AssetBundle[] $bundles source asset bundles.
-     * @return \yii\web\AssetBundle[] output asset bundles.
+     * @param \cover\web\AssetBundle[] $targets output asset bundles.
+     * @param \cover\web\AssetBundle[] $bundles source asset bundles.
+     * @return \cover\web\AssetBundle[] output asset bundles.
      */
     protected function adjustDependency($targets, $bundles)
     {
@@ -430,7 +423,7 @@ class AssetController extends Controller
 
     /**
      * Registers asset bundles including their dependencies.
-     * @param \yii\web\AssetBundle[] $bundles asset bundles list.
+     * @param \cover\web\AssetBundle[] $bundles asset bundles list.
      * @param string $name bundle name.
      * @param array $registered stores already registered names.
      * @throws Exception if circular dependency is detected.
@@ -452,9 +445,9 @@ class AssetController extends Controller
 
     /**
      * Saves new asset bundles configuration.
-     * @param \yii\web\AssetBundle[] $targets list of asset bundles to be saved.
+     * @param \cover\web\AssetBundle[] $targets list of asset bundles to be saved.
      * @param string $bundleFile output file name.
-     * @throws \yii\console\Exception on failure.
+     * @throws \cover\console\Exception on failure.
      */
     protected function saveTargets($targets, $bundleFile)
     {
@@ -488,7 +481,7 @@ class AssetController extends Controller
         $bundleFileContent = <<<EOD
 <?php
 /**
- * This file is generated by the "yii {$this->id}" command.
+ * This file is generated by the "cover {$this->id}" command.
  * DO NOT MODIFY THIS FILE DIRECTLY.
  * @version {$version}
  */
@@ -504,7 +497,7 @@ EOD;
      * Compresses given JavaScript files and combines them into the single one.
      * @param array $inputFiles list of source file names.
      * @param string $outputFile output file name.
-     * @throws \yii\console\Exception on failure
+     * @throws \cover\console\Exception on failure
      */
     protected function compressJsFiles($inputFiles, $outputFile)
     {
@@ -533,7 +526,7 @@ EOD;
      * Compresses given CSS files and combines them into the single one.
      * @param array $inputFiles list of source file names.
      * @param string $outputFile output file name.
-     * @throws \yii\console\Exception on failure
+     * @throws \cover\console\Exception on failure
      */
     protected function compressCssFiles($inputFiles, $outputFile)
     {
@@ -562,7 +555,7 @@ EOD;
      * Combines JavaScript files into a single one.
      * @param array $inputFiles source file names.
      * @param string $outputFile output file name.
-     * @throws \yii\console\Exception on failure.
+     * @throws \cover\console\Exception on failure.
      */
     public function combineJsFiles($inputFiles, $outputFile)
     {
@@ -587,7 +580,7 @@ EOD;
      * Combines CSS files into a single one.
      * @param array $inputFiles source file names.
      * @param string $outputFile output file name.
-     * @throws \yii\console\Exception on failure.
+     * @throws \cover\console\Exception on failure.
      */
     public function combineCssFiles($inputFiles, $outputFile)
     {
@@ -686,7 +679,7 @@ EOD;
      * Creates template of configuration file for [[actionCompress]].
      * @param string $configFile output file name.
      * @return int CLI exit code
-     * @throws \yii\console\Exception on failure.
+     * @throws \cover\console\Exception on failure.
      */
     public function actionTemplate($configFile)
     {
@@ -696,12 +689,12 @@ EOD;
         $template = <<<EOD
 <?php
 /**
- * Configuration file for the "yii asset" console command.
+ * Configuration file for the "cover asset" console command.
  */
 
 // In the console environment, some path aliases may not exist. Please define these:
-// Yii::setAlias('@webroot', __DIR__ . '/../web');
-// Yii::setAlias('@web', '/');
+// Cover::setAlias('@webroot', __DIR__ . '/../web');
+// Cover::setAlias('@web', '/');
 
 return [
     // Adjust command/callback for JavaScript files compressing:
@@ -713,13 +706,13 @@ return [
     // The list of asset bundles to compress:
     'bundles' => [
         // 'app\assets\AppAsset',
-        // 'yii\web\YiiAsset',
-        // 'yii\web\JqueryAsset',
+        // 'cover\web\CoverAsset',
+        // 'cover\web\JqueryAsset',
     ],
     // Asset bundle for compression output:
     'targets' => [
         'all' => [
-            'class' => 'yii\web\AssetBundle',
+            'class' => 'cover\web\AssetBundle',
             'basePath' => '@webroot/assets',
             'baseUrl' => '@web/assets',
             'js' => 'js/all-{hash}.js',
@@ -784,7 +777,7 @@ EOD;
      */
     private function composeBundleConfig($bundle)
     {
-        $config = Yii::getObjectVars($bundle);
+        $config = Cover::getObjectVars($bundle);
         $config['class'] = get_class($bundle);
         return $config;
     }
@@ -813,8 +806,8 @@ EOD;
 
     /**
      * Deletes bundle asset files, which have been published from `sourcePath`.
-     * @param \yii\web\AssetBundle[] $bundles asset bundles to be processed.
-     * @since 2.0.10
+     * @param \cover\web\AssetBundle[] $bundles asset bundles to be processed.
+     * @since 1.0
      */
     private function deletePublishedAssets($bundles)
     {

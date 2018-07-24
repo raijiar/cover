@@ -1,22 +1,17 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\console\Exception;
-use yii\console\ExitCode;
-use yii\db\Connection;
-use yii\db\Query;
-use yii\di\Instance;
-use yii\helpers\Console;
-use yii\helpers\FileHelper;
-use yii\helpers\VarDumper;
-use yii\i18n\GettextPoFile;
+use Cover;
+use cover\console\Exception;
+use cover\console\ExitCode;
+use cover\db\Connection;
+use cover\db\Query;
+use cover\di\Instance;
+use cover\helpers\Console;
+use cover\helpers\FileHelper;
+use cover\helpers\VarDumper;
+use cover\i18n\GettextPoFile;
 
 /**
  * Extracts messages to be translated from source files.
@@ -30,15 +25,14 @@ use yii\i18n\GettextPoFile;
  *
  * Usage:
  * 1. Create a configuration file using the 'message/config' command:
- *    yii message/config /path/to/myapp/messages/config.php
+ *    cover message/config /path/to/myapp/messages/config.php
  * 2. Edit the created config file, adjusting it for your web application needs.
  * 3. Run the 'message/extract' command, using created config:
- *    yii message /path/to/myapp/messages/config.php
+ *    cover message /path/to/myapp/messages/config.php
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class MessageController extends \yii\console\Controller
+class MessageController extends \cover\console\Controller
 {
     /**
      * @var string controller default action ID.
@@ -47,11 +41,11 @@ class MessageController extends \yii\console\Controller
     /**
      * @var string required, root directory of all source files.
      */
-    public $sourcePath = '@yii';
+    public $sourcePath = '@cover';
     /**
      * @var string required, root directory containing message translations.
      */
-    public $messagePath = '@yii/messages';
+    public $messagePath = '@cover/messages';
     /**
      * @var array required, list of language codes that the extracted messages
      * should be translated to. For example, ['zh-CN', 'de'].
@@ -59,11 +53,11 @@ class MessageController extends \yii\console\Controller
     public $languages = [];
     /**
      * @var string the name of the function for translating messages.
-     * Defaults to 'Yii::t'. This is used as a mark to find the messages to be
+     * Defaults to 'Cover::t'. This is used as a mark to find the messages to be
      * translated. You may use a string for single function name or an array for
      * multiple function names.
      */
-    public $translator = 'Yii::t';
+    public $translator = 'Cover::t';
     /**
      * @var bool whether to sort messages by keys when merging new messages
      * with the existing ones. Defaults to false, which means the new (untranslated)
@@ -98,7 +92,7 @@ class MessageController extends \yii\console\Controller
         '.hgignore',
         '.hgkeep',
         '/messages',
-        '/BaseYii.php', // contains examples about Yii:t()
+        '/BaseCover.php', // contains examples about Cover:t()
     ];
     /**
      * @var array list of patterns that specify which files (not directories) should be processed.
@@ -128,19 +122,19 @@ class MessageController extends \yii\console\Controller
      */
     public $catalog = 'messages';
     /**
-     * @var array message categories to ignore. For example, 'yii', 'app*', 'widgets/menu', etc.
+     * @var array message categories to ignore. For example, 'cover', 'app*', 'widgets/menu', etc.
      * @see isCategoryIgnored
      */
     public $ignoreCategories = [];
     /**
      * @var string File header in generated PHP file with messages. This property is used only if [[$format]] is "php".
-     * @since 2.0.13
+     * @since 1.0
      */
     public $phpFileHeader = '';
     /**
      * @var string|null DocBlock used for messages array in generated PHP file. If `null`, default DocBlock will be used.
      * This property is used only if [[$format]] is "php".
-     * @since 2.0.13
+     * @since 1.0
      */
     public $phpDocBlock;
 
@@ -148,7 +142,7 @@ class MessageController extends \yii\console\Controller
      * @var array Config for messages extraction.
      * @see actionExtract()
      * @see initConfig()
-     * @since 2.0.13
+     * @since 1.0
      */
     protected $config;
 
@@ -182,7 +176,7 @@ class MessageController extends \yii\console\Controller
 
     /**
      * {@inheritdoc}
-     * @since 2.0.8
+     * @since 1.0
      */
     public function optionAliases()
     {
@@ -217,7 +211,7 @@ class MessageController extends \yii\console\Controller
      */
     public function actionConfig($filePath)
     {
-        $filePath = Yii::getAlias($filePath);
+        $filePath = Cover::getAlias($filePath);
         if (file_exists($filePath)) {
             if (!$this->confirm("File '{$filePath}' already exists. Do you wish to overwrite it?")) {
                 return ExitCode::OK;
@@ -228,13 +222,13 @@ class MessageController extends \yii\console\Controller
         $content = <<<EOD
 <?php
 /**
- * Configuration file for 'yii {$this->id}/{$this->defaultAction}' command.
+ * Configuration file for 'cover {$this->id}/{$this->defaultAction}' command.
  *
- * This file is automatically generated by 'yii {$this->id}/{$this->action->id}' command.
+ * This file is automatically generated by 'cover {$this->id}/{$this->action->id}' command.
  * It contains parameters for source code messages extraction.
  * You may modify this file to suit your needs.
  *
- * You can use 'yii {$this->id}/{$this->action->id}-template' command to create
+ * You can use 'cover {$this->id}/{$this->action->id}-template' command to create
  * template configuration file with detailed description for each parameter.
  */
 return $array;
@@ -263,7 +257,7 @@ EOD;
      */
     public function actionConfigTemplate($filePath)
     {
-        $filePath = Yii::getAlias($filePath);
+        $filePath = Cover::getAlias($filePath);
 
         if (file_exists($filePath)) {
             if (!$this->confirm("File '{$filePath}' already exists. Do you wish to overwrite it?")) {
@@ -271,7 +265,7 @@ EOD;
             }
         }
 
-        if (!copy(Yii::getAlias('@yii/views/messageConfig.php'), $filePath)) {
+        if (!copy(Cover::getAlias('@cover/views/messageConfig.php'), $filePath)) {
             $this->stdout("Configuration file template was NOT created at '{$filePath}'.\n\n", Console::FG_RED);
             return ExitCode::UNSPECIFIED_ERROR;
         }
@@ -287,7 +281,7 @@ EOD;
      * messages that need to be translated in different languages.
      *
      * @param string $configFile the path or alias of the configuration file.
-     * You may use the "yii message/config" command to generate
+     * You may use the "cover message/config" command to generate
      * this file and then customize it for your needs.
      * @throws Exception on failure.
      */
@@ -463,7 +457,7 @@ EOD;
      * @param string $fileName name of the file to extract messages from
      * @param string $translator name of the function used to translate messages
      * @param array $ignoreCategories message categories to ignore.
-     * This parameter is available since version 2.0.4.
+     * This parameter is available since version 1.0
      * @return array
      */
     protected function extractMessages($fileName, $translator, $ignoreCategories = [])
@@ -581,7 +575,7 @@ EOD;
      * @param string $category category that is checked
      * @param array $ignoreCategories message categories to ignore.
      * @return bool
-     * @since 2.0.7
+     * @since 1.0
      */
     protected function isCategoryIgnored($category, array $ignoreCategories)
     {
@@ -605,7 +599,7 @@ EOD;
      * @param array|string $a
      * @param array|string $b
      * @return bool
-     * @since 2.0.1
+     * @since 1.0
      */
     protected function tokensEqual($a, $b)
     {
@@ -624,7 +618,7 @@ EOD;
      *
      * @param array $tokens
      * @return int|string
-     * @since 2.0.1
+     * @since 1.0
      */
     protected function getLine($tokens)
     {
@@ -844,7 +838,7 @@ EOD;
      * @param array $messages
      * @param string $dirName name of the directory to write to
      * @param string $catalog message catalog
-     * @since 2.0.6
+     * @since 1.0
      */
     protected function saveMessagesToPOT($messages, $dirName, $catalog)
     {
@@ -879,13 +873,13 @@ EOD;
     /**
      * @param string $configFile
      * @throws Exception If configuration file does not exists.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function initConfig($configFile)
     {
         $configFileContent = [];
         if ($configFile !== null) {
-            $configFile = Yii::getAlias($configFile);
+            $configFile = Cover::getAlias($configFile);
             if (!is_file($configFile)) {
                 throw new Exception("The configuration file does not exist: $configFile");
             }
@@ -897,8 +891,8 @@ EOD;
             $configFileContent,
             $this->getPassedOptionValues()
         );
-        $this->config['sourcePath'] = Yii::getAlias($this->config['sourcePath']);
-        $this->config['messagePath'] = Yii::getAlias($this->config['messagePath']);
+        $this->config['sourcePath'] = Cover::getAlias($this->config['sourcePath']);
+        $this->config['messagePath'] = Cover::getAlias($this->config['messagePath']);
 
         if (!isset($this->config['sourcePath'], $this->config['languages'])) {
             throw new Exception('The configuration file must specify "sourcePath" and "languages".');
@@ -926,7 +920,7 @@ EOD;
 /**
  * Message translations.
  *
- * This file is automatically generated by 'yii {$this->id}/{$this->action->id}' command.
+ * This file is automatically generated by 'cover {$this->id}/{$this->action->id}' command.
  * It contains the localizable messages extracted from source code.
  * You may modify this file by translating the extracted messages.
  *

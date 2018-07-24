@@ -1,28 +1,22 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\console\controllers;
+namespace cover\console\controllers;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\base\InvalidConfigException;
-use yii\base\NotSupportedException;
-use yii\console\Controller;
-use yii\console\Exception;
-use yii\console\ExitCode;
-use yii\db\MigrationInterface;
-use yii\helpers\Console;
-use yii\helpers\FileHelper;
+use Cover;
+use cover\base\BaseObject;
+use cover\base\InvalidConfigException;
+use cover\base\NotSupportedException;
+use cover\console\Controller;
+use cover\console\Exception;
+use cover\console\ExitCode;
+use cover\db\MigrationInterface;
+use cover\helpers\Console;
+use cover\helpers\FileHelper;
 
 /**
  * BaseMigrateController is the base class for migrate controllers.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 abstract class BaseMigrateController extends Controller
 {
@@ -45,7 +39,7 @@ abstract class BaseMigrateController extends Controller
      * If you have set up [[migrationNamespaces]], you may set this field to `null` in order
      * to disable usage of migrations that are not namespaced.
      *
-     * Since version 2.0.12 you may also specify an array of migration paths that should be searched for
+     * Since version 1.0 you may also specify an array of migration paths that should be searched for
      * migrations to load. This is mainly useful to support old extensions that provide migrations
      * without namespace and to adopt the new feature of namespaced migrations while keeping existing migrations.
      *
@@ -60,9 +54,9 @@ abstract class BaseMigrateController extends Controller
      * @var array list of namespaces containing the migration classes.
      *
      * Migration namespaces should be resolvable as a [path alias](guide:concept-aliases) if prefixed with `@`, e.g. if you specify
-     * the namespace `app\migrations`, the code `Yii::getAlias('@app/migrations')` should be able to return
+     * the namespace `app\migrations`, the code `Cover::getAlias('@app/migrations')` should be able to return
      * the file path to the directory this namespace refers to.
-     * This corresponds with the [autoloading conventions](guide:concept-autoloading) of Yii.
+     * This corresponds with the [autoloading conventions](guide:concept-autoloading) of Cover.
      *
      * For example:
      *
@@ -73,7 +67,7 @@ abstract class BaseMigrateController extends Controller
      * ]
      * ```
      *
-     * @since 2.0.10
+     * @since 1.0
      * @see $migrationPath
      */
     public $migrationNamespaces = [];
@@ -87,7 +81,7 @@ abstract class BaseMigrateController extends Controller
      * @var bool indicates whether the console output should be compacted.
      * If this is set to true, the individual commands ran within the migration will not be output to the console.
      * Default is false, in other words the output is fully verbose by default.
-     * @since 2.0.13
+     * @since 1.0
      */
     public $compact = false;
 
@@ -107,7 +101,7 @@ abstract class BaseMigrateController extends Controller
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param \yii\base\Action $action the action to be executed.
+     * @param \cover\base\Action $action the action to be executed.
      * @throws InvalidConfigException if directory specified in migrationPath doesn't exist and action isn't "create".
      * @return bool whether the action should continue to be executed.
      */
@@ -124,10 +118,10 @@ abstract class BaseMigrateController extends Controller
 
             if (is_array($this->migrationPath)) {
                 foreach ($this->migrationPath as $i => $path) {
-                    $this->migrationPath[$i] = Yii::getAlias($path);
+                    $this->migrationPath[$i] = Cover::getAlias($path);
                 }
             } elseif ($this->migrationPath !== null) {
-                $path = Yii::getAlias($this->migrationPath);
+                $path = Cover::getAlias($this->migrationPath);
                 if (!is_dir($path)) {
                     if ($action->id !== 'create') {
                         throw new InvalidConfigException("Migration failed. Directory specified in migrationPath doesn't exist: {$this->migrationPath}");
@@ -137,8 +131,8 @@ abstract class BaseMigrateController extends Controller
                 $this->migrationPath = $path;
             }
 
-            $version = Yii::getVersion();
-            $this->stdout("Yii Migration Tool (based on Yii v{$version})\n\n");
+            $version = Cover::getVersion();
+            $this->stdout("Cover Migration Tool (based on Cover v{$version})\n\n");
 
             return true;
         }
@@ -152,8 +146,8 @@ abstract class BaseMigrateController extends Controller
      * For example,
      *
      * ```
-     * yii migrate     # apply all new migrations
-     * yii migrate 3   # apply the first 3 new migrations
+     * cover migrate     # apply all new migrations
+     * cover migrate 3   # apply the first 3 new migrations
      * ```
      *
      * @param int $limit the number of new migrations to be applied. If 0, it means
@@ -216,9 +210,9 @@ abstract class BaseMigrateController extends Controller
      * For example,
      *
      * ```
-     * yii migrate/down     # revert the last migration
-     * yii migrate/down 3   # revert the last 3 migrations
-     * yii migrate/down all # revert all migrations
+     * cover migrate/down     # revert the last migration
+     * cover migrate/down 3   # revert the last 3 migrations
+     * cover migrate/down all # revert all migrations
      * ```
      *
      * @param int|string $limit the number of migrations to be reverted. Defaults to 1,
@@ -278,9 +272,9 @@ abstract class BaseMigrateController extends Controller
      * them again. For example,
      *
      * ```
-     * yii migrate/redo     # redo the last applied migration
-     * yii migrate/redo 3   # redo the last 3 applied migrations
-     * yii migrate/redo all # redo all migrations
+     * cover migrate/redo     # redo the last applied migration
+     * cover migrate/redo 3   # redo the last 3 applied migrations
+     * cover migrate/redo all # redo all migrations
      * ```
      *
      * @param int|string $limit the number of migrations to be redone. Defaults to 1,
@@ -348,11 +342,11 @@ abstract class BaseMigrateController extends Controller
      * them again. For example,
      *
      * ```
-     * yii migrate/to 101129_185401                          # using timestamp
-     * yii migrate/to m101129_185401_create_user_table       # using full name
-     * yii migrate/to 1392853618                             # using UNIX timestamp
-     * yii migrate/to "2014-02-15 13:00:50"                  # using strtotime() parseable string
-     * yii migrate/to app\migrations\M101129185401CreateUser # using full namespace name
+     * cover migrate/to 101129_185401                          # using timestamp
+     * cover migrate/to m101129_185401_create_user_table       # using full name
+     * cover migrate/to 1392853618                             # using UNIX timestamp
+     * cover migrate/to "2014-02-15 13:00:50"                  # using strtotime() parseable string
+     * cover migrate/to app\migrations\M101129185401CreateUser # using full namespace name
      * ```
      *
      * @param string $version either the version name or the certain time value in the past
@@ -382,10 +376,10 @@ abstract class BaseMigrateController extends Controller
      * No actual migration will be performed.
      *
      * ```
-     * yii migrate/mark 101129_185401                        # using timestamp
-     * yii migrate/mark m101129_185401_create_user_table     # using full name
-     * yii migrate/mark app\migrations\M101129185401CreateUser # using full namespace name
-     * yii migrate/mark m000000_000000_base # reset the complete migration history
+     * cover migrate/mark 101129_185401                        # using timestamp
+     * cover migrate/mark m101129_185401_create_user_table     # using full name
+     * cover migrate/mark app\migrations\M101129185401CreateUser # using full namespace name
+     * cover migrate/mark m000000_000000_base # reset the complete migration history
      * ```
      *
      * @param string $version the version at which the migration history should be marked.
@@ -448,10 +442,10 @@ abstract class BaseMigrateController extends Controller
      * Truncates the whole database and starts the migration from the beginning.
      *
      * ```
-     * yii migrate/fresh
+     * cover migrate/fresh
      * ```
      *
-     * @since 2.0.13
+     * @since 1.0
      */
     public function actionFresh()
     {
@@ -473,7 +467,7 @@ abstract class BaseMigrateController extends Controller
      * Checks if given migration version specification matches namespaced migration name.
      * @param string $rawVersion raw version specification received from user input.
      * @return string|false actual migration version, `false` - if not match.
-     * @since 2.0.10
+     * @since 1.0
      */
     private function extractNamespaceMigrationVersion($rawVersion)
     {
@@ -488,7 +482,7 @@ abstract class BaseMigrateController extends Controller
      * Checks if given migration version specification matches migration base name.
      * @param string $rawVersion raw version specification received from user input.
      * @return string|false actual migration version, `false` - if not match.
-     * @since 2.0.10
+     * @since 1.0
      */
     private function extractMigrationVersion($rawVersion)
     {
@@ -506,14 +500,14 @@ abstract class BaseMigrateController extends Controller
      * so far. For example,
      *
      * ```
-     * yii migrate/history     # showing the last 10 migrations
-     * yii migrate/history 5   # showing the last 5 migrations
-     * yii migrate/history all # showing the whole history
+     * cover migrate/history     # showing the last 10 migrations
+     * cover migrate/history 5   # showing the last 5 migrations
+     * cover migrate/history all # showing the whole history
      * ```
      *
      * @param int|string $limit the maximum number of migrations to be displayed.
      * If it is "all", the whole migration history will be displayed.
-     * @throws \yii\console\Exception if invalid limit value passed
+     * @throws \cover\console\Exception if invalid limit value passed
      */
     public function actionHistory($limit = 10)
     {
@@ -550,14 +544,14 @@ abstract class BaseMigrateController extends Controller
      * For example,
      *
      * ```
-     * yii migrate/new     # showing the first 10 new migrations
-     * yii migrate/new 5   # showing the first 5 new migrations
-     * yii migrate/new all # showing all new migrations
+     * cover migrate/new     # showing the first 10 new migrations
+     * cover migrate/new 5   # showing the first 5 new migrations
+     * cover migrate/new all # showing all new migrations
      * ```
      *
      * @param int|string $limit the maximum number of new migrations to be displayed.
      * If it is `all`, all available new migrations will be displayed.
-     * @throws \yii\console\Exception if invalid limit value passed
+     * @throws \cover\console\Exception if invalid limit value passed
      */
     public function actionNew($limit = 10)
     {
@@ -597,7 +591,7 @@ abstract class BaseMigrateController extends Controller
      * skeleton by filling up the actual migration logic.
      *
      * ```
-     * yii migrate/create create_user_table
+     * cover migrate/create create_user_table
      * ```
      *
      * In order to generate a namespaced migration, you should specify a namespace before the migration's name.
@@ -606,7 +600,7 @@ abstract class BaseMigrateController extends Controller
      * For example:
      *
      * ```
-     * yii migrate/create 'app\\migrations\\createUserTable'
+     * cover migrate/create 'app\\migrations\\createUserTable'
      * ```
      *
      * In case [[migrationPath]] is not set and no namespace is provided, the first entry of [[migrationNamespaces]] will be used.
@@ -652,7 +646,7 @@ abstract class BaseMigrateController extends Controller
      * Generates class base name and namespace from migration name from user input.
      * @param string $name migration name from user input.
      * @return array list of 2 elements: 'namespace' and 'class base name'
-     * @since 2.0.10
+     * @since 1.0
      */
     private function generateClassName($name)
     {
@@ -682,7 +676,7 @@ abstract class BaseMigrateController extends Controller
      * @param string|null $namespace migration namespace.
      * @return string migration file path.
      * @throws Exception on failure.
-     * @since 2.0.10
+     * @since 1.0
      */
     private function findMigrationPath($namespace)
     {
@@ -701,11 +695,11 @@ abstract class BaseMigrateController extends Controller
      * Returns the file path matching the give namespace.
      * @param string $namespace namespace.
      * @return string file path.
-     * @since 2.0.10
+     * @since 1.0
      */
     private function getNamespacePath($namespace)
     {
-        return str_replace('/', DIRECTORY_SEPARATOR, Yii::getAlias('@' . str_replace('\\', '/', $namespace)));
+        return str_replace('/', DIRECTORY_SEPARATOR, Cover::getAlias('@' . str_replace('\\', '/', $namespace)));
     }
 
     /**
@@ -767,14 +761,14 @@ abstract class BaseMigrateController extends Controller
     /**
      * Creates a new migration instance.
      * @param string $class the migration class name
-     * @return \yii\db\MigrationInterface the migration instance
+     * @return \cover\db\MigrationInterface the migration instance
      */
     protected function createMigration($class)
     {
         $this->includeMigrationFile($class);
 
         /** @var MigrationInterface $migration */
-        $migration = Yii::createObject($class);
+        $migration = Cover::createObject($class);
         if ($migration instanceof BaseObject && $migration->canSetProperty('compact')) {
             $migration->compact = $this->compact;
         }
@@ -789,7 +783,7 @@ abstract class BaseMigrateController extends Controller
      * autoloading automatically. It will include the migration file, by searching
      * [[migrationPath]] for classes without namespace.
      * @param string $class the migration class name.
-     * @since 2.0.12
+     * @since 1.0
      */
     protected function includeMigrationFile($class)
     {
@@ -927,18 +921,18 @@ abstract class BaseMigrateController extends Controller
      *  - className: string migration class name
      *
      * @return string generated PHP code.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function generateMigrationSourceCode($params)
     {
-        return $this->renderFile(Yii::getAlias($this->templateFile), $params);
+        return $this->renderFile(Cover::getAlias($this->templateFile), $params);
     }
 
     /**
      * Truncates the database.
      * This method should be overwritten in subclasses to implement the task of clearing the database.
      * @throws NotSupportedException if not overridden
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function truncateDatabase()
     {
@@ -950,7 +944,7 @@ abstract class BaseMigrateController extends Controller
      *
      * Subclasses may override this method to define a limit.
      * @return int|null the maximum name length for a migration or `null` if no limit applies.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function getMigrationNameLimit()
     {
