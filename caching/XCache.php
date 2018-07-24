@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * XCache provides XCache caching in terms of an application component.
@@ -18,9 +13,7 @@ namespace yii\caching;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- * @deprecated since 2.0.14. This class will be removed in 2.1.0.
+ * @since 1.0
  */
 class XCache extends Cache
 {

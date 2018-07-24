@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\Connection;
-use yii\db\PdoValue;
-use yii\db\Query;
-use yii\di\Instance;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\db\Connection;
+use cover\db\PdoValue;
+use cover\db\Query;
+use cover\di\Instance;
 
 /**
  * DbCache implements a cache application component by storing cached data in a database.
@@ -26,7 +21,7 @@ use yii\di\Instance;
  *
  * ```php
  * 'cache' => [
- *     'class' => 'yii\caching\DbCache',
+ *     'class' => 'cover\caching\DbCache',
  *     // 'db' => 'mydb',
  *     // 'cacheTable' => 'my_cache',
  * ]
@@ -34,8 +29,7 @@ use yii\di\Instance;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class DbCache extends Cache
 {
@@ -43,7 +37,7 @@ class DbCache extends Cache
      * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
      * After the DbCache object is created, if you want to change this property, you should only assign it
      * with a DB connection object.
-     * Starting from version 2.0.2, this can also be a configuration array for creating the object.
+     * Starting from version 1.0, this can also be a configuration array for creating the object.
      */
     public $db = 'db';
     /**

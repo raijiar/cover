@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\helpers\FileHelper;
+use Cover;
+use cover\helpers\FileHelper;
 
 /**
  * FileCache implements a cache component using files.
@@ -21,8 +16,7 @@ use yii\helpers\FileHelper;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class FileCache extends Cache
 {
@@ -77,7 +71,7 @@ class FileCache extends Cache
     public function init()
     {
         parent::init();
-        $this->cachePath = Yii::getAlias($this->cachePath);
+        $this->cachePath = Cover::getAlias($this->cachePath);
         if (!is_dir($this->cachePath)) {
             FileHelper::createDirectory($this->cachePath, $this->dirMode, true);
         }
@@ -153,7 +147,7 @@ class FileCache extends Cache
         }
 
         $error = error_get_last();
-        Yii::warning("Unable to write cache file '{$cacheFile}': {$error['message']}", __METHOD__);
+        Cover::warning("Unable to write cache file '{$cacheFile}': {$error['message']}", __METHOD__);
         return false;
     }
 
@@ -257,13 +251,13 @@ class FileCache extends Cache
                     if (!$expiredOnly) {
                         if (!@rmdir($fullPath)) {
                             $error = error_get_last();
-                            Yii::warning("Unable to remove directory '{$fullPath}': {$error['message']}", __METHOD__);
+                            Cover::warning("Unable to remove directory '{$fullPath}': {$error['message']}", __METHOD__);
                         }
                     }
                 } elseif (!$expiredOnly || $expiredOnly && @filemtime($fullPath) < time()) {
                     if (!@unlink($fullPath)) {
                         $error = error_get_last();
-                        Yii::warning("Unable to remove file '{$fullPath}': {$error['message']}", __METHOD__);
+                        Cover::warning("Unable to remove file '{$fullPath}': {$error['message']}", __METHOD__);
                     }
                 }
             }

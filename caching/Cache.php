@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\base\Component;
-use yii\helpers\StringHelper;
+use Cover;
+use cover\base\Component;
+use cover\helpers\StringHelper;
 
 /**
  * Cache is the base class for cache classes supporting different cache storage implementations.
@@ -48,8 +43,7 @@ use yii\helpers\StringHelper;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 abstract class Cache extends Component implements CacheInterface
 {
@@ -75,7 +69,7 @@ abstract class Cache extends Component implements CacheInterface
     /**
      * @var int default duration in seconds before a cache entry will expire. Default value is 0, meaning infinity.
      * This value is used by [[set()]] if the duration is not explicitly given.
-     * @since 2.0.11
+     * @since 1.0
      */
     public $defaultDuration = 0;
 
@@ -172,7 +166,7 @@ abstract class Cache extends Component implements CacheInterface
      * @return array list of cached values corresponding to the specified keys. The array
      * is returned in terms of (key, value) pairs.
      * If a value is not cached or expired, the corresponding array value will be false.
-     * @since 2.0.7
+     * @since 1.0
      */
     public function multiGet($keys)
     {
@@ -264,7 +258,7 @@ abstract class Cache extends Component implements CacheInterface
      * the corresponding values in the cache will be invalidated when it is fetched via [[get()]].
      * This parameter is ignored if [[serializer]] is false.
      * @return array array of failed keys
-     * @since 2.0.7
+     * @since 1.0
      */
     public function multiSet($items, $duration = 0, $dependency = null)
     {
@@ -314,7 +308,7 @@ abstract class Cache extends Component implements CacheInterface
      * the corresponding values in the cache will be invalidated when it is fetched via [[get()]].
      * This parameter is ignored if [[serializer]] is false.
      * @return array array of failed keys
-     * @since 2.0.7
+     * @since 1.0
      */
     public function multiAdd($items, $duration = 0, $dependency = null)
     {
@@ -547,7 +541,7 @@ abstract class Cache extends Component implements CacheInterface
      *
      * ```php
      * public function getTopProducts($count = 10) {
-     *     $cache = $this->cache; // Could be Yii::$app->cache
+     *     $cache = $this->cache; // Could be Cover::$app->cache
      *     return $cache->getOrSet(['top-n-products', 'n' => $count], function ($cache) use ($count) {
      *         return Products::find()->mostPopular()->limit(10)->all();
      *     }, 1000);
@@ -564,7 +558,7 @@ abstract class Cache extends Component implements CacheInterface
      * the corresponding value in the cache will be invalidated when it is fetched via [[get()]].
      * This parameter is ignored if [[serializer]] is `false`.
      * @return mixed result of $callable execution
-     * @since 2.0.11
+     * @since 1.0
      */
     public function getOrSet($key, $callable, $duration = null, $dependency = null)
     {
@@ -574,7 +568,7 @@ abstract class Cache extends Component implements CacheInterface
 
         $value = call_user_func($callable, $this);
         if (!$this->set($key, $value, $duration, $dependency)) {
-            Yii::warning('Failed to set cache value for key ' . json_encode($key), __METHOD__);
+            Cover::warning('Failed to set cache value for key ' . json_encode($key), __METHOD__);
         }
 
         return $value;

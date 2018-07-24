@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\base\InvalidConfigException;
+use Cover;
+use cover\base\InvalidConfigException;
 
 /**
  * MemCache implements a cache application component based on [memcache](http://pecl.php.net/package/memcache)
@@ -32,7 +27,7 @@ use yii\base\InvalidConfigException;
  * [
  *     'components' => [
  *         'cache' => [
- *             'class' => 'yii\caching\MemCache',
+ *             'class' => 'cover\caching\MemCache',
  *             'servers' => [
  *                 [
  *                     'host' => 'server1',
@@ -60,8 +55,7 @@ use yii\base\InvalidConfigException;
  * @property MemCacheServer[] $servers List of memcache server configurations. Note that the type of this
  * property differs in getter and setter. See [[getServers()]] and [[setServers()]] for details.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class MemCache extends Cache
 {

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * TagDependency associates a cached data item with one or multiple [[tags]].
@@ -14,17 +9,16 @@ namespace yii\caching;
  *
  * ```php
  * // setting multiple cache keys to store data forever and tagging them with "user-123"
- * Yii::$app->cache->set('user_42_profile', '', 0, new TagDependency(['tags' => 'user-123']));
- * Yii::$app->cache->set('user_42_stats', '', 0, new TagDependency(['tags' => 'user-123']));
+ * Cover::$app->cache->set('user_42_profile', '', 0, new TagDependency(['tags' => 'user-123']));
+ * Cover::$app->cache->set('user_42_stats', '', 0, new TagDependency(['tags' => 'user-123']));
  *
  * // invalidating all keys tagged with "user-123"
- * TagDependency::invalidate(Yii::$app->cache, 'user-123');
+ * TagDependency::invalidate(Cover::$app->cache, 'user-123');
  * ```
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class TagDependency extends Dependency
 {

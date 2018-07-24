@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * Dependency is the base class for cache dependency classes.
@@ -15,10 +10,9 @@ namespace yii\caching;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-abstract class Dependency extends \yii\base\BaseObject
+abstract class Dependency extends \cover\base\BaseObject
 {
     /**
      * @var mixed the dependency data that is saved in cache and later is compared with the
@@ -59,7 +53,7 @@ abstract class Dependency extends \yii\base\BaseObject
 
     /**
      * Returns a value indicating whether the dependency has changed.
-     * @deprecated since version 2.0.11. Will be removed in version 2.1. Use [[isChanged()]] instead.
+     * @deprecated since version 1.0. Will be removed in version 2.1. Use [[isChanged()]] instead.
      * @param CacheInterface $cache the cache component that is currently evaluating this dependency
      * @return bool whether the dependency has changed.
      */
@@ -72,7 +66,7 @@ abstract class Dependency extends \yii\base\BaseObject
      * Checks whether the dependency is changed.
      * @param CacheInterface $cache the cache component that is currently evaluating this dependency
      * @return bool whether the dependency has changed.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function isChanged($cache)
     {
@@ -105,7 +99,7 @@ abstract class Dependency extends \yii\base\BaseObject
     protected function generateReusableHash()
     {
         $data = $this->data;
-        $this->data = null;  // https://github.com/yiisoft/yii2/issues/3052
+        $this->data = null;  // https://github.com/coversoft/cover2/issues/3052
         $key = sha1(serialize($this));
         $this->data = $data;
         return $key;

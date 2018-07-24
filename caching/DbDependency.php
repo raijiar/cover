@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\Connection;
-use yii\di\Instance;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\db\Connection;
+use cover\di\Instance;
 
 /**
  * DbDependency represents a dependency based on the query result of a SQL statement.
@@ -20,8 +15,7 @@ use yii\di\Instance;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class DbDependency extends Dependency
 {

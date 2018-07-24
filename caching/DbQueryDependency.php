@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use yii\base\InvalidConfigException;
-use yii\db\QueryInterface;
-use yii\di\Instance;
+use cover\base\InvalidConfigException;
+use cover\db\QueryInterface;
+use cover\di\Instance;
 
 /**
  * DbQueryDependency represents a dependency based on the query result of an [[QueryInterface]] instance.
@@ -25,7 +20,7 @@ use yii\di\Instance;
  * @see QueryInterface
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0.12
+ * @since 1.0
  */
 class DbQueryDependency extends Dependency
 {
@@ -75,7 +70,7 @@ class DbQueryDependency extends Dependency
         }
 
         if (!$this->query instanceof QueryInterface) {
-            throw new InvalidConfigException('"' . get_class($this) . '::$query" should be an instance of "yii\db\QueryInterface".');
+            throw new InvalidConfigException('"' . get_class($this) . '::$query" should be an instance of "cover\db\QueryInterface".');
         }
 
         if (!empty($db->enableQueryCache)) {

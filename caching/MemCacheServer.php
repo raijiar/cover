@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * MemCacheServer represents the configuration data for a single memcache or memcached server.
@@ -15,10 +10,9 @@ namespace yii\caching;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class MemCacheServer extends \yii\base\BaseObject
+class MemCacheServer extends \cover\base\BaseObject
 {
     /**
      * @var string memcache server hostname or IP address

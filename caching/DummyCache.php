@@ -1,24 +1,18 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * DummyCache is a placeholder cache component.
  *
  * DummyCache does not cache anything. It is provided so that one can always configure
- * a 'cache' application component and save the check of existence of `\Yii::$app->cache`.
+ * a 'cache' application component and save the check of existence of `\Cover::$app->cache`.
  * By replacing DummyCache with some other cache component, one can quickly switch from
  * non-caching mode to caching mode.
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class DummyCache extends Cache
 {

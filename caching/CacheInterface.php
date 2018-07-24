@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * CacheInterface is the base interface for cache.
@@ -36,9 +31,7 @@ namespace yii\caching;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Dmitry Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.13. Previous framework versions used abstract class [[yii\caching\Cache]] as interface.
+ * @since 1.0. Previous framework versions used abstract class [[cover\caching\Cache]] as interface.
  */
 interface CacheInterface extends \ArrayAccess
 {
@@ -170,7 +163,7 @@ interface CacheInterface extends \ArrayAccess
      *
      * ```php
      * public function getTopProducts($count = 10) {
-     *     $cache = $this->cache; // Could be Yii::$app->cache
+     *     $cache = $this->cache; // Could be Cover::$app->cache
      *     return $cache->getOrSet(['top-n-products', 'n' => $count], function ($cache) use ($count) {
      *         return Products::find()->mostPopular()->limit($count)->all();
      *     }, 1000);

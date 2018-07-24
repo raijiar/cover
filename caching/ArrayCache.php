@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
 /**
  * ArrayCache provides caching for the current request only by storing the values in an array.
@@ -19,8 +14,7 @@ namespace yii\caching;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class ArrayCache extends Cache
 {

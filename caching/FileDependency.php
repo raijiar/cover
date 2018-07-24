@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\caching;
+namespace cover\caching;
 
-use Yii;
-use yii\base\InvalidConfigException;
+use Cover;
+use cover\base\InvalidConfigException;
 
 /**
  * FileDependency represents a dependency based on a file's last modification time.
@@ -18,8 +13,7 @@ use yii\base\InvalidConfigException;
  *
  * For more details and usage information on Cache, see the [guide article on caching](guide:caching-overview).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class FileDependency extends Dependency
 {
@@ -43,7 +37,7 @@ class FileDependency extends Dependency
             throw new InvalidConfigException('FileDependency::fileName must be set');
         }
 
-        $fileName = Yii::getAlias($this->fileName);
+        $fileName = Cover::getAlias($this->fileName);
         clearstatcache(false, $fileName);
         return @filemtime($fileName);
     }
