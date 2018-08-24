@@ -1,27 +1,22 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidCallException;
-use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
-use yii\base\Model;
-use yii\base\ModelEvent;
-use yii\base\NotSupportedException;
-use yii\base\UnknownMethodException;
-use yii\helpers\ArrayHelper;
+use Cover;
+use cover\base\InvalidArgumentException;
+use cover\base\InvalidCallException;
+use cover\base\InvalidConfigException;
+use cover\base\InvalidParamException;
+use cover\base\Model;
+use cover\base\ModelEvent;
+use cover\base\NotSupportedException;
+use cover\base\UnknownMethodException;
+use cover\helpers\ArrayHelper;
 
 /**
  * ActiveRecord is the base class for classes representing relational data in terms of objects.
  *
- * See [[\yii\db\ActiveRecord]] for a concrete implementation.
+ * See [[\cover\db\ActiveRecord]] for a concrete implementation.
  *
  * @property array $dirtyAttributes The changed attribute values (name-value pairs). This property is
  * read-only.
@@ -37,9 +32,7 @@ use yii\helpers\ArrayHelper;
  * @property array $relatedRecords An array of related records indexed by relation names. This property is
  * read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
 {
@@ -80,7 +73,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
     const EVENT_AFTER_DELETE = 'afterDelete';
     /**
      * @event Event an event that is triggered after a record is refreshed.
-     * @since 2.0.8
+     * @since 1.0
      */
     const EVENT_AFTER_REFRESH = 'afterRefresh';
 
@@ -434,7 +427,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * @param array $link the primary-foreign key constraint.
      * @param bool $multiple whether this query represents a relation to more than one record.
      * @return ActiveQueryInterface the relational query object.
-     * @since 2.0.12
+     * @since 1.0
      * @see hasOne()
      * @see hasMany()
      */
@@ -593,7 +586,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * @param string $name the name of the attribute.
      * @param bool $identical whether the comparison of new and old value is made for
      * identical values using `===`, defaults to `true`. Otherwise `==` is used for comparison.
-     * This parameter is available since version 2.0.4.
+     * This parameter is available since version 1.0
      * @return bool whether the attribute has been changed
      */
     public function isAttributeChanged($name, $identical = true)
@@ -983,8 +976,8 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * already the new, updated values.
      *
      * Note that no automatic type conversion performed by default. You may use
-     * [[\yii\behaviors\AttributeTypecastBehavior]] to facilitate attribute typecasting.
-     * See http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#attributes-typecasting.
+     * [[\cover\behaviors\AttributeTypecastBehavior]] to facilitate attribute typecasting.
+     * See http://www.coverframework.com/doc-2.0/guide-db-active-record.html#attributes-typecasting.
      */
     public function afterSave($insert, $changedAttributes)
     {
@@ -1036,7 +1029,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * Repopulates this active record with the latest data.
      *
      * If the refresh is successful, an [[EVENT_AFTER_REFRESH]] event will be triggered.
-     * This event is available since version 2.0.8.
+     * This event is available since version 1.0.
      *
      * @return bool whether the row still exists in the database. If `true`, the latest data
      * will be populated to this active record. Otherwise, this record will remain unchanged.
@@ -1053,7 +1046,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * @param BaseActiveRecord $record the record to take attributes from.
      * @return bool whether refresh was successful.
      * @see refresh()
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function refreshInternal($record)
     {
@@ -1076,7 +1069,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * The default implementation will trigger an [[EVENT_AFTER_REFRESH]] event.
      * When overriding this method, make sure you call the parent implementation to ensure the
      * event is triggered.
-     * @since 2.0.8
+     * @since 1.0
      */
     public function afterRefresh()
     {
@@ -1315,7 +1308,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
             if (is_array($relation->via)) {
                 /* @var $viaClass ActiveRecordInterface */
                 /* @var $record ActiveRecordInterface */
-                $record = Yii::createObject($viaClass);
+                $record = Cover::createObject($viaClass);
                 foreach ($columns as $column => $value) {
                     $record->$column = $value;
                 }
@@ -1635,7 +1628,7 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
      * @param string $attribute the attribute name
      * @return string the attribute hint
      * @see attributeHints()
-     * @since 2.0.4
+     * @since 1.0
      */
     public function getAttributeHint($attribute)
     {
