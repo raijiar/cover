@@ -1,20 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\StaticInstanceInterface;
+use cover\base\StaticInstanceInterface;
 
 /**
  * ActiveRecordInterface.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 interface ActiveRecordInterface extends StaticInstanceInterface
 {
@@ -197,7 +190,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * array condition, make sure the array structure can not be changed from the outside:
      *
      * ```php
-     * // yii\web\Controller ensures that $id is scalar
+     * // cover\web\Controller ensures that $id is scalar
      * public function actionView($id)
      * {
      *     $model = Post::findOne($id);
@@ -205,10 +198,10 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * }
      *
      * // explicitly specifying the colum to search, passing a scalar or array here will always result in finding a single record
-     * $model = Post::findOne(['id' => Yii::$app->request->get('id')]);
+     * $model = Post::findOne(['id' => Cover::$app->request->get('id')]);
      *
      * // do NOT use the following code! it is possible to inject an array condition to filter by arbitrary column values!
-     * $model = Post::findOne(Yii::$app->request->get('id'));
+     * $model = Post::findOne(Cover::$app->request->get('id'));
      * ```
      *
      * @param mixed $condition primary key value or a set of column values
@@ -264,7 +257,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * array condition, make sure the array structure can not be changed from the outside:
      *
      * ```php
-     * // yii\web\Controller ensures that $id is scalar
+     * // cover\web\Controller ensures that $id is scalar
      * public function actionView($id)
      * {
      *     $model = Post::findOne($id);
@@ -272,10 +265,10 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * }
      *
      * // explicitly specifying the colum to search, passing a scalar or array here will always result in finding a single record
-     * $model = Post::findOne(['id' => Yii::$app->request->get('id')]);
+     * $model = Post::findOne(['id' => Cover::$app->request->get('id')]);
      *
      * // do NOT use the following code! it is possible to inject an array condition to filter by arbitrary column values!
-     * $model = Post::findOne(Yii::$app->request->get('id'));
+     * $model = Post::findOne(Cover::$app->request->get('id'));
      * ```
      *
      * @param mixed $condition primary key value or a set of column values
@@ -333,7 +326,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * $customer->save();
      * ```
      *
-     * @param bool $runValidation whether to perform validation (calling [[\yii\base\Model::validate()|validate()]])
+     * @param bool $runValidation whether to perform validation (calling [[\cover\base\Model::validate()|validate()]])
      * before saving the record. Defaults to `true`. If the validation fails, the record
      * will not be saved to the database and this method will return `false`.
      * @param array $attributeNames list of attribute names that need to be saved. Defaults to `null`,
@@ -354,7 +347,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * $customer->insert();
      * ```
      *
-     * @param bool $runValidation whether to perform validation (calling [[\yii\base\Model::validate()|validate()]])
+     * @param bool $runValidation whether to perform validation (calling [[\cover\base\Model::validate()|validate()]])
      * before saving the record. Defaults to `true`. If the validation fails, the record
      * will not be saved to the database and this method will return `false`.
      * @param array $attributes list of attributes that need to be saved. Defaults to `null`,
@@ -375,7 +368,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * $customer->update();
      * ```
      *
-     * @param bool $runValidation whether to perform validation (calling [[\yii\base\Model::validate()|validate()]])
+     * @param bool $runValidation whether to perform validation (calling [[\cover\base\Model::validate()|validate()]])
      * before saving the record. Defaults to `true`. If the validation fails, the record
      * will not be saved to the database and this method will return `false`.
      * @param array $attributeNames list of attributes that need to be saved. Defaults to `null`,
@@ -425,7 +418,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      * Note that this method does not check if the relation exists or not.
      * @param string $name the relation name, e.g. `orders` for a relation defined via `getOrders()` method (case-sensitive).
      * @param ActiveRecordInterface|array|null $records the related records to be populated into the relation.
-     * @since 2.0.8
+     * @since 1.0
      */
     public function populateRelation($name, $records);
 

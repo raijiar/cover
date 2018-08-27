@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * ActiveQueryInterface defines the common interface to be implemented by active record query classes.
@@ -16,9 +11,7 @@ namespace yii\db;
  *
  * A class implementing this interface should also use [[ActiveQueryTrait]] and [[ActiveRelationTrait]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 interface ActiveQueryInterface extends QueryInterface
 {
@@ -78,7 +71,7 @@ interface ActiveQueryInterface extends QueryInterface
      * Customer::find()->with('orders.address')->all();
      * // find customers together with their country and orders of status 1
      * Customer::find()->with([
-     *     'orders' => function (\yii\db\ActiveQuery $query) {
+     *     'orders' => function (\cover\db\ActiveQuery $query) {
      *         $query->andWhere('status = 1');
      *     },
      *     'country',

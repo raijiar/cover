@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\InvalidConfigException;
+use cover\base\InvalidConfigException;
 
 /**
  * ActiveQuery represents a DB query associated with an Active Record class.
@@ -66,9 +61,7 @@ use yii\base\InvalidConfigException;
  * marks a relation as inverse of another relation and [[onCondition()]] which adds a condition that
  * is to be added to relational query join condition.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class ActiveQuery extends Query implements ActiveQueryInterface
 {
@@ -144,7 +137,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
         // multiple times.
         if (!empty($this->joinWith)) {
             $this->buildJoinWith();
-            $this->joinWith = null;    // clean it up to avoid issue https://github.com/yiisoft/yii2/issues/2687
+            $this->joinWith = null;    // clean it up to avoid issue https://github.com/coversoft/cover2/issues/2687
         }
 
         if (empty($this->from)) {
@@ -383,7 +376,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
      * Order::find()->joinWith('books', true, 'INNER JOIN')->all();
      * // find all orders, eager loading "books", and sort the orders and books by the book names.
      * Order::find()->joinWith([
-     *     'books' => function (\yii\db\ActiveQuery $query) {
+     *     'books' => function (\cover\db\ActiveQuery $query) {
      *         $query->orderBy('item.name');
      *     }
      * ])->all();
@@ -391,7 +384,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
      * Order::find()->joinWith(['books b'], true, 'INNER JOIN')->where(['b.category' => 'Science fiction'])->all();
      * ```
      *
-     * The alias syntax is available since version 2.0.7.
+     * The alias syntax is available since version 1.0
      *
      * @param bool|array $eagerLoading whether to eager load the relations
      * specified in `$with`.  When this is a boolean, it applies to all
@@ -476,7 +469,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
 
         if (!empty($join)) {
             // append explicit join to joinWith()
-            // https://github.com/yiisoft/yii2/issues/2880
+            // https://github.com/coversoft/cover2/issues/2880
             $this->join = empty($this->join) ? $join : array_merge($this->join, $join);
         }
     }
@@ -786,7 +779,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
      *
      * @param string $alias the table alias.
      * @return $this the query object itself
-     * @since 2.0.7
+     * @since 1.0
      */
     public function alias($alias)
     {
@@ -809,7 +802,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
 
     /**
      * {@inheritdoc}
-     * @since 2.0.12
+     * @since 1.0
      */
     public function getTablesUsedInFrom()
     {
@@ -822,7 +815,7 @@ class ActiveQuery extends Query implements ActiveQueryInterface
 
     /**
      * @return string primary table name
-     * @since 2.0.12
+     * @since 1.0
      */
     protected function getPrimaryTableName()
     {

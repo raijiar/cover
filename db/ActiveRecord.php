@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
+use Cover;
+use cover\base\InvalidArgumentException;
+use cover\base\InvalidConfigException;
+use cover\helpers\ArrayHelper;
+use cover\helpers\Inflector;
+use cover\helpers\StringHelper;
 
 /**
  * ActiveRecord is the base class for classes representing relational data in terms of objects.
@@ -29,13 +24,13 @@ use yii\helpers\StringHelper;
  * In this example, Active Record is providing an object-oriented interface for accessing data stored in the database.
  * But Active Record provides much more functionality than this.
  *
- * To declare an ActiveRecord class you need to extend [[\yii\db\ActiveRecord]] and
+ * To declare an ActiveRecord class you need to extend [[\cover\db\ActiveRecord]] and
  * implement the `tableName` method:
  *
  * ```php
  * <?php
  *
- * class Customer extends \yii\db\ActiveRecord
+ * class Customer extends \cover\db\ActiveRecord
  * {
  *     public static function tableName()
  *     {
@@ -73,9 +68,7 @@ use yii\helpers\StringHelper;
  * @method ActiveQuery hasMany($class, array $link) see [[BaseActiveRecord::hasMany()]] for more info
  * @method ActiveQuery hasOne($class, array $link) see [[BaseActiveRecord::hasOne()]] for more info
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class ActiveRecord extends BaseActiveRecord
 {
@@ -104,7 +97,7 @@ class ActiveRecord extends BaseActiveRecord
      * You may call this method to load default values after creating a new instance:
      *
      * ```php
-     * // class Customer extends \yii\db\ActiveRecord
+     * // class Customer extends \cover\db\ActiveRecord
      * $customer = new Customer();
      * $customer->loadDefaultValues();
      * ```
@@ -132,7 +125,7 @@ class ActiveRecord extends BaseActiveRecord
      */
     public static function getDb()
     {
-        return Yii::$app->getDb();
+        return Cover::$app->getDb();
     }
 
     /**
@@ -201,7 +194,7 @@ class ActiveRecord extends BaseActiveRecord
      * @param array $condition condition to filter.
      * @return array filtered condition.
      * @throws InvalidArgumentException in case array contains unsafe values.
-     * @since 2.0.15
+     * @since 1.0
      * @internal
      */
     protected static function filterCondition(array $condition)
@@ -356,7 +349,7 @@ class ActiveRecord extends BaseActiveRecord
      */
     public static function find()
     {
-        return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+        return Cover::createObject(ActiveQuery::className(), [get_called_class()]);
     }
 
     /**
@@ -507,7 +500,7 @@ class ActiveRecord extends BaseActiveRecord
     public function insert($runValidation = true, $attributes = null)
     {
         if ($runValidation && !$this->validate($attributes)) {
-            Yii::info('Model not inserted due to validation error.', __METHOD__);
+            Cover::info('Model not inserted due to validation error.', __METHOD__);
             return false;
         }
 
@@ -617,7 +610,7 @@ class ActiveRecord extends BaseActiveRecord
     public function update($runValidation = true, $attributeNames = null)
     {
         if ($runValidation && !$this->validate($attributeNames)) {
-            Yii::info('Model not updated due to validation error.', __METHOD__);
+            Cover::info('Model not updated due to validation error.', __METHOD__);
             return false;
         }
 

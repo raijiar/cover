@@ -1,18 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * ActiveQueryTrait implements the common methods and properties for active record query classes.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 trait ActiveQueryTrait
 {
@@ -62,7 +55,7 @@ trait ActiveQueryTrait
      * Customer::find()->with('orders.address')->all();
      * // find customers together with their country and orders of status 1
      * Customer::find()->with([
-     *     'orders' => function (\yii\db\ActiveQuery $query) {
+     *     'orders' => function (\cover\db\ActiveQuery $query) {
      *         $query->andWhere('status = 1');
      *     },
      *     'country',
@@ -107,7 +100,7 @@ trait ActiveQueryTrait
      * Converts found rows into model instances.
      * @param array $rows
      * @return array|ActiveRecord[]
-     * @since 2.0.11
+     * @since 1.0
      */
     protected function createModels($rows)
     {

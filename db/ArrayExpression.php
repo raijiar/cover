@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 use Traversable;
-use yii\base\InvalidConfigException;
+use cover\base\InvalidConfigException;
 
 /**
  * Class ArrayExpression represents an array SQL expression.
@@ -22,8 +17,7 @@ use yii\base\InvalidConfigException;
  * which, depending on DBMS, will result in a well-prepared condition. For example, in
  * PostgreSQL it will be compiled to `WHERE "items" @> ARRAY[1, 2, 3]::integer[]`.
  *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.14
+ * @since 1.0
  */
 class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -105,7 +99,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function offsetExists($offset)
     {
@@ -120,7 +114,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * The offset to retrieve.
      * </p>
      * @return mixed Can return all value types.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function offsetGet($offset)
     {
@@ -138,7 +132,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * The value to set.
      * </p>
      * @return void
-     * @since 2.0.14
+     * @since 1.0
      */
     public function offsetSet($offset, $value)
     {
@@ -153,7 +147,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * The offset to unset.
      * </p>
      * @return void
-     * @since 2.0.14
+     * @since 1.0
      */
     public function offsetUnset($offset)
     {
@@ -168,7 +162,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * </p>
      * <p>
      * The return value is cast to an integer.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function count()
     {
@@ -181,7 +175,7 @@ class ArrayExpression implements ExpressionInterface, \ArrayAccess, \Countable, 
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
      * <b>Traversable</b>
-     * @since 2.0.14.1
+     * @since 1.0
      * @throws InvalidConfigException when ArrayExpression contains QueryInterface object
      */
     public function getIterator()
