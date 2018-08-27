@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * Expression represents a DB expression that does not need escaping or quoting.
@@ -16,7 +11,7 @@ namespace yii\db;
  *
  * ```php
  * $expression = new Expression('NOW()');
- * $now = (new \yii\db\Query)->select($expression)->scalar();  // SELECT NOW();
+ * $now = (new \cover\db\Query)->select($expression)->scalar();  // SELECT NOW();
  * echo $now; // prints the current date
  * ```
  *
@@ -25,10 +20,9 @@ namespace yii\db;
  *
  * An expression can also be bound with parameters specified via [[params]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class Expression extends \yii\base\BaseObject implements ExpressionInterface
+class Expression extends \cover\base\BaseObject implements ExpressionInterface
 {
     /**
      * @var string the DB expression

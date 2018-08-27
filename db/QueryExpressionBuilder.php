@@ -1,18 +1,12 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * Class QueryExpressionBuilder is used internally to build [[Query]] object
  * using unified [[QueryBuilder]] expression building interface.
  *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.14
+ * @since 1.0
  */
 class QueryExpressionBuilder implements ExpressionBuilderInterface
 {

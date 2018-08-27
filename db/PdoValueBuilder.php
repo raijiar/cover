@@ -1,17 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * Class PdoValueBuilder builds object of the [[PdoValue]] expression class.
  *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.14
+ * @since 1.0
  */
 class PdoValueBuilder implements ExpressionBuilderInterface
 {

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * The MigrationInterface defines the minimum set of methods to be implemented by a database migration.
@@ -13,8 +8,7 @@ namespace yii\db;
  * Each migration class should provide the [[up()]] method containing the logic for "upgrading" the database
  * and the [[down()]] method for the "downgrading" logic.
  *
- * @author Klimov Paul <klimov@zfort.com>
- * @since 2.0
+ * @since 1.0
  */
 interface MigrationInterface
 {

@@ -1,17 +1,12 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\InvalidArgumentException;
-use yii\base\NotSupportedException;
-use yii\db\conditions\ConditionInterface;
-use yii\db\conditions\HashCondition;
-use yii\helpers\StringHelper;
+use cover\base\InvalidArgumentException;
+use cover\base\NotSupportedException;
+use cover\db\conditions\ConditionInterface;
+use cover\db\conditions\HashCondition;
+use cover\helpers\StringHelper;
 
 /**
  * QueryBuilder builds a SELECT SQL statement based on the specification given as a [[Query]] object.
@@ -23,14 +18,13 @@ use yii\helpers\StringHelper;
  * For more details and usage information on QueryBuilder, see the [guide article on query builders](guide:db-query-builder).
  *
  * @property string[] $conditionClasses Map of condition aliases to condition classes. For example: ```php
- * ['LIKE' => yii\db\condition\LikeCondition::class] ``` . This property is write-only.
+ * ['LIKE' => cover\db\condition\LikeCondition::class] ``` . This property is write-only.
  * @property string[] $expressionBuilders Array of builders that should be merged with the pre-defined ones in
  * [[expressionBuilders]] property. This property is write-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class QueryBuilder extends \yii\base\BaseObject
+class QueryBuilder extends \cover\base\BaseObject
 {
     /**
      * The prefix for automatically generated query binding parameters.
@@ -56,7 +50,7 @@ class QueryBuilder extends \yii\base\BaseObject
     /**
      * @var array map of query condition to builder methods.
      * These methods are used by [[buildCondition]] to build SQL conditions from array syntax.
-     * @deprecated since 2.0.14. Is not used, will be dropped in 2.1.0.
+     * @deprecated since 1.0. Is not used, will be dropped in 1.0.
      */
     protected $conditionBuilders = [];
     /**
@@ -64,7 +58,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * ```php
      * return [
-     *     'LIKE' => yii\db\condition\LikeCondition::class,
+     *     'LIKE' => cover\db\condition\LikeCondition::class,
      * ];
      * ```
      *
@@ -75,7 +69,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @see setConditonClasses()
      * @see defaultConditionClasses()
-     * @since 2.0.14
+     * @since 1.0
      */
     protected $conditionClasses = [];
     /**
@@ -84,7 +78,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * ```php
      * [
-     *    yii\db\Expression::class => yii\db\ExpressionBuilder::class
+     *    cover\db\Expression::class => cover\db\ExpressionBuilder::class
      * ]
      * ```
      * This property is mainly used by [[buildExpression()]] to build SQL expressions form expression objects.
@@ -100,7 +94,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @see setExpressionBuilders()
      * @see defaultExpressionBuilders()
-     * @since 2.0.14
+     * @since 1.0
      */
     protected $expressionBuilders = [];
 
@@ -133,24 +127,24 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @return array
      * @see conditionClasses
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function defaultConditionClasses()
     {
         return [
-            'NOT' => 'yii\db\conditions\NotCondition',
-            'AND' => 'yii\db\conditions\AndCondition',
-            'OR' => 'yii\db\conditions\OrCondition',
-            'BETWEEN' => 'yii\db\conditions\BetweenCondition',
-            'NOT BETWEEN' => 'yii\db\conditions\BetweenCondition',
-            'IN' => 'yii\db\conditions\InCondition',
-            'NOT IN' => 'yii\db\conditions\InCondition',
-            'LIKE' => 'yii\db\conditions\LikeCondition',
-            'NOT LIKE' => 'yii\db\conditions\LikeCondition',
-            'OR LIKE' => 'yii\db\conditions\LikeCondition',
-            'OR NOT LIKE' => 'yii\db\conditions\LikeCondition',
-            'EXISTS' => 'yii\db\conditions\ExistsCondition',
-            'NOT EXISTS' => 'yii\db\conditions\ExistsCondition',
+            'NOT' => 'cover\db\conditions\NotCondition',
+            'AND' => 'cover\db\conditions\AndCondition',
+            'OR' => 'cover\db\conditions\OrCondition',
+            'BETWEEN' => 'cover\db\conditions\BetweenCondition',
+            'NOT BETWEEN' => 'cover\db\conditions\BetweenCondition',
+            'IN' => 'cover\db\conditions\InCondition',
+            'NOT IN' => 'cover\db\conditions\InCondition',
+            'LIKE' => 'cover\db\conditions\LikeCondition',
+            'NOT LIKE' => 'cover\db\conditions\LikeCondition',
+            'OR LIKE' => 'cover\db\conditions\LikeCondition',
+            'OR NOT LIKE' => 'cover\db\conditions\LikeCondition',
+            'EXISTS' => 'cover\db\conditions\ExistsCondition',
+            'NOT EXISTS' => 'cover\db\conditions\ExistsCondition',
         ];
     }
 
@@ -160,25 +154,25 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @return array
      * @see $expressionBuilders
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function defaultExpressionBuilders()
     {
         return [
-            'yii\db\Query' => 'yii\db\QueryExpressionBuilder',
-            'yii\db\PdoValue' => 'yii\db\PdoValueBuilder',
-            'yii\db\Expression' => 'yii\db\ExpressionBuilder',
-            'yii\db\conditions\ConjunctionCondition' => 'yii\db\conditions\ConjunctionConditionBuilder',
-            'yii\db\conditions\NotCondition' => 'yii\db\conditions\NotConditionBuilder',
-            'yii\db\conditions\AndCondition' => 'yii\db\conditions\ConjunctionConditionBuilder',
-            'yii\db\conditions\OrCondition' => 'yii\db\conditions\ConjunctionConditionBuilder',
-            'yii\db\conditions\BetweenCondition' => 'yii\db\conditions\BetweenConditionBuilder',
-            'yii\db\conditions\InCondition' => 'yii\db\conditions\InConditionBuilder',
-            'yii\db\conditions\LikeCondition' => 'yii\db\conditions\LikeConditionBuilder',
-            'yii\db\conditions\ExistsCondition' => 'yii\db\conditions\ExistsConditionBuilder',
-            'yii\db\conditions\SimpleCondition' => 'yii\db\conditions\SimpleConditionBuilder',
-            'yii\db\conditions\HashCondition' => 'yii\db\conditions\HashConditionBuilder',
-            'yii\db\conditions\BetweenColumnsCondition' => 'yii\db\conditions\BetweenColumnsConditionBuilder',
+            'cover\db\Query' => 'cover\db\QueryExpressionBuilder',
+            'cover\db\PdoValue' => 'cover\db\PdoValueBuilder',
+            'cover\db\Expression' => 'cover\db\ExpressionBuilder',
+            'cover\db\conditions\ConjunctionCondition' => 'cover\db\conditions\ConjunctionConditionBuilder',
+            'cover\db\conditions\NotCondition' => 'cover\db\conditions\NotConditionBuilder',
+            'cover\db\conditions\AndCondition' => 'cover\db\conditions\ConjunctionConditionBuilder',
+            'cover\db\conditions\OrCondition' => 'cover\db\conditions\ConjunctionConditionBuilder',
+            'cover\db\conditions\BetweenCondition' => 'cover\db\conditions\BetweenConditionBuilder',
+            'cover\db\conditions\InCondition' => 'cover\db\conditions\InConditionBuilder',
+            'cover\db\conditions\LikeCondition' => 'cover\db\conditions\LikeConditionBuilder',
+            'cover\db\conditions\ExistsCondition' => 'cover\db\conditions\ExistsConditionBuilder',
+            'cover\db\conditions\SimpleCondition' => 'cover\db\conditions\SimpleConditionBuilder',
+            'cover\db\conditions\HashCondition' => 'cover\db\conditions\HashConditionBuilder',
+            'cover\db\conditions\BetweenColumnsCondition' => 'cover\db\conditions\BetweenColumnsConditionBuilder',
         ];
     }
 
@@ -187,7 +181,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @param string[] $builders array of builders that should be merged with the pre-defined ones
      * in [[expressionBuilders]] property.
-     * @since 2.0.14
+     * @since 1.0
      * @see expressionBuilders
      */
     public function setExpressionBuilders($builders)
@@ -201,10 +195,10 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string[] $classes map of condition aliases to condition classes. For example:
      *
      * ```php
-     * ['LIKE' => yii\db\condition\LikeCondition::class]
+     * ['LIKE' => cover\db\condition\LikeCondition::class]
      * ```
      *
-     * @since 2.0.14.2
+     * @since 1.0
      * @see conditionClasses
      */
     public function setConditionClasses($classes)
@@ -273,7 +267,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @see ExpressionInterface
      * @see ExpressionBuilderInterface
      * @see expressionBuilders
-     * @since 2.0.14
+     * @since 1.0
      * @throws InvalidArgumentException when $expression building is not supported by this QueryBuilder.
      */
     public function buildExpression(ExpressionInterface $expression, &$params = [])
@@ -290,7 +284,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param ExpressionInterface $expression
      * @return ExpressionBuilderInterface
      * @see expressionBuilders
-     * @since 2.0.14
+     * @since 1.0
      * @throws InvalidArgumentException when $expression building is not supported by this QueryBuilder.
      */
     public function getExpressionBuilder(ExpressionInterface $expression)
@@ -334,8 +328,8 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @param string $table the table that new rows will be inserted into.
      * @param array|Query $columns the column data (name => value) to be inserted into the table or instance
-     * of [[yii\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
-     * Passing of [[yii\db\Query|Query]] is available since version 2.0.11.
+     * of [[cover\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
+     * Passing of [[cover\db\Query|Query]] is available since version 1.0.
      * @param array $params the binding parameters that will be generated by this method.
      * They should be bound to the DB command later.
      * @return string the INSERT SQL
@@ -353,11 +347,11 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @param string $table the table that new rows will be inserted into.
      * @param array|Query $columns the column data (name => value) to be inserted into the table or instance
-     * of [[yii\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
+     * of [[cover\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
      * @param array $params the binding parameters that will be generated by this method.
      * They should be bound to the DB command later.
      * @return array array of column names, placeholders, values and params.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function prepareInsertValues($table, $columns, $params = [])
     {
@@ -376,7 +370,7 @@ class QueryBuilder extends \yii\base\BaseObject
 
                 if ($value instanceof ExpressionInterface) {
                     $placeholders[] = $this->buildExpression($value, $params);
-                } elseif ($value instanceof \yii\db\Query) {
+                } elseif ($value instanceof \cover\db\Query) {
                     list($sql, $params) = $this->build($value, $params);
                     $placeholders[] = "($sql)";
                 } else {
@@ -391,12 +385,12 @@ class QueryBuilder extends \yii\base\BaseObject
      * Prepare select-subquery and field names for INSERT INTO ... SELECT SQL statement.
      *
      * @param Query $columns Object, which represents select query.
-     * @param \yii\db\Schema $schema Schema object to quote column name.
+     * @param \cover\db\Schema $schema Schema object to quote column name.
      * @param array $params the parameters to be bound to the generated SQL statement. These parameters will
      * be included in the result with the additional parameters generated during the query building process.
      * @return array array of column names, values and params.
      * @throws InvalidArgumentException if query's select does not contain named parameters only.
-     * @since 2.0.11
+     * @since 1.0
      */
     protected function prepareInsertSelectSubQuery($columns, $schema, $params = [])
     {
@@ -440,7 +434,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $table the table that new rows will be inserted into.
      * @param array $columns the column names
      * @param array|\Generator $rows the rows to be batch inserted into the table
-     * @param array $params the binding parameters. This parameter exists since 2.0.14
+     * @param array $params the binding parameters. This parameter exists since 1.0
      * @return string the batch INSERT SQL statement
      */
     public function batchInsert($table, $columns, $rows, &$params = [])
@@ -504,7 +498,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *     'url' => 'http://example.com/', // url is unique
      *     'visits' => 0,
      * ], [
-     *     'visits' => new \yii\db\Expression('visits + 1'),
+     *     'visits' => new \cover\db\Expression('visits + 1'),
      * ], $params);
      * ```
      *
@@ -520,7 +514,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * They should be bound to the DB command later.
      * @return string the resulting SQL.
      * @throws NotSupportedException if this is not supported by the underlying DBMS.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function upsert($table, $insertColumns, $updateColumns, &$params)
     {
@@ -534,7 +528,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param Constraint[] $constraints this parameter recieves a matched constraint list.
      * The constraints will be unique by their column names.
      * @return array
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function prepareUpsertColumns($table, $insertColumns, $updateColumns, &$constraints = [])
     {
@@ -635,7 +629,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters that will be modified by this method
      * so that they can be bound to the DB command later.
      * @return array an array `SET` parts for an `UPDATE` SQL statement (the first array element) and params (the second array element).
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function prepareUpdateSets($table, $columns, $params = [])
     {
@@ -930,7 +924,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * If there are multiple columns, separate them with commas.
      * The name will be properly quoted by the method.
      * @return string the SQL statement for adding an unique constraint to an existing table.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addUnique($name, $table, $columns)
     {
@@ -953,7 +947,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $table the table whose unique constraint is to be dropped.
      * The name will be properly quoted by the method.
      * @return string the SQL statement for dropping an unique constraint.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropUnique($name, $table)
     {
@@ -969,7 +963,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * The name will be properly quoted by the method.
      * @param string $expression the SQL of the `CHECK` constraint.
      * @return string the SQL statement for adding a check constraint to an existing table.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addCheck($name, $table, $expression)
     {
@@ -984,7 +978,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $table the table whose check constraint is to be dropped.
      * The name will be properly quoted by the method.
      * @return string the SQL statement for dropping a check constraint.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropCheck($name, $table)
     {
@@ -1003,7 +997,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param mixed $value default value.
      * @return string the SQL statement for adding a default value constraint to an existing table.
      * @throws NotSupportedException if this is not supported by the underlying DBMS.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addDefaultValue($name, $table, $column, $value)
     {
@@ -1018,7 +1012,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * The name will be properly quoted by the method.
      * @return string the SQL statement for dropping a default value constraint.
      * @throws NotSupportedException if this is not supported by the underlying DBMS.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropDefaultValue($name, $table)
     {
@@ -1060,7 +1054,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
      * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
      * @return string the SQL statement for adding comment on column
-     * @since 2.0.8
+     * @since 1.0
      */
     public function addCommentOnColumn($table, $column, $comment)
     {
@@ -1073,7 +1067,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
      * @return string the SQL statement for adding comment on table
-     * @since 2.0.8
+     * @since 1.0
      */
     public function addCommentOnTable($table, $comment)
     {
@@ -1086,7 +1080,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
      * @return string the SQL statement for adding comment on column
-     * @since 2.0.8
+     * @since 1.0
      */
     public function dropCommentFromColumn($table, $column)
     {
@@ -1098,7 +1092,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @return string the SQL statement for adding comment on column
-     * @since 2.0.8
+     * @since 1.0
      */
     public function dropCommentFromTable($table)
     {
@@ -1112,7 +1106,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param string|Query $subQuery the select statement which defines the view.
      * This can be either a string or a [[Query]] object.
      * @return string the `CREATE VIEW` SQL statement.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function createView($viewName, $subQuery)
     {
@@ -1135,7 +1129,7 @@ class QueryBuilder extends \yii\base\BaseObject
      *
      * @param string $viewName the name of the view to be dropped.
      * @return string the `DROP VIEW` SQL statement.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function dropView($viewName)
     {
@@ -1532,13 +1526,13 @@ class QueryBuilder extends \yii\base\BaseObject
 
     /**
      * Transforms $condition defined in array format (as described in [[Query::where()]]
-     * to instance of [[yii\db\condition\ConditionInterface|ConditionInterface]] according to
+     * to instance of [[cover\db\condition\ConditionInterface|ConditionInterface]] according to
      * [[conditionClasses]] map.
      *
      * @param string|array $condition
      * @see conditionClasses
      * @return ConditionInterface
-     * @since 2.0.14
+     * @since 1.0
      */
     public function createConditionFromArray($condition)
     {
@@ -1547,7 +1541,7 @@ class QueryBuilder extends \yii\base\BaseObject
             if (isset($this->conditionClasses[$operator])) {
                 $className = $this->conditionClasses[$operator];
             } else {
-                $className = 'yii\db\conditions\SimpleCondition';
+                $className = 'cover\db\conditions\SimpleCondition';
             }
             /** @var ConditionInterface $className */
             return $className::fromArrayDefinition($operator, $condition);
@@ -1562,7 +1556,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $condition the condition specification.
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildHashCondition($condition, &$params)
     {
@@ -1575,7 +1569,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $operands the SQL expressions to connect.
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildAndCondition($operator, $operands, &$params)
     {
@@ -1590,7 +1584,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws InvalidArgumentException if wrong number of operands have been given.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildNotCondition($operator, $operands, &$params)
     {
@@ -1606,7 +1600,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws InvalidArgumentException if wrong number of operands have been given.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildBetweenCondition($operator, $operands, &$params)
     {
@@ -1625,7 +1619,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws Exception if wrong number of operands have been given.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildInCondition($operator, $operands, &$params)
     {
@@ -1652,7 +1646,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws InvalidArgumentException if wrong number of operands have been given.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildLikeCondition($operator, $operands, &$params)
     {
@@ -1667,7 +1661,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws InvalidArgumentException if the operand is not a [[Query]] object.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildExistsCondition($operator, $operands, &$params)
     {
@@ -1682,7 +1676,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params the binding parameters to be populated
      * @return string the generated SQL expression
      * @throws InvalidArgumentException if wrong number of operands have been given.
-     * @deprecated since 2.0.14. Use `buildCondition()` instead.
+     * @deprecated since 1.0. Use `buildCondition()` instead.
      */
     public function buildSimpleCondition($operator, $operands, &$params)
     {
@@ -1694,7 +1688,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * Creates a SELECT EXISTS() SQL statement.
      * @param string $rawSql the subquery in a raw form to select from.
      * @return string the SELECT EXISTS() SQL statement.
-     * @since 2.0.8
+     * @since 1.0
      */
     public function selectExists($rawSql)
     {
@@ -1708,7 +1702,7 @@ class QueryBuilder extends \yii\base\BaseObject
      * @param array $params passed by reference
      * @return string the placeholder name in $params array
      *
-     * @since 2.0.14
+     * @since 1.0
      */
     public function bindParam($value, &$params)
     {

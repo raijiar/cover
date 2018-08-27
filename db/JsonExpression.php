@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\InvalidConfigException;
+use cover\base\InvalidConfigException;
 
 /**
  * Class JsonExpression represents data that should be encoded to JSON.
@@ -18,8 +13,7 @@ use yii\base\InvalidConfigException;
  * new JsonExpression(['a' => 1, 'b' => 2]); // will be encoded to '{"a": 1, "b": 2}'
  * ```
  *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
- * @since 2.0.14
+ * @since 1.0
  */
 class JsonExpression implements ExpressionInterface, \JsonSerializable
 {
@@ -28,7 +22,7 @@ class JsonExpression implements ExpressionInterface, \JsonSerializable
 
     /**
      * @var mixed the value to be encoded to JSON.
-     * The value must be compatible with [\yii\helpers\Json::encode()|Json::encode()]] input requirements.
+     * The value must be compatible with [\cover\helpers\Json::encode()|Json::encode()]] input requirements.
      */
     protected $value;
     /**
@@ -44,7 +38,7 @@ class JsonExpression implements ExpressionInterface, \JsonSerializable
      * JsonExpression constructor.
      *
      * @param mixed $value the value to be encoded to JSON.
-     * The value must be compatible with [\yii\helpers\Json::encode()|Json::encode()]] requirements.
+     * The value must be compatible with [\cover\helpers\Json::encode()|Json::encode()]] requirements.
      * @param string|null $type the type of the JSON. See [[JsonExpression::type]]
      *
      * @see type
@@ -83,7 +77,7 @@ class JsonExpression implements ExpressionInterface, \JsonSerializable
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 2.0.14.2
+     * @since 1.0
      * @throws InvalidConfigException when JsonExpression contains QueryInterface object
      */
     public function jsonSerialize()
