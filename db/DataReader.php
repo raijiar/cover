@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\InvalidCallException;
+use cover\base\InvalidCallException;
 
 /**
  * DataReader represents a forward-only stream of rows from a query result set.
@@ -45,10 +40,9 @@ use yii\base\InvalidCallException;
  * @property bool $isClosed Whether the reader is closed or not. This property is read-only.
  * @property int $rowCount Number of rows contained in the result. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class DataReader extends \yii\base\BaseObject implements \Iterator, \Countable
+class DataReader extends \cover\base\BaseObject implements \Iterator, \Countable
 {
     /**
      * @var \PDOStatement the PDOStatement associated with the command

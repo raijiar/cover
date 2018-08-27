@@ -1,20 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\BaseObject;
-use yii\helpers\StringHelper;
+use cover\base\BaseObject;
+use cover\helpers\StringHelper;
 
 /**
  * ColumnSchema class describes the metadata of a column in a database table.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class ColumnSchema extends BaseObject
 {
@@ -110,7 +104,7 @@ class ColumnSchema extends BaseObject
      * If the value is null or an [[Expression]], it will not be converted.
      * @param mixed $value input value
      * @return mixed converted value
-     * @since 2.0.3
+     * @since 1.0
      */
     protected function typecast($value)
     {
@@ -159,7 +153,7 @@ class ColumnSchema extends BaseObject
                 return (int) $value;
             case 'boolean':
                 // treating a 0 bit value as false too
-                // https://github.com/yiisoft/yii2/issues/9006
+                // https://github.com/coversoft/cover2/issues/9006
                 return (bool) $value && $value !== "\0";
             case 'double':
                 return (float) $value;

@@ -1,13 +1,13 @@
 <?php
 
-namespace yii\db;
+namespace cover\db;
 
 use PDO;
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\base\NotSupportedException;
-use yii\caching\CacheInterface;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidConfigException;
+use cover\base\NotSupportedException;
+use cover\caching\CacheInterface;
 
 /**
  * Connection represents a connection to a database via [PDO](http://php.net/manual/en/book.pdo.php).
@@ -28,7 +28,7 @@ use yii\caching\CacheInterface;
  * the DB connection:
  *
  * ```php
- * $connection = new \yii\db\Connection([
+ * $connection = new \cover\db\Connection([
  *     'dsn' => $dsn,
  *     'username' => $username,
  *     'password' => $password,
@@ -96,7 +96,7 @@ use yii\caching\CacheInterface;
  * ```php
  * 'components' => [
  *     'db' => [
- *         'class' => '\yii\db\Connection',
+ *         'class' => '\cover\db\Connection',
  *         'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
  *         'username' => 'root',
  *         'password' => '',
@@ -125,25 +125,24 @@ use yii\caching\CacheInterface;
  * @property Transaction|null $transaction The currently active transaction. Null if no active transaction.
  * This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Connection extends Component
 {
     /**
-     * @event [[yii\base\Event|Event]] an event that is triggered after a DB connection is established
+     * @event [[cover\base\Event|Event]] an event that is triggered after a DB connection is established
      */
     const EVENT_AFTER_OPEN = 'afterOpen';
     /**
-     * @event [[yii\base\Event|Event]] an event that is triggered right before a top-level transaction is started
+     * @event [[cover\base\Event|Event]] an event that is triggered right before a top-level transaction is started
      */
     const EVENT_BEGIN_TRANSACTION = 'beginTransaction';
     /**
-     * @event [[yii\base\Event|Event]] an event that is triggered right after a top-level transaction is committed
+     * @event [[cover\base\Event|Event]] an event that is triggered right after a top-level transaction is committed
      */
     const EVENT_COMMIT_TRANSACTION = 'commitTransaction';
     /**
-     * @event [[yii\base\Event|Event]] an event that is triggered right after a top-level transaction is rolled back
+     * @event [[cover\base\Event|Event]] an event that is triggered right after a top-level transaction is rolled back
      */
     const EVENT_ROLLBACK_TRANSACTION = 'rollbackTransaction';
 
@@ -261,61 +260,61 @@ class Connection extends Component
     /**
      * @var array mapping between PDO driver names and [[Schema]] classes.
      * The keys of the array are PDO driver names while the values are either the corresponding
-     * schema class names or configurations. Please refer to [[Yii::createObject()]] for
+     * schema class names or configurations. Please refer to [[Cover::createObject()]] for
      * details on how to specify a configuration.
      *
      * This property is mainly used by [[getSchema()]] when fetching the database schema information.
      * You normally do not need to set this property unless you want to use your own
-     * [[Schema]] class to support DBMS that is not supported by Yii.
+     * [[Schema]] class to support DBMS that is not supported by Cover.
      */
     public $schemaMap = [
-        'pgsql' => 'yii\db\pgsql\Schema', // PostgreSQL
-        'mysqli' => 'yii\db\mysql\Schema', // MySQL
-        'mysql' => 'yii\db\mysql\Schema', // MySQL
-        'sqlite' => 'yii\db\sqlite\Schema', // sqlite 3
-        'sqlite2' => 'yii\db\sqlite\Schema', // sqlite 2
-        'sqlsrv' => 'yii\db\mssql\Schema', // newer MSSQL driver on MS Windows hosts
-        'oci' => 'yii\db\oci\Schema', // Oracle driver
-        'mssql' => 'yii\db\mssql\Schema', // older MSSQL driver on MS Windows hosts
-        'dblib' => 'yii\db\mssql\Schema', // dblib drivers on GNU/Linux (and maybe other OSes) hosts
-        'cubrid' => 'yii\db\cubrid\Schema', // CUBRID
+        'pgsql' => 'cover\db\pgsql\Schema', // PostgreSQL
+        'mysqli' => 'cover\db\mysql\Schema', // MySQL
+        'mysql' => 'cover\db\mysql\Schema', // MySQL
+        'sqlite' => 'cover\db\sqlite\Schema', // sqlite 3
+        'sqlite2' => 'cover\db\sqlite\Schema', // sqlite 2
+        'sqlsrv' => 'cover\db\mssql\Schema', // newer MSSQL driver on MS Windows hosts
+        'oci' => 'cover\db\oci\Schema', // Oracle driver
+        'mssql' => 'cover\db\mssql\Schema', // older MSSQL driver on MS Windows hosts
+        'dblib' => 'cover\db\mssql\Schema', // dblib drivers on GNU/Linux (and maybe other OSes) hosts
+        'cubrid' => 'cover\db\cubrid\Schema', // CUBRID
     ];
     /**
-     * @var string Custom PDO wrapper class. If not set, it will use [[PDO]] or [[\yii\db\mssql\PDO]] when MSSQL is used.
+     * @var string Custom PDO wrapper class. If not set, it will use [[PDO]] or [[\cover\db\mssql\PDO]] when MSSQL is used.
      * @see pdo
      */
     public $pdoClass;
     /**
      * @var string the class used to create new database [[Command]] objects. If you want to extend the [[Command]] class,
      * you may configure this property to use your extended version of the class.
-     * Since version 2.0.14 [[$commandMap]] is used if this property is set to its default value.
+     * Since version 1.0 [[$commandMap]] is used if this property is set to its default value.
      * @see createCommand
-     * @since 2.0.7
-     * @deprecated since 2.0.14. Use [[$commandMap]] for precise configuration.
+     * @since 1.0
+     * @deprecated since 1.0. Use [[$commandMap]] for precise configuration.
      */
-    public $commandClass = 'yii\db\Command';
+    public $commandClass = 'cover\db\Command';
     /**
      * @var array mapping between PDO driver names and [[Command]] classes.
      * The keys of the array are PDO driver names while the values are either the corresponding
-     * command class names or configurations. Please refer to [[Yii::createObject()]] for
+     * command class names or configurations. Please refer to [[Cover::createObject()]] for
      * details on how to specify a configuration.
      *
      * This property is mainly used by [[createCommand()]] to create new database [[Command]] objects.
      * You normally do not need to set this property unless you want to use your own
-     * [[Command]] class or support DBMS that is not supported by Yii.
-     * @since 2.0.14
+     * [[Command]] class or support DBMS that is not supported by Cover.
+     * @since 1.0
      */
     public $commandMap = [
-        'pgsql' => 'yii\db\Command', // PostgreSQL
-        'mysqli' => 'yii\db\Command', // MySQL
-        'mysql' => 'yii\db\Command', // MySQL
-        'sqlite' => 'yii\db\sqlite\Command', // sqlite 3
-        'sqlite2' => 'yii\db\sqlite\Command', // sqlite 2
-        'sqlsrv' => 'yii\db\Command', // newer MSSQL driver on MS Windows hosts
-        'oci' => 'yii\db\Command', // Oracle driver
-        'mssql' => 'yii\db\Command', // older MSSQL driver on MS Windows hosts
-        'dblib' => 'yii\db\Command', // dblib drivers on GNU/Linux (and maybe other OSes) hosts
-        'cubrid' => 'yii\db\Command', // CUBRID
+        'pgsql' => 'cover\db\Command', // PostgreSQL
+        'mysqli' => 'cover\db\Command', // MySQL
+        'mysql' => 'cover\db\Command', // MySQL
+        'sqlite' => 'cover\db\sqlite\Command', // sqlite 3
+        'sqlite2' => 'cover\db\sqlite\Command', // sqlite 2
+        'sqlsrv' => 'cover\db\Command', // newer MSSQL driver on MS Windows hosts
+        'oci' => 'cover\db\Command', // Oracle driver
+        'mssql' => 'cover\db\Command', // older MSSQL driver on MS Windows hosts
+        'dblib' => 'cover\db\Command', // dblib drivers on GNU/Linux (and maybe other OSes) hosts
+        'cubrid' => 'cover\db\Command', // CUBRID
     ];
     /**
      * @var bool whether to enable [savepoint](http://en.wikipedia.org/wiki/Savepoint).
@@ -391,7 +390,7 @@ class Connection extends Component
     public $masterConfig = [];
     /**
      * @var bool whether to shuffle [[masters]] before getting one.
-     * @since 2.0.11
+     * @since 1.0
      * @see masters
      */
     public $shuffleMasters = true;
@@ -399,7 +398,7 @@ class Connection extends Component
      * @var bool whether to enable logging of database queries. Defaults to true.
      * You may want to disable this option in a production environment to gain performance
      * if you do not need the information being logged.
-     * @since 2.0.12
+     * @since 1.0
      * @see enableProfiling
      */
     public $enableLogging = true;
@@ -407,7 +406,7 @@ class Connection extends Component
      * @var bool whether to enable profiling of opening database connection and database queries. Defaults to true.
      * You may want to disable this option in a production environment to gain performance
      * if you do not need the information being logged.
-     * @since 2.0.12
+     * @since 1.0
      * @see enableLogging
      */
     public $enableProfiling = true;
@@ -470,7 +469,7 @@ class Connection extends Component
      * @param int $duration the number of seconds that query results can remain valid in the cache. If this is
      * not set, the value of [[queryCacheDuration]] will be used instead.
      * Use 0 to indicate that the cached data will never expire.
-     * @param \yii\caching\Dependency $dependency the cache dependency associated with the cached query results.
+     * @param \cover\caching\Dependency $dependency the cache dependency associated with the cached query results.
      * @return mixed the return result of the callable
      * @throws \Exception|\Throwable if there is any exception during query
      * @see enableQueryCache
@@ -538,7 +537,7 @@ class Connection extends Component
      * Returns the current query cache information.
      * This method is used internally by [[Command]].
      * @param int $duration the preferred caching duration. If null, it will be ignored.
-     * @param \yii\caching\Dependency $dependency the preferred caching dependency. If null, it will be ignored.
+     * @param \cover\caching\Dependency $dependency the preferred caching dependency. If null, it will be ignored.
      * @return array the current query cache information, or null if query cache is not enabled.
      * @internal
      */
@@ -559,8 +558,8 @@ class Connection extends Component
         }
 
         if ($duration === 0 || $duration > 0) {
-            if (is_string($this->queryCache) && Yii::$app) {
-                $cache = Yii::$app->get($this->queryCache, false);
+            if (is_string($this->queryCache) && Cover::$app) {
+                $cache = Cover::$app->get($this->queryCache, false);
             } else {
                 $cache = $this->queryCache;
             }
@@ -600,20 +599,20 @@ class Connection extends Component
         $token = 'Opening DB connection: ' . $this->dsn;
         $enableProfiling = $this->enableProfiling;
         try {
-            Yii::info($token, __METHOD__);
+            Cover::info($token, __METHOD__);
             if ($enableProfiling) {
-                Yii::beginProfile($token, __METHOD__);
+                Cover::beginProfile($token, __METHOD__);
             }
 
             $this->pdo = $this->createPdoInstance();
             $this->initConnection();
 
             if ($enableProfiling) {
-                Yii::endProfile($token, __METHOD__);
+                Cover::endProfile($token, __METHOD__);
             }
         } catch (\PDOException $e) {
             if ($enableProfiling) {
-                Yii::endProfile($token, __METHOD__);
+                Cover::endProfile($token, __METHOD__);
             }
 
             throw new Exception($e->getMessage(), $e->errorInfo, (int) $e->getCode(), $e);
@@ -636,7 +635,7 @@ class Connection extends Component
         }
 
         if ($this->pdo !== null) {
-            Yii::debug('Closing DB connection: ' . $this->dsn, __METHOD__);
+            Cover::debug('Closing DB connection: ' . $this->dsn, __METHOD__);
             $this->pdo = null;
             $this->_schema = null;
             $this->_transaction = null;
@@ -667,16 +666,16 @@ class Connection extends Component
             }
             if (isset($driver)) {
                 if ($driver === 'mssql' || $driver === 'dblib') {
-                    $pdoClass = 'yii\db\mssql\PDO';
+                    $pdoClass = 'cover\db\mssql\PDO';
                 } elseif ($driver === 'sqlsrv') {
-                    $pdoClass = 'yii\db\mssql\SqlsrvPDO';
+                    $pdoClass = 'cover\db\mssql\SqlsrvPDO';
                 }
             }
         }
 
         $dsn = $this->dsn;
         if (strncmp('sqlite:@', $dsn, 8) === 0) {
-            $dsn = 'sqlite:' . Yii::getAlias(substr($dsn, 7));
+            $dsn = 'sqlite:' . Cover::getAlias(substr($dsn, 7));
         }
 
         return new $pdoClass($dsn, $this->username, $this->password, $this->attributes);
@@ -710,7 +709,7 @@ class Connection extends Component
     public function createCommand($sql = null, $params = [])
     {
         $driver = $this->getDriverName();
-        $config = ['class' => 'yii\db\Command'];
+        $config = ['class' => 'cover\db\Command'];
         if ($this->commandClass !== $config['class']) {
             $config['class'] = $this->commandClass;
         } elseif (isset($this->commandMap[$driver])) {
@@ -719,7 +718,7 @@ class Connection extends Component
         $config['db'] = $this;
         $config['sql'] = $sql;
         /** @var Command $command */
-        $command = Yii::createObject($config);
+        $command = Cover::createObject($config);
         return $command->bindValues($params);
     }
 
@@ -783,18 +782,18 @@ class Connection extends Component
     /**
      * Rolls back given [[Transaction]] object if it's still active and level match.
      * In some cases rollback can fail, so this method is fail safe. Exception thrown
-     * from rollback will be caught and just logged with [[\Yii::error()]].
+     * from rollback will be caught and just logged with [[\Cover::error()]].
      * @param Transaction $transaction Transaction object given from [[beginTransaction()]].
      * @param int $level Transaction level just after [[beginTransaction()]] call.
      */
     private function rollbackTransactionOnLevel($transaction, $level)
     {
         if ($transaction->isActive && $transaction->level === $level) {
-            // https://github.com/yiisoft/yii2/pull/13347
+            // https://github.com/coversoft/cover2/pull/13347
             try {
                 $transaction->rollBack();
             } catch (\Exception $e) {
-                \Yii::error($e, __METHOD__);
+                \Cover::error($e, __METHOD__);
                 // hide this exception to be able to continue throwing original exception outside
             }
         }
@@ -816,7 +815,7 @@ class Connection extends Component
             $config = !is_array($this->schemaMap[$driver]) ? ['class' => $this->schemaMap[$driver]] : $this->schemaMap[$driver];
             $config['db'] = $this;
 
-            return $this->_schema = Yii::createObject($config);
+            return $this->_schema = Cover::createObject($config);
         }
 
         throw new NotSupportedException("Connection does not support reading schema information for '$driver' DBMS.");
@@ -835,11 +834,11 @@ class Connection extends Component
      * Can be used to set [[QueryBuilder]] configuration via Connection configuration array.
      *
      * @param array $value the [[QueryBuilder]] properties to be configured.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function setQueryBuilder($value)
     {
-        Yii::configure($this->getQueryBuilder(), $value);
+        Cover::configure($this->getQueryBuilder(), $value);
     }
 
     /**
@@ -956,7 +955,7 @@ class Connection extends Component
     /**
      * Returns a server version as a string comparable by [[\version_compare()]].
      * @return string server version as a string.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function getServerVersion()
     {
@@ -1016,7 +1015,7 @@ class Connection extends Component
      * Returns the currently active master connection.
      * If this method is called for the first time, it will try to open a master connection.
      * @return Connection the currently active master connection. `null` is returned if there is no master available.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function getMaster()
     {
@@ -1091,7 +1090,7 @@ class Connection extends Component
      * @param array $sharedConfig the configuration common to those given in `$pool`.
      * @return Connection the opened DB connection, or `null` if no server is available
      * @throws InvalidConfigException if a configuration does not specify "dsn"
-     * @since 2.0.11
+     * @since 1.0
      */
     protected function openFromPoolSequentially(array $pool, array $sharedConfig)
     {
@@ -1103,7 +1102,7 @@ class Connection extends Component
             $sharedConfig['class'] = get_class($this);
         }
 
-        $cache = is_string($this->serverStatusCache) ? Yii::$app->get($this->serverStatusCache, false) : $this->serverStatusCache;
+        $cache = is_string($this->serverStatusCache) ? Cover::$app->get($this->serverStatusCache, false) : $this->serverStatusCache;
 
         foreach ($pool as $config) {
             $config = array_merge($sharedConfig, $config);
@@ -1118,13 +1117,13 @@ class Connection extends Component
             }
 
             /* @var $db Connection */
-            $db = Yii::createObject($config);
+            $db = Cover::createObject($config);
 
             try {
                 $db->open();
                 return $db;
             } catch (\Exception $e) {
-                Yii::warning("Connection ({$config['dsn']}) failed: " . $e->getMessage(), __METHOD__);
+                Cover::warning("Connection ({$config['dsn']}) failed: " . $e->getMessage(), __METHOD__);
                 if ($cache instanceof CacheInterface) {
                     // mark this server as dead and only retry it after the specified interval
                     $cache->set($key, 1, $this->serverRetryInterval);

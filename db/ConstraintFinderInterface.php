@@ -1,17 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * ConstraintFinderInterface defines methods for getting a table constraint information.
  *
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0.14
+ * @since 1.0
  */
 interface ConstraintFinderInterface
 {

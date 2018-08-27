@@ -1,29 +1,23 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\helpers\StringHelper;
+use Cover;
+use cover\base\BaseObject;
+use cover\helpers\StringHelper;
 
 /**
  * ColumnSchemaBuilder helps to define database schema types using a PHP interface.
  *
  * See [[SchemaBuilderTrait]] for more detailed description and usage examples.
  *
- * @author Vasenin Matvey <vaseninm@gmail.com>
- * @since 2.0.6
+ * @since 1.0
  */
 class ColumnSchemaBuilder extends BaseObject
 {
     // Internally used constants representing categories that abstract column types fall under.
     // See [[$categoryMap]] for mappings of abstract column types to category.
-    // @since 2.0.8
+    // @since 1.0
     const CATEGORY_PK = 'pk';
     const CATEGORY_STRING = 'string';
     const CATEGORY_NUMERIC = 'numeric';
@@ -59,29 +53,29 @@ class ColumnSchemaBuilder extends BaseObject
     protected $default;
     /**
      * @var mixed SQL string to be appended to column schema definition.
-     * @since 2.0.9
+     * @since 1.0
      */
     protected $append;
     /**
      * @var bool whether the column values should be unsigned. If this is `true`, an `UNSIGNED` keyword will be added.
-     * @since 2.0.7
+     * @since 1.0
      */
     protected $isUnsigned = false;
     /**
      * @var string the column after which this column will be added.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected $after;
     /**
      * @var bool whether this column is to be inserted at the beginning of the table.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected $isFirst;
 
 
     /**
      * @var array mapping of abstract column types (keys) to type categories (values).
-     * @since 2.0.8
+     * @since 1.0
      */
     public $categoryMap = [
         Schema::TYPE_PK => self::CATEGORY_PK,
@@ -107,14 +101,14 @@ class ColumnSchemaBuilder extends BaseObject
         Schema::TYPE_MONEY => self::CATEGORY_NUMERIC,
     ];
     /**
-     * @var \yii\db\Connection the current database connection. It is used mainly to escape strings
+     * @var \cover\db\Connection the current database connection. It is used mainly to escape strings
      * safely when building the final column schema string.
-     * @since 2.0.8
+     * @since 1.0
      */
     public $db;
     /**
      * @var string comment value of the column.
-     * @since 2.0.8
+     * @since 1.0
      */
     public $comment;
 
@@ -123,7 +117,7 @@ class ColumnSchemaBuilder extends BaseObject
      *
      * @param string $type type of the column. See [[$type]].
      * @param int|string|array $length length or precision of the column. See [[$length]].
-     * @param \yii\db\Connection $db the current database connection. See [[$db]].
+     * @param \cover\db\Connection $db the current database connection. See [[$db]].
      * @param array $config name-value pairs that will be used to initialize the object properties
      */
     public function __construct($type, $length = null, $db = null, $config = [])
@@ -147,7 +141,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Adds a `NULL` constraint to the column.
      * @return $this
-     * @since 2.0.9
+     * @since 1.0
      */
     public function null()
     {
@@ -195,7 +189,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Specifies the comment for column.
      * @param string $comment the comment
      * @return $this
-     * @since 2.0.8
+     * @since 1.0
      */
     public function comment($comment)
     {
@@ -206,7 +200,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Marks column as unsigned.
      * @return $this
-     * @since 2.0.7
+     * @since 1.0
      */
     public function unsigned()
     {
@@ -227,7 +221,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Note: MySQL, Oracle and Cubrid support only.
      * @param string $after the column after which $this column will be added.
      * @return $this
-     * @since 2.0.8
+     * @since 1.0
      */
     public function after($after)
     {
@@ -239,7 +233,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Adds an `FIRST` constraint to the column.
      * Note: MySQL, Oracle and Cubrid support only.
      * @return $this
-     * @since 2.0.8
+     * @since 1.0
      */
     public function first()
     {
@@ -251,7 +245,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Specify the default SQL expression for the column.
      * @param string $default the default value expression.
      * @return $this
-     * @since 2.0.7
+     * @since 1.0
      */
     public function defaultExpression($default)
     {
@@ -264,7 +258,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Position modifiers will be appended after column definition in databases that support them.
      * @param string $sql the SQL string to be appended.
      * @return $this
-     * @since 2.0.9
+     * @since 1.0
      */
     public function append($sql)
     {
@@ -374,7 +368,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Builds the unsigned string for column. Defaults to unsupported.
      * @return string a string containing UNSIGNED keyword.
-     * @since 2.0.7
+     * @since 1.0
      */
     protected function buildUnsignedString()
     {
@@ -384,7 +378,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Builds the after constraint for the column. Defaults to unsupported.
      * @return string a string containing the AFTER constraint.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function buildAfterString()
     {
@@ -394,7 +388,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Builds the first constraint for the column. Defaults to unsupported.
      * @return string a string containing the FIRST constraint.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function buildFirstString()
     {
@@ -404,7 +398,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Builds the custom string that's appended to column definition.
      * @return string custom string to append.
-     * @since 2.0.9
+     * @since 1.0
      */
     protected function buildAppendString()
     {
@@ -414,7 +408,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Returns the category of the column type.
      * @return string a string containing the column type category name.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function getTypeCategory()
     {
@@ -424,7 +418,7 @@ class ColumnSchemaBuilder extends BaseObject
     /**
      * Builds the comment specification for the column.
      * @return string a string containing the COMMENT keyword and the comment itself
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function buildCommentString()
     {
@@ -435,7 +429,7 @@ class ColumnSchemaBuilder extends BaseObject
      * Returns the complete column definition from input format.
      * @param string $format the format of the definition.
      * @return string a string containing the complete column definition.
-     * @since 2.0.8
+     * @since 1.0
      */
     protected function buildCompleteString($format)
     {

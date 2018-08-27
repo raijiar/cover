@@ -1,19 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * Exception represents an exception that is caused by some DB-related operations.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
-class Exception extends \yii\base\Exception
+class Exception extends \cover\base\Exception
 {
     /**
      * @var array the error info provided by a PDO exception. This is the same as returned

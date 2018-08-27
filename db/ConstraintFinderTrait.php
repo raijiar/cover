@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * ConstraintFinderTrait provides methods for getting a table constraint information.
@@ -23,8 +18,7 @@ namespace yii\db;
  * @property IndexConstraint[][] $schemaUniques Unique constraints for all tables in the database.
  * Each array element is an array of [[IndexConstraint]] or its child classes. This property is read-only.
  *
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0.13
+ * @since 1.0
  */
 trait ConstraintFinderTrait
 {

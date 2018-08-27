@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\Component;
-use yii\base\NotSupportedException;
+use Cover;
+use cover\base\Component;
+use cover\base\NotSupportedException;
 
 /**
  * Command represents a SQL statement to be executed against a database.
@@ -51,8 +46,7 @@ use yii\base\NotSupportedException;
  * [[sql]].
  * @property string $sql The SQL statement to be executed.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Command extends Component
 {
@@ -83,7 +77,7 @@ class Command extends Component
      */
     public $queryCacheDuration;
     /**
-     * @var \yii\caching\Dependency the dependency to be associated with the cached query result for this command
+     * @var \cover\caching\Dependency the dependency to be associated with the cached query result for this command
      * @see cache()
      */
     public $queryCacheDependency;
@@ -106,7 +100,7 @@ class Command extends Component
      */
     private $_isolationLevel = false;
     /**
-     * @var callable a callable (e.g. anonymous function) that is called when [[\yii\db\Exception]] is thrown
+     * @var callable a callable (e.g. anonymous function) that is called when [[\cover\db\Exception]] is thrown
      * when executing the command.
      */
     private $_retryHandler;
@@ -117,7 +111,7 @@ class Command extends Component
      * @param int $duration the number of seconds that query result of this command can remain valid in the cache.
      * If this is not set, the value of [[Connection::queryCacheDuration]] will be used instead.
      * Use 0 to indicate that the cached data will never expire.
-     * @param \yii\caching\Dependency $dependency the cache dependency associated with the cached query result.
+     * @param \cover\caching\Dependency $dependency the cache dependency associated with the cached query result.
      * @return $this the command object itself
      */
     public function cache($duration = null, $dependency = null)
@@ -174,7 +168,7 @@ class Command extends Component
      *
      * @param string $sql the SQL statement to be set.
      * @return $this this command instance
-     * @since 2.0.13
+     * @since 1.0
      * @see reset()
      * @see cancel()
      */
@@ -347,7 +341,7 @@ class Command extends Component
      * @param array $values the values to be bound. This must be given in terms of an associative
      * array with array keys being the parameter names, and array values the corresponding parameter values,
      * e.g. `[':name' => 'John', ':age' => 25]`. By default, the PDO type of each value is determined
-     * by its PHP type. You may explicitly specify the PDO type by using a [[yii\db\PdoValue]] class: `new PdoValue(value, type)`,
+     * by its PHP type. You may explicitly specify the PDO type by using a [[cover\db\PdoValue]] class: `new PdoValue(value, type)`,
      * e.g. `[':name' => 'John', ':profile' => new PdoValue($profile, \PDO::PARAM_LOB)]`.
      * @return $this the current command being executed
      */
@@ -359,7 +353,7 @@ class Command extends Component
 
         $schema = $this->db->getSchema();
         foreach ($values as $name => $value) {
-            if (is_array($value)) { // TODO: Drop in Yii 2.1
+            if (is_array($value)) { // TODO: Drop in Cover 2.1
                 $this->_pendingParams[$name] = $value;
                 $this->params[$name] = $value[0];
             } elseif ($value instanceof PdoValue) {
@@ -459,9 +453,9 @@ class Command extends Component
      * Note that the created command is not executed until [[execute()]] is called.
      *
      * @param string $table the table that new rows will be inserted into.
-     * @param array|\yii\db\Query $columns the column data (name => value) to be inserted into the table or instance
-     * of [[yii\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
-     * Passing of [[yii\db\Query|Query]] is available since version 2.0.11.
+     * @param array|\cover\db\Query $columns the column data (name => value) to be inserted into the table or instance
+     * of [[cover\db\Query|Query]] to perform INSERT INTO ... SELECT SQL statement.
+     * Passing of [[cover\db\Query|Query]] is available since version 1.0
      * @return $this the command object itself
      */
     public function insert($table, $columns)
@@ -525,7 +519,7 @@ class Command extends Component
      *     'url' => 'http://example.com/', // url is unique
      *     'visits' => 0,
      * ], [
-     *     'visits' => new \yii\db\Expression('visits + 1'),
+     *     'visits' => new \cover\db\Expression('visits + 1'),
      * ], $params);
      * ```
      *
@@ -539,7 +533,7 @@ class Command extends Component
      * If `false` is passed, no update will be performed if the column data already exists.
      * @param array $params the parameters to be bound to the command.
      * @return $this the command object itself.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function upsert($table, $insertColumns, $updateColumns = true, $params = [])
     {
@@ -681,7 +675,7 @@ class Command extends Component
      * Creates a SQL command for adding a new DB column.
      * @param string $table the table that the new column will be added to. The table name will be properly quoted by the method.
      * @param string $column the name of the new column. The name will be properly quoted by the method.
-     * @param string $type the column type. [[\yii\db\QueryBuilder::getColumnType()]] will be called
+     * @param string $type the column type. [[\cover\db\QueryBuilder::getColumnType()]] will be called
      * to convert the give column type to the physical one. For example, `string` will be converted
      * as `varchar(255)`, and `string not null` becomes `varchar(255) not null`.
      * @return $this the command object itself
@@ -724,7 +718,7 @@ class Command extends Component
      * Creates a SQL command for changing the definition of a column.
      * @param string $table the table whose column is to be changed. The table name will be properly quoted by the method.
      * @param string $column the name of the column to be changed. The name will be properly quoted by the method.
-     * @param string $type the column type. [[\yii\db\QueryBuilder::getColumnType()]] will be called
+     * @param string $type the column type. [[\cover\db\QueryBuilder::getColumnType()]] will be called
      * to convert the give column type to the physical one. For example, `string` will be converted
      * as `varchar(255)`, and `string not null` becomes `varchar(255) not null`.
      * @return $this the command object itself
@@ -835,7 +829,7 @@ class Command extends Component
      * If there are multiple columns, separate them with commas.
      * The name will be properly quoted by the method.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addUnique($name, $table, $columns)
     {
@@ -851,7 +845,7 @@ class Command extends Component
      * @param string $table the table whose unique constraint is to be dropped.
      * The name will be properly quoted by the method.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropUnique($name, $table)
     {
@@ -868,7 +862,7 @@ class Command extends Component
      * The name will be properly quoted by the method.
      * @param string $expression the SQL of the `CHECK` constraint.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addCheck($name, $table, $expression)
     {
@@ -884,7 +878,7 @@ class Command extends Component
      * @param string $table the table whose check constraint is to be dropped.
      * The name will be properly quoted by the method.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropCheck($name, $table)
     {
@@ -903,7 +897,7 @@ class Command extends Component
      * The name will be properly quoted by the method.
      * @param mixed $value default value.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function addDefaultValue($name, $table, $column, $value)
     {
@@ -919,7 +913,7 @@ class Command extends Component
      * @param string $table the table whose default value constraint is to be dropped.
      * The name will be properly quoted by the method.
      * @return $this the command object itself.
-     * @since 2.0.13
+     * @since 1.0
      */
     public function dropDefaultValue($name, $table)
     {
@@ -968,7 +962,7 @@ class Command extends Component
      * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
      * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
      * @return $this the command object itself
-     * @since 2.0.8
+     * @since 1.0
      */
     public function addCommentOnColumn($table, $column, $comment)
     {
@@ -983,7 +977,7 @@ class Command extends Component
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
      * @return $this the command object itself
-     * @since 2.0.8
+     * @since 1.0
      */
     public function addCommentOnTable($table, $comment)
     {
@@ -998,7 +992,7 @@ class Command extends Component
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
      * @return $this the command object itself
-     * @since 2.0.8
+     * @since 1.0
      */
     public function dropCommentFromColumn($table, $column)
     {
@@ -1012,7 +1006,7 @@ class Command extends Component
      *
      * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
      * @return $this the command object itself
-     * @since 2.0.8
+     * @since 1.0
      */
     public function dropCommentFromTable($table)
     {
@@ -1028,7 +1022,7 @@ class Command extends Component
      * @param string|Query $subquery the select statement which defines the view.
      * This can be either a string or a [[Query]] object.
      * @return $this the command object itself.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function createView($viewName, $subquery)
     {
@@ -1042,7 +1036,7 @@ class Command extends Component
      *
      * @param string $viewName the name of the view to be dropped.
      * @return $this the command object itself.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function dropView($viewName)
     {
@@ -1070,18 +1064,18 @@ class Command extends Component
         $this->prepare(false);
 
         try {
-            $profile and Yii::beginProfile($rawSql, __METHOD__);
+            $profile and Cover::beginProfile($rawSql, __METHOD__);
 
             $this->internalExecute($rawSql);
             $n = $this->pdoStatement->rowCount();
 
-            $profile and Yii::endProfile($rawSql, __METHOD__);
+            $profile and Cover::endProfile($rawSql, __METHOD__);
 
             $this->refreshTableSchema();
 
             return $n;
         } catch (Exception $e) {
-            $profile and Yii::endProfile($rawSql, __METHOD__);
+            $profile and Cover::endProfile($rawSql, __METHOD__);
             throw $e;
         }
     }
@@ -1097,7 +1091,7 @@ class Command extends Component
     {
         if ($this->db->enableLogging) {
             $rawSql = $this->getRawSql();
-            Yii::info($rawSql, $category);
+            Cover::info($rawSql, $category);
         }
         if (!$this->db->enableProfiling) {
             return [false, isset($rawSql) ? $rawSql : null];
@@ -1113,16 +1107,16 @@ class Command extends Component
      * for valid fetch modes. If this parameter is null, the value set in [[fetchMode]] will be used.
      * @return mixed the method execution result
      * @throws Exception if the query causes any problem
-     * @since 2.0.1 this method is protected (was private before).
+     * @since 1.0 this method is protected (was private before).
      */
     protected function queryInternal($method, $fetchMode = null)
     {
-        list($profile, $rawSql) = $this->logQuery('yii\db\Command::query');
+        list($profile, $rawSql) = $this->logQuery('cover\db\Command::query');
 
         if ($method !== '') {
             $info = $this->db->getQueryCacheInfo($this->queryCacheDuration, $this->queryCacheDependency);
             if (is_array($info)) {
-                /* @var $cache \yii\caching\CacheInterface */
+                /* @var $cache \cover\caching\CacheInterface */
                 $cache = $info[0];
                 $cacheKey = [
                     __CLASS__,
@@ -1134,7 +1128,7 @@ class Command extends Component
                 ];
                 $result = $cache->get($cacheKey);
                 if (is_array($result) && isset($result[0])) {
-                    Yii::debug('Query result served from cache', 'yii\db\Command::query');
+                    Cover::debug('Query result served from cache', 'cover\db\Command::query');
                     return $result[0];
                 }
             }
@@ -1143,7 +1137,7 @@ class Command extends Component
         $this->prepare(true);
 
         try {
-            $profile and Yii::beginProfile($rawSql, 'yii\db\Command::query');
+            $profile and Cover::beginProfile($rawSql, 'cover\db\Command::query');
 
             $this->internalExecute($rawSql);
 
@@ -1157,15 +1151,15 @@ class Command extends Component
                 $this->pdoStatement->closeCursor();
             }
 
-            $profile and Yii::endProfile($rawSql, 'yii\db\Command::query');
+            $profile and Cover::endProfile($rawSql, 'cover\db\Command::query');
         } catch (Exception $e) {
-            $profile and Yii::endProfile($rawSql, 'yii\db\Command::query');
+            $profile and Cover::endProfile($rawSql, 'cover\db\Command::query');
             throw $e;
         }
 
         if (isset($cache, $cacheKey, $info)) {
             $cache->set($cacheKey, [$result], $info[1], $info[2]);
-            Yii::debug('Saved query result in cache', 'yii\db\Command::query');
+            Cover::debug('Saved query result in cache', 'cover\db\Command::query');
         }
 
         return $result;
@@ -1175,7 +1169,7 @@ class Command extends Component
      * Marks a specified table schema to be refreshed after command execution.
      * @param string $name name of the table, which schema should be refreshed.
      * @return $this this command instance
-     * @since 2.0.6
+     * @since 1.0
      */
     protected function requireTableSchemaRefresh($name)
     {
@@ -1185,7 +1179,7 @@ class Command extends Component
 
     /**
      * Refreshes table schema, which was marked by [[requireTableSchemaRefresh()]].
-     * @since 2.0.6
+     * @since 1.0
      */
     protected function refreshTableSchema()
     {
@@ -1199,7 +1193,7 @@ class Command extends Component
      * @param string|null $isolationLevel The isolation level to use for this transaction.
      * See [[Transaction::begin()]] for details.
      * @return $this this command instance.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function requireTransaction($isolationLevel = null)
     {
@@ -1212,7 +1206,7 @@ class Command extends Component
      * when executing the command. The signature of the callable should be:
      *
      * ```php
-     * function (\yii\db\Exception $e, $attempt)
+     * function (\cover\db\Exception $e, $attempt)
      * {
      *     // return true or false (whether to retry the command or rethrow $e)
      * }
@@ -1223,7 +1217,7 @@ class Command extends Component
      *
      * @param callable $handler a PHP callback to handle database exceptions.
      * @return $this this command instance.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function setRetryHandler(callable $handler)
     {
@@ -1239,7 +1233,7 @@ class Command extends Component
      *
      * @param string|null $rawSql the rawSql if it has been created.
      * @throws Exception if execution failed.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function internalExecute($rawSql)
     {
@@ -1271,7 +1265,7 @@ class Command extends Component
     /**
      * Resets command properties to their initial state.
      *
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function reset()
     {
