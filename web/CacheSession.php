@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\web;
+namespace cover\web;
 
-use Yii;
-use yii\caching\CacheInterface;
-use yii\di\Instance;
+use Cover;
+use cover\caching\CacheInterface;
+use cover\di\Instance;
 
 /**
  * CacheSession implements a session component using cache as storage medium.
@@ -26,15 +21,14 @@ use yii\di\Instance;
  *
  * ```php
  * 'session' => [
- *     'class' => 'yii\web\CacheSession',
+ *     'class' => 'cover\web\CacheSession',
  *     // 'cache' => 'mycache',
  * ]
  * ```
  *
  * @property bool $useCustomStorage Whether to use custom storage. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class CacheSession extends Session
 {
@@ -45,7 +39,7 @@ class CacheSession extends Session
      * After the CacheSession object is created, if you want to change this property,
      * you should only assign it with a cache object.
      *
-     * Starting from version 2.0.2, this can also be a configuration array for creating the object.
+     * Starting from version 1.0, this can also be a configuration array for creating the object.
      */
     public $cache = 'cache';
 
@@ -56,7 +50,7 @@ class CacheSession extends Session
     public function init()
     {
         parent::init();
-        $this->cache = Instance::ensure($this->cache, 'yii\caching\CacheInterface');
+        $this->cache = Instance::ensure($this->cache, 'cover\caching\CacheInterface');
     }
 
     /**

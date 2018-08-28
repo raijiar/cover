@@ -1,16 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\web;
+namespace cover\web;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
+use Cover;
+use cover\base\BaseObject;
+use cover\helpers\ArrayHelper;
+use cover\helpers\Url;
 
 /**
  * AssetBundle represents a collection of asset files, such as CSS, JS, images.
@@ -24,8 +19,7 @@ use yii\helpers\Url;
  *
  * For more details and usage information on AssetBundle, see the [guide article on assets](guide:structure-assets).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class AssetBundle extends BaseObject
 {
@@ -68,8 +62,8 @@ class AssetBundle extends BaseObject
      *
      * ```php
      * public $depends = [
-     *    'yii\web\YiiAsset',
-     *    'yii\bootstrap\BootstrapAsset',
+     *    'cover\web\CoverAsset',
+     *    'cover\bootstrap\BootstrapAsset',
      * ];
      * ```
      */
@@ -86,7 +80,7 @@ class AssetBundle extends BaseObject
      *   of the asset can be determined by prefixing [[baseUrl]] to the relative path.
      * - an array, with the first entry being the URL or relative path as described before, and a list of key => value pairs
      *   that will be used to overwrite [[jsOptions]] settings for this entry.
-     *   This functionality is available since version 2.0.7.
+     *   This functionality is available since version 1.0
      *
      * Note that only a forward slash "/" should be used as directory separator.
      */
@@ -132,19 +126,19 @@ class AssetBundle extends BaseObject
     public function init()
     {
         if ($this->sourcePath !== null) {
-            $this->sourcePath = rtrim(Yii::getAlias($this->sourcePath), '/\\');
+            $this->sourcePath = rtrim(Cover::getAlias($this->sourcePath), '/\\');
         }
         if ($this->basePath !== null) {
-            $this->basePath = rtrim(Yii::getAlias($this->basePath), '/\\');
+            $this->basePath = rtrim(Cover::getAlias($this->basePath), '/\\');
         }
         if ($this->baseUrl !== null) {
-            $this->baseUrl = rtrim(Yii::getAlias($this->baseUrl), '/');
+            $this->baseUrl = rtrim(Cover::getAlias($this->baseUrl), '/');
         }
     }
 
     /**
      * Registers the CSS and JS files with the given view.
-     * @param \yii\web\View $view the view that the asset files are to be registered with.
+     * @param \cover\web\View $view the view that the asset files are to be registered with.
      */
     public function registerAssetFiles($view)
     {

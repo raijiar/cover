@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\web;
+namespace cover\web;
 
 /**
  * BadRequestHttpException represents a "Bad Request" HTTP exception with status code 400.
@@ -16,8 +11,7 @@ namespace yii\web;
  * additional information.
  *
  * @see https://tools.ietf.org/html/rfc7231#section-6.5.1
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class BadRequestHttpException extends HttpException
 {

@@ -1,24 +1,19 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\web;
+namespace cover\web;
 
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
-use yii\helpers\FileHelper;
-use yii\helpers\Url;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidArgumentException;
+use cover\base\InvalidConfigException;
+use cover\helpers\FileHelper;
+use cover\helpers\Url;
 
 /**
  * AssetManager manages asset bundle configuration and loading.
  *
- * AssetManager is configured as an application component in [[\yii\web\Application]] by default.
- * You can access that instance via `Yii::$app->assetManager`.
+ * AssetManager is configured as an application component in [[\cover\web\Application]] by default.
+ * You can access that instance via `Cover::$app->assetManager`.
  *
  * You can modify its configuration by adding an array to your application config under `components`
  * as shown in the following example:
@@ -36,8 +31,7 @@ use yii\helpers\Url;
  * @property AssetConverterInterface $converter The asset converter. Note that the type of this property
  * differs in getter and setter. See [[getConverter()]] and [[setConverter()]] for details.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class AssetManager extends Component
 {
@@ -58,7 +52,7 @@ class AssetManager extends Component
      *
      * ```php
      * [
-     *     'yii\bootstrap\BootstrapAsset' => [
+     *     'cover\bootstrap\BootstrapAsset' => [
      *         'css' => [],
      *     ],
      * ]
@@ -143,14 +137,14 @@ class AssetManager extends Component
      * The signature of the callback should be: `function ($from, $to)`, where `$from` is the sub-directory or
      * file to be copied from, while `$to` is the copy target.
      *
-     * This is passed as a parameter `beforeCopy` to [[\yii\helpers\FileHelper::copyDirectory()]].
+     * This is passed as a parameter `beforeCopy` to [[\cover\helpers\FileHelper::copyDirectory()]].
      */
     public $beforeCopy;
     /**
      * @var callback a PHP callback that is called after a sub-directory or file is successfully copied.
      * This option is used only when publishing a directory. The signature of the callback is the same as
      * for [[beforeCopy]].
-     * This is passed as a parameter `afterCopy` to [[\yii\helpers\FileHelper::copyDirectory()]].
+     * This is passed as a parameter `afterCopy` to [[\cover\helpers\FileHelper::copyDirectory()]].
      */
     public $afterCopy;
     /**
@@ -167,7 +161,7 @@ class AssetManager extends Component
      * last modification time of the published asset file.
      * You normally would want to set this property to true when you have enabled HTTP caching for assets,
      * because it allows you to bust caching when the assets are updated.
-     * @since 2.0.3
+     * @since 1.0
      */
     public $appendTimestamp = false;
     /**
@@ -194,7 +188,7 @@ class AssetManager extends Component
      * }
      * ```
      *
-     * @since 2.0.6
+     * @since 1.0
      */
     public $hashCallback;
 
@@ -208,7 +202,7 @@ class AssetManager extends Component
     public function init()
     {
         parent::init();
-        $this->basePath = Yii::getAlias($this->basePath);
+        $this->basePath = Cover::getAlias($this->basePath);
         if (!is_dir($this->basePath)) {
             throw new InvalidConfigException("The directory does not exist: {$this->basePath}");
         } elseif (!is_writable($this->basePath)) {
@@ -216,7 +210,7 @@ class AssetManager extends Component
         }
 
         $this->basePath = realpath($this->basePath);
-        $this->baseUrl = rtrim(Yii::getAlias($this->baseUrl), '/');
+        $this->baseUrl = rtrim(Cover::getAlias($this->baseUrl), '/');
     }
 
     /**
@@ -263,7 +257,7 @@ class AssetManager extends Component
             $config['class'] = $name;
         }
         /* @var $bundle AssetBundle */
-        $bundle = Yii::createObject($config);
+        $bundle = Cover::createObject($config);
         if ($publish) {
             $bundle->publish($this);
         }
@@ -303,10 +297,10 @@ class AssetManager extends Component
         if (($actualAsset = $this->resolveAsset($bundle, $asset)) !== false) {
             if (strncmp($actualAsset, '@web/', 5) === 0) {
                 $asset = substr($actualAsset, 5);
-                $basePath = Yii::getAlias('@webroot');
-                $baseUrl = Yii::getAlias('@web');
+                $basePath = Cover::getAlias('@webroot');
+                $baseUrl = Cover::getAlias('@web');
             } else {
-                $asset = Yii::getAlias($actualAsset);
+                $asset = Cover::getAlias($actualAsset);
                 $basePath = $this->basePath;
                 $baseUrl = $this->baseUrl;
             }
@@ -355,9 +349,9 @@ class AssetManager extends Component
             $asset = $bundle->sourcePath . '/' . $asset;
         }
 
-        $n = mb_strlen($asset, Yii::$app->charset);
+        $n = mb_strlen($asset, Cover::$app->charset);
         foreach ($this->assetMap as $from => $to) {
-            $n2 = mb_strlen($from, Yii::$app->charset);
+            $n2 = mb_strlen($from, Cover::$app->charset);
             if ($n2 <= $n && substr_compare($asset, $from, $n - $n2, $n2) === 0) {
                 return $to;
             }
@@ -375,12 +369,12 @@ class AssetManager extends Component
     public function getConverter()
     {
         if ($this->_converter === null) {
-            $this->_converter = Yii::createObject(AssetConverter::className());
+            $this->_converter = Cover::createObject(AssetConverter::className());
         } elseif (is_array($this->_converter) || is_string($this->_converter)) {
             if (is_array($this->_converter) && !isset($this->_converter['class'])) {
                 $this->_converter['class'] = AssetConverter::className();
             }
-            $this->_converter = Yii::createObject($this->_converter);
+            $this->_converter = Cover::createObject($this->_converter);
         }
 
         return $this->_converter;
@@ -424,7 +418,7 @@ class AssetManager extends Component
      * that holds the published assets. This problem can be avoided altogether by 'requesting'
      * in advance all the resources that are supposed to trigger a 'publish()' call, and doing
      * that in the application deployment phase, before system goes live. See more in the following
-     * discussion: http://code.google.com/p/yii/issues/detail?id=2579
+     * discussion: http://code.google.com/p/cover/issues/detail?id=2579
      *
      * @param string $path the asset (file or directory) to be published
      * @param array $options the options to be applied when publishing a directory.
@@ -446,7 +440,7 @@ class AssetManager extends Component
      */
     public function publish($path, $options = [])
     {
-        $path = Yii::getAlias($path);
+        $path = Cover::getAlias($path);
 
         if (isset($this->_published[$path])) {
             return $this->_published[$path];
@@ -571,7 +565,7 @@ class AssetManager extends Component
      */
     public function getPublishedPath($path)
     {
-        $path = Yii::getAlias($path);
+        $path = Cover::getAlias($path);
 
         if (isset($this->_published[$path])) {
             return $this->_published[$path][0];
@@ -592,7 +586,7 @@ class AssetManager extends Component
      */
     public function getPublishedUrl($path)
     {
-        $path = Yii::getAlias($path);
+        $path = Cover::getAlias($path);
 
         if (isset($this->_published[$path])) {
             return $this->_published[$path][1];
@@ -616,6 +610,6 @@ class AssetManager extends Component
             return call_user_func($this->hashCallback, $path);
         }
         $path = (is_file($path) ? dirname($path) : $path) . filemtime($path);
-        return sprintf('%x', crc32($path . Yii::getVersion() . '|' . $this->linkAssets));
+        return sprintf('%x', crc32($path . Cover::getVersion() . '|' . $this->linkAssets));
     }
 }
