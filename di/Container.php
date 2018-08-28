@@ -90,7 +90,7 @@ use cover\helpers\ArrayHelper;
  * definition or instance). This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class Container extends Component
 {
@@ -140,7 +140,7 @@ class Container extends Component
      * @param array $config a list of name-value pairs that will be used to initialize the object properties.
      * @return object an instance of the requested class.
      * @throws InvalidConfigException if the class cannot be recognized or correspond to an invalid definition
-     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 2.0.9)
+     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 1.0)
      */
     public function get($class, $params = [], $config = [])
     {
@@ -351,7 +351,7 @@ class Container extends Component
      * @param array $params constructor parameters
      * @param array $config configurations to be applied to the new instance
      * @return object the newly created instance of the specified class
-     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 2.0.9)
+     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 1.0)
      */
     protected function build($class, $params, $config)
     {
@@ -489,8 +489,8 @@ class Container extends Component
      * This can be either a list of parameters, or an associative array representing named function parameters.
      * @return mixed the callback return value.
      * @throws InvalidConfigException if a dependency cannot be resolved or if a dependency cannot be fulfilled.
-     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 2.0.9)
-     * @since 2.0.7
+     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 1.0)
+     * @since 1.0
      */
     public function invoke(callable $callback, $params = [])
     {
@@ -511,8 +511,8 @@ class Container extends Component
      * @param array $params The array of parameters for the function, can be either numeric or associative.
      * @return array The resolved dependencies.
      * @throws InvalidConfigException if a dependency cannot be resolved or if a dependency cannot be fulfilled.
-     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 2.0.9)
-     * @since 2.0.7
+     * @throws NotInstantiableException If resolved to an abstract class or an interface (since 1.0)
+     * @since 1.0
      */
     public function resolveCallableDependencies(callable $callback, $params = [])
     {
@@ -616,7 +616,7 @@ class Container extends Component
      * ```
      *
      * @see set() to know more about possible values of definitions
-     * @since 2.0.11
+     * @since 1.0
      */
     public function setDefinitions(array $definitions)
     {
@@ -638,7 +638,7 @@ class Container extends Component
      *
      * @see setDefinitions() for allowed formats of $singletons parameter
      * @see setSingleton() to know more about possible values of definitions
-     * @since 2.0.11
+     * @since 1.0
      */
     public function setSingletons(array $singletons)
     {

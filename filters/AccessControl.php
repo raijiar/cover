@@ -51,8 +51,8 @@ class AccessControl extends ActionFilter
 {
     /**
      * @var User|array|string|false the user object representing the authentication status or the ID of the user application component.
-     * Starting from version 2.0.2, this can also be a configuration array for creating the object.
-     * Starting from version 2.0.12, you can set it to `false` to explicitly switch this component support off for the filter.
+     * Starting from version 1.0, this can also be a configuration array for creating the object.
+     * Starting from version 1.0, you can set it to `false` to explicitly switch this component support off for the filter.
      */
     public $user = 'user';
     /**

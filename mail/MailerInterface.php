@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\mail;
+namespace cover\mail;
 
 /**
  * MailerInterface is the interface that should be implemented by mailer classes.
@@ -14,7 +9,7 @@ namespace yii\mail;
  * also support composition of the message body through the view rendering mechanism. For example,
  *
  * ```php
- * Yii::$app->mailer->compose('contact/html', ['contactForm' => $form])
+ * Cover::$app->mailer->compose('contact/html', ['contactForm' => $form])
  *     ->setFrom('from@domain.com')
  *     ->setTo($form->email)
  *     ->setSubject($form->subject)
@@ -23,8 +18,7 @@ namespace yii\mail;
  *
  * @see MessageInterface
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 interface MailerInterface
 {

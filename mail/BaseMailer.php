@@ -22,8 +22,7 @@ use cover\web\View;
  * @property string $viewPath The directory that contains the view files for composing mail messages Defaults
  * to '@app/mail'.
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 abstract class BaseMailer extends Component implements MailerInterface, ViewContextInterface
 {

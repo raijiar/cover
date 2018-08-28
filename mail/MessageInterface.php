@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\mail;
+namespace cover\mail;
 
 /**
  * MessageInterface is the interface that should be implemented by mail message classes.
@@ -13,10 +8,10 @@ namespace yii\mail;
  * A message represents the settings and content of an email, such as the sender, recipient,
  * subject, body, etc.
  *
- * Messages are sent by a [[\yii\mail\MailerInterface|mailer]], like the following,
+ * Messages are sent by a [[\cover\mail\MailerInterface|mailer]], like the following,
  *
  * ```php
- * Yii::$app->mailer->compose()
+ * Cover::$app->mailer->compose()
  *     ->setFrom('from@domain.com')
  *     ->setTo($form->email)
  *     ->setSubject($form->subject)
@@ -27,8 +22,7 @@ namespace yii\mail;
  *
  * @see MailerInterface
  *
- * @author Paul Klimov <klimov.paul@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 interface MessageInterface
 {

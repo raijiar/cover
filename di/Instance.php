@@ -94,7 +94,7 @@ class Instance
      *
      * @param object|string|array|static $reference an object or a reference to the desired object.
      * You may specify a reference in terms of a component ID or an Instance object.
-     * Starting from version 2.0.2, you may also pass in a configuration array for creating the object.
+     * Starting from version 1.0, you may also pass in a configuration array for creating the object.
      * If the "class" value is not specified in the configuration array, it will use the value of `$type`.
      * @param string $type the class/interface name to be checked. If null, type check will not be performed.
      * @param ServiceLocator|Container $container the container. This will be passed to [[get()]].
@@ -167,7 +167,7 @@ class Instance
      * @return Instance
      * @throws InvalidConfigException when $state property does not contain `id` parameter
      * @see var_export()
-     * @since 2.0.12
+     * @since 1.0
      */
     public static function __set_state($state)
     {
