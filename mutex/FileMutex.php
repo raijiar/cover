@@ -31,8 +31,7 @@ use cover\helpers\FileHelper;
  *
  * @see Mutex
  *
- * @author resurtm <resurtm@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class FileMutex extends Mutex
 {
@@ -166,7 +165,7 @@ class FileMutex extends Mutex
      * Generate path for lock file.
      * @param string $name
      * @return string
-     * @since 2.0.10
+     * @since 1.0
      */
     protected function getLockFilePath($name)
     {

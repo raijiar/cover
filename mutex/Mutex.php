@@ -22,8 +22,7 @@ use cover\base\Component;
  *
  * This is a base class, which should be extended in order to implement the actual lock mechanism.
  *
- * @author resurtm <resurtm@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 abstract class Mutex extends Component
 {
