@@ -1,14 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\Component;
-use yii\base\InvalidArgumentException;
+use cover\base\Component;
+use cover\base\InvalidArgumentException;
 
 /**
  * SqlTokenizer splits an SQL query into individual SQL tokens.
@@ -25,8 +20,7 @@ use yii\base\InvalidArgumentException;
  *
  * Tokens are instances of [[SqlToken]].
  *
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0.13
+ * @since 1.0
  */
 abstract class SqlTokenizer extends Component
 {

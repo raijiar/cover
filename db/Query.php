@@ -1,17 +1,12 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidArgumentException;
-use yii\helpers\ArrayHelper;
-use yii\base\InvalidConfigException;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidArgumentException;
+use cover\helpers\ArrayHelper;
+use cover\base\InvalidConfigException;
 
 /**
  * Query represents a SELECT SQL statement in a way that is independent of DBMS.
@@ -44,9 +39,7 @@ use yii\base\InvalidConfigException;
  *
  * @property string[] $tablesUsedInFrom Table names indexed by aliases. This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 class Query extends Component implements QueryInterface, ExpressionInterface
 {
@@ -121,13 +114,13 @@ class Query extends Component implements QueryInterface, ExpressionInterface
      * Use a negative number to indicate that query cache should not be used.
      * Use boolean `true` to indicate that [[Connection::queryCacheDuration]] should be used.
      * @see cache()
-     * @since 2.0.14
+     * @since 1.0
      */
     public $queryCacheDuration;
     /**
-     * @var \yii\caching\Dependency the dependency to be associated with the cached query result for this query
+     * @var \cover\caching\Dependency the dependency to be associated with the cached query result for this query
      * @see cache()
-     * @since 2.0.14
+     * @since 1.0
      */
     public $queryCacheDependency;
 
@@ -141,7 +134,7 @@ class Query extends Component implements QueryInterface, ExpressionInterface
     public function createCommand($db = null)
     {
         if ($db === null) {
-            $db = Yii::$app->getDb();
+            $db = Cover::$app->getDb();
         }
         list($sql, $params) = $db->getQueryBuilder()->build($this);
 
@@ -186,7 +179,7 @@ class Query extends Component implements QueryInterface, ExpressionInterface
      */
     public function batch($batchSize = 100, $db = null)
     {
-        return Yii::createObject([
+        return Cover::createObject([
             'class' => BatchQueryResult::className(),
             'query' => $this,
             'batchSize' => $batchSize,
@@ -214,7 +207,7 @@ class Query extends Component implements QueryInterface, ExpressionInterface
      */
     public function each($batchSize = 100, $db = null)
     {
-        return Yii::createObject([
+        return Cover::createObject([
             'class' => BatchQueryResult::className(),
             'query' => $this,
             'batchSize' => $batchSize,
@@ -476,8 +469,8 @@ class Query extends Component implements QueryInterface, ExpressionInterface
      * Returns table names used in [[from]] indexed by aliases.
      * Both aliases and names are enclosed into {{ and }}.
      * @return string[] table names indexed by aliases
-     * @throws \yii\base\InvalidConfigException
-     * @since 2.0.12
+     * @throws \cover\base\InvalidConfigException
+     * @since 1.0
      */
     public function getTablesUsedInFrom()
     {
@@ -503,7 +496,7 @@ class Query extends Component implements QueryInterface, ExpressionInterface
      * Both aliases and names are enclosed into {{ and }}.
      * @param array $tableNames non-empty array
      * @return string[] table names indexed by aliases
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function cleanUpTableNames($tableNames)
     {
@@ -596,7 +589,7 @@ PATTERN;
      * When the columns are specified as an array, you may also use array keys as the column aliases (if a column
      * does not need alias, do not use a string key).
      *
-     * Starting from version 2.0.1, you may also select sub-queries as columns by specifying each such column
+     * Starting from version 1.0, you may also select sub-queries as columns by specifying each such column
      * as a `Query` instance representing the sub-query.
      *
      * @param string $option additional option that should be appended to the 'SELECT' keyword. For example,
@@ -656,7 +649,7 @@ PATTERN;
      * - if column definition already present in SELECT part with same alias
      * - if column definition without alias already present in SELECT part without alias too
      * @param array $columns the columns to be merged to the select.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function getUniqueColumns($columns)
     {
@@ -686,7 +679,7 @@ PATTERN;
 
     /**
      * @return array List of columns without aliases from SELECT statement.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function getUnaliasedColumnsFromSelect()
     {
@@ -732,16 +725,16 @@ PATTERN;
      *
      * ```php
      * // SELECT * FROM  `user` `u`, `profile`;
-     * $query = (new \yii\db\Query)->from(['u' => 'user', 'profile']);
+     * $query = (new \cover\db\Query)->from(['u' => 'user', 'profile']);
      *
      * // SELECT * FROM (SELECT * FROM `user` WHERE `active` = 1) `activeusers`;
-     * $subquery = (new \yii\db\Query)->from('user')->where(['active' => true])
-     * $query = (new \yii\db\Query)->from(['activeusers' => $subquery]);
+     * $subquery = (new \cover\db\Query)->from('user')->where(['active' => true])
+     * $query = (new \cover\db\Query)->from(['activeusers' => $subquery]);
      *
      * // subquery can also be a string with plain SQL wrapped in parenthesis
      * // SELECT * FROM (SELECT * FROM `user` WHERE `active` = 1) `activeusers`;
      * $subquery = "(SELECT * FROM `user` WHERE `active` = 1)";
-     * $query = (new \yii\db\Query)->from(['activeusers' => $subquery]);
+     * $query = (new \cover\db\Query)->from(['activeusers' => $subquery]);
      * ```
      *
      * @return $this the query object itself
@@ -850,7 +843,7 @@ PATTERN;
      * @param string $defaultOperator The operator to use, when no operator is given in `$value`.
      * Defaults to `=`, performing an exact match.
      * @return $this The query object itself
-     * @since 2.0.8
+     * @since 1.0
      */
     public function andFilterCompare($name, $value, $defaultOperator = '=')
     {
@@ -983,8 +976,8 @@ PATTERN;
      * to represent the group-by information. Otherwise, the method will not be able to correctly determine
      * the group-by columns.
      *
-     * Since version 2.0.7, an [[ExpressionInterface]] object can be passed to specify the GROUP BY part explicitly in plain SQL.
-     * Since version 2.0.14, an [[ExpressionInterface]] object can be passed as well.
+     * Since version 1.0, an [[ExpressionInterface]] object can be passed to specify the GROUP BY part explicitly in plain SQL.
+     * Since version 1.0, an [[ExpressionInterface]] object can be passed as well.
      * @return $this the query object itself
      * @see addGroupBy()
      */
@@ -1010,8 +1003,8 @@ PATTERN;
      * to represent the group-by information. Otherwise, the method will not be able to correctly determine
      * the group-by columns.
      *
-     * Since version 2.0.7, an [[Expression]] object can be passed to specify the GROUP BY part explicitly in plain SQL.
-     * Since version 2.0.14, an [[ExpressionInterface]] object can be passed as well.
+     * Since version 1.0, an [[Expression]] object can be passed to specify the GROUP BY part explicitly in plain SQL.
+     * Since version 1.0, an [[ExpressionInterface]] object can be passed as well.
      * @return $this the query object itself
      * @see groupBy()
      */
@@ -1115,7 +1108,7 @@ PATTERN;
      * @see having()
      * @see andFilterHaving()
      * @see orFilterHaving()
-     * @since 2.0.11
+     * @since 1.0
      */
     public function filterHaving(array $condition)
     {
@@ -1140,7 +1133,7 @@ PATTERN;
      * @return $this the query object itself
      * @see filterHaving()
      * @see orFilterHaving()
-     * @since 2.0.11
+     * @since 1.0
      */
     public function andFilterHaving(array $condition)
     {
@@ -1165,7 +1158,7 @@ PATTERN;
      * @return $this the query object itself
      * @see filterHaving()
      * @see andFilterHaving()
-     * @since 2.0.11
+     * @since 1.0
      */
     public function orFilterHaving(array $condition)
     {
@@ -1235,9 +1228,9 @@ PATTERN;
      * Use a negative number to indicate that query cache should not be used.
      * Use boolean `true` to indicate that [[Connection::queryCacheDuration]] should be used.
      * Defaults to `true`.
-     * @param \yii\caching\Dependency $dependency the cache dependency associated with the cached result.
+     * @param \cover\caching\Dependency $dependency the cache dependency associated with the cached result.
      * @return $this the Query object itself
-     * @since 2.0.14
+     * @since 1.0
      */
     public function cache($duration = true, $dependency = null)
     {
@@ -1249,7 +1242,7 @@ PATTERN;
     /**
      * Disables query cache for this Query.
      * @return $this the Query object itself
-     * @since 2.0.14
+     * @since 1.0
      */
     public function noCache()
     {
@@ -1262,7 +1255,7 @@ PATTERN;
      *
      * @param Command $command
      * @return Command
-     * @since 2.0.14
+     * @since 1.0
      */
     protected function setCommandCache($command)
     {

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * The QueryInterface defines the minimum set of methods to be implemented by a database query.
@@ -16,9 +11,7 @@ namespace yii\db;
  * Allows pagination via [[limit]] and [[offset]].
  * Sorting is supported via [[orderBy]] and items can be limited to match some conditions using [[where]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 interface QueryInterface
 {
@@ -263,7 +256,7 @@ interface QueryInterface
      * in case you set false where condition like `0=1`.
      * @param bool $value whether to prevent query execution.
      * @return $this the query object itself.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function emulateExecution($value = true);
 }

@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * SchemaBuilderTrait contains shortcut methods to create instances of [[ColumnSchemaBuilder]].
@@ -30,7 +25,7 @@ namespace yii\db;
  * ```
  *
  * @author Vasenin Matvey <vaseninm@gmail.com>
- * @since 2.0.6
+ * @since 1.0
  */
 trait SchemaBuilderTrait
 {
@@ -44,7 +39,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function primaryKey($length = null)
     {
@@ -56,7 +51,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function bigPrimaryKey($length = null)
     {
@@ -68,7 +63,7 @@ trait SchemaBuilderTrait
      * @param int $length column size definition i.e. the maximum string length.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.8
+     * @since 1.0
      */
     public function char($length = null)
     {
@@ -80,7 +75,7 @@ trait SchemaBuilderTrait
      * @param int $length column size definition i.e. the maximum string length.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function string($length = null)
     {
@@ -90,7 +85,7 @@ trait SchemaBuilderTrait
     /**
      * Creates a text column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function text()
     {
@@ -102,7 +97,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function tinyInteger($length = null)
     {
@@ -114,7 +109,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function smallInteger($length = null)
     {
@@ -126,7 +121,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function integer($length = null)
     {
@@ -138,7 +133,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function bigInteger($length = null)
     {
@@ -150,7 +145,7 @@ trait SchemaBuilderTrait
      * @param int $precision column value precision. First parameter passed to the column type, e.g. FLOAT(precision).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function float($precision = null)
     {
@@ -162,7 +157,7 @@ trait SchemaBuilderTrait
      * @param int $precision column value precision. First parameter passed to the column type, e.g. DOUBLE(precision).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function double($precision = null)
     {
@@ -178,7 +173,7 @@ trait SchemaBuilderTrait
      * Second parameter passed to the column type, e.g. DECIMAL(precision, scale).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function decimal($precision = null, $scale = null)
     {
@@ -198,7 +193,7 @@ trait SchemaBuilderTrait
      * @param int $precision column value precision. First parameter passed to the column type, e.g. DATETIME(precision).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function dateTime($precision = null)
     {
@@ -210,7 +205,7 @@ trait SchemaBuilderTrait
      * @param int $precision column value precision. First parameter passed to the column type, e.g. TIMESTAMP(precision).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function timestamp($precision = null)
     {
@@ -222,7 +217,7 @@ trait SchemaBuilderTrait
      * @param int $precision column value precision. First parameter passed to the column type, e.g. TIME(precision).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function time($precision = null)
     {
@@ -232,7 +227,7 @@ trait SchemaBuilderTrait
     /**
      * Creates a date column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function date()
     {
@@ -244,7 +239,7 @@ trait SchemaBuilderTrait
      * @param int $length column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function binary($length = null)
     {
@@ -254,7 +249,7 @@ trait SchemaBuilderTrait
     /**
      * Creates a boolean column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function boolean()
     {
@@ -270,7 +265,7 @@ trait SchemaBuilderTrait
      * Second parameter passed to the column type, e.g. DECIMAL(precision, scale).
      * This parameter will be ignored if not supported by the DBMS.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function money($precision = null, $scale = null)
     {
@@ -288,19 +283,19 @@ trait SchemaBuilderTrait
     /**
      * Creates a JSON column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.14
-     * @throws \yii\base\Exception
+     * @since 1.0
+     * @throws \cover\base\Exception
      */
     public function json()
     {
         /*
-         * TODO Remove in Yii 2.1
+         * TODO Remove in Cover 1.0
          *
          * Disabled due to bug in MySQL extension
          * @link https://bugs.php.net/bug.php?id=70384
          */
         if (version_compare(PHP_VERSION, '5.6', '<') && $this->getDb()->getDriverName() === 'mysql') {
-            throw new \yii\base\Exception('JSON column type is not supported in PHP < 5.6');
+            throw new \cover\base\Exception('JSON column type is not supported in PHP < 5.6');
         }
 
         return $this->getDb()->getSchema()->createColumnSchemaBuilder(Schema::TYPE_JSON);

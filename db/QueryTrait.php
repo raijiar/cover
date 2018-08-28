@@ -1,22 +1,15 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\NotSupportedException;
+use cover\base\NotSupportedException;
 
 /**
  * The BaseQuery trait represents the minimum method set of a database Query.
  *
  * It is supposed to be used in a class that implements the [[QueryInterface]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Carsten Brandt <mail@cebe.cc>
- * @since 2.0
+ * @since 1.0
  */
 trait QueryTrait
 {
@@ -54,7 +47,7 @@ trait QueryTrait
     /**
      * @var bool whether to emulate the actual query execution, returning empty or false results.
      * @see emulateExecution()
-     * @since 2.0.11
+     * @since 1.0
      */
     public $emulateExecution = false;
 
@@ -316,7 +309,7 @@ trait QueryTrait
      * to represent the order-by information. Otherwise, the method will not be able to correctly determine
      * the order-by columns.
      *
-     * Since version 2.0.7, an [[ExpressionInterface]] object can be passed to specify the ORDER BY part explicitly in plain SQL.
+     * Since version 1.0, an [[ExpressionInterface]] object can be passed to specify the ORDER BY part explicitly in plain SQL.
      * @return $this the query object itself
      * @see addOrderBy()
      */
@@ -339,7 +332,7 @@ trait QueryTrait
      * to represent the order-by information. Otherwise, the method will not be able to correctly determine
      * the order-by columns.
      *
-     * Since version 2.0.7, an [[ExpressionInterface]] object can be passed to specify the ORDER BY part explicitly in plain SQL.
+     * Since version 1.0, an [[ExpressionInterface]] object can be passed to specify the ORDER BY part explicitly in plain SQL.
      * @return $this the query object itself
      * @see orderBy()
      */
@@ -412,7 +405,7 @@ trait QueryTrait
      * in case you set false where condition like `0=1`.
      * @param bool $value whether to prevent query execution.
      * @return $this the query object itself.
-     * @since 2.0.11
+     * @since 1.0
      */
     public function emulateExecution($value = true)
     {

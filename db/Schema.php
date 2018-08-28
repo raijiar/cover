@@ -1,21 +1,16 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use Yii;
-use yii\base\BaseObject;
-use yii\base\InvalidCallException;
-use yii\base\InvalidConfigException;
-use yii\base\NotSupportedException;
-use yii\caching\Cache;
-use yii\caching\CacheInterface;
-use yii\caching\TagDependency;
-use yii\helpers\StringHelper;
+use Cover;
+use cover\base\BaseObject;
+use cover\base\InvalidCallException;
+use cover\base\InvalidConfigException;
+use cover\base\NotSupportedException;
+use cover\caching\Cache;
+use cover\caching\CacheInterface;
+use cover\caching\TagDependency;
+use cover\helpers\StringHelper;
 
 /**
  * Schema is the base class for concrete DBMS-specific schema classes.
@@ -36,9 +31,7 @@ use yii\helpers\StringHelper;
  * [[Transaction::REPEATABLE_READ]] and [[Transaction::SERIALIZABLE]] but also a string containing DBMS specific
  * syntax to be used after `SET TRANSACTION ISOLATION LEVEL`. This property is write-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0
+ * @since 1.0
  */
 abstract class Schema extends BaseObject
 {
@@ -84,24 +77,24 @@ abstract class Schema extends BaseObject
      * If left part is found in DB error message exception class from the right part is used.
      */
     public $exceptionMap = [
-        'SQLSTATE[23' => 'yii\db\IntegrityException',
+        'SQLSTATE[23' => 'cover\db\IntegrityException',
     ];
     /**
      * @var string|array column schema class or class config
-     * @since 2.0.11
+     * @since 1.0
      */
-    public $columnSchemaClass = 'yii\db\ColumnSchema';
+    public $columnSchemaClass = 'cover\db\ColumnSchema';
 
     /**
      * @var string|string[] character used to quote schema, table, etc. names.
      * An array of 2 characters can be used in case starting and ending characters are different.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected $tableQuoteCharacter = "'";
     /**
      * @var string|string[] character used to quote column names.
      * An array of 2 characters can be used in case starting and ending characters are different.
-     * @since 2.0.14
+     * @since 1.0
      */
     protected $columnQuoteCharacter = '"';
 
@@ -132,7 +125,7 @@ abstract class Schema extends BaseObject
      * @param string $name the table name
      * @return TableSchema [[TableSchema]] with resolved table, schema, etc. names.
      * @throws NotSupportedException if this method is not supported by the DBMS.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function resolveTableName($name)
     {
@@ -145,7 +138,7 @@ abstract class Schema extends BaseObject
      * because the default implementation simply throws an exception.
      * @return array all schema names in the database, except system schemas.
      * @throws NotSupportedException if this method is not supported by the DBMS.
-     * @since 2.0.4
+     * @since 1.0
      */
     protected function findSchemaNames()
     {
@@ -180,7 +173,7 @@ abstract class Schema extends BaseObject
      */
     protected function createColumnSchema()
     {
-        return Yii::createObject($this->columnSchemaClass);
+        return Cover::createObject($this->columnSchemaClass);
     }
 
     /**
@@ -212,7 +205,7 @@ abstract class Schema extends BaseObject
      * @param bool $refresh whether to fetch the latest available schema names. If this is false,
      * schema names fetched previously (if available) will be returned.
      * @return string[] all schema names in the database, except system schemas.
-     * @since 2.0.4
+     * @since 1.0
      */
     public function getSchemaNames($refresh = false)
     {
@@ -281,7 +274,7 @@ abstract class Schema extends BaseObject
     public function refresh()
     {
         /* @var $cache CacheInterface */
-        $cache = is_string($this->db->schemaCache) ? Yii::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
+        $cache = is_string($this->db->schemaCache) ? Cover::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
         if ($this->db->enableSchemaCache && $cache instanceof CacheInterface) {
             TagDependency::invalidate($cache, $this->getCacheTag());
         }
@@ -294,7 +287,7 @@ abstract class Schema extends BaseObject
      * This method cleans up cached table schema so that it can be re-created later
      * to reflect the database schema change.
      * @param string $name table name.
-     * @since 2.0.6
+     * @since 1.0
      */
     public function refreshTableSchema($name)
     {
@@ -302,7 +295,7 @@ abstract class Schema extends BaseObject
         unset($this->_tableMetadata[$rawName]);
         $this->_tableNames = [];
         /* @var $cache CacheInterface */
-        $cache = is_string($this->db->schemaCache) ? Yii::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
+        $cache = is_string($this->db->schemaCache) ? Cover::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
         if ($this->db->enableSchemaCache && $cache instanceof CacheInterface) {
             $cache->delete($this->getCacheKey($rawName));
         }
@@ -326,7 +319,7 @@ abstract class Schema extends BaseObject
      * @param string $type type of the column. See [[ColumnSchemaBuilder::$type]].
      * @param int|string|array $length length or precision of the column. See [[ColumnSchemaBuilder::$length]].
      * @return ColumnSchemaBuilder column schema builder instance
-     * @since 2.0.6
+     * @since 1.0
      */
     public function createColumnSchemaBuilder($type, $length = null)
     {
@@ -425,7 +418,7 @@ abstract class Schema extends BaseObject
      * @param string $table the table that new rows will be inserted into.
      * @param array $columns the column data (name => value) to be inserted into the table.
      * @return array|false primary key values or false if the command fails
-     * @since 2.0.4
+     * @since 1.0
      */
     public function insert($table, $columns)
     {
@@ -560,7 +553,7 @@ abstract class Schema extends BaseObject
      * If the table name is not quoted, this method will do nothing.
      * @param string $name table name.
      * @return string unquoted table name.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function unquoteSimpleTableName($name)
     {
@@ -578,7 +571,7 @@ abstract class Schema extends BaseObject
      * If the column name is not quoted or is the asterisk character '*', this method will do nothing.
      * @param string $name column name.
      * @return string unquoted column name.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function unquoteSimpleColumnName($name)
     {
@@ -653,7 +646,7 @@ abstract class Schema extends BaseObject
             return $e;
         }
 
-        $exceptionClass = '\yii\db\Exception';
+        $exceptionClass = '\cover\db\Exception';
         foreach ($this->exceptionMap as $error => $class) {
             if (strpos($e->getMessage(), $error) !== false) {
                 $exceptionClass = $class;
@@ -678,7 +671,7 @@ abstract class Schema extends BaseObject
     /**
      * Returns a server version as a string comparable by [[\version_compare()]].
      * @return string server version as a string.
-     * @since 2.0.14
+     * @since 1.0
      */
     public function getServerVersion()
     {
@@ -725,13 +718,13 @@ abstract class Schema extends BaseObject
      * @param string $type metadata type.
      * @param bool $refresh whether to reload the table metadata even if it is found in the cache.
      * @return mixed metadata.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function getTableMetadata($name, $type, $refresh)
     {
         $cache = null;
         if ($this->db->enableSchemaCache && !in_array($name, $this->db->schemaCacheExclude, true)) {
-            $schemaCache = is_string($this->db->schemaCache) ? Yii::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
+            $schemaCache = is_string($this->db->schemaCache) ? Cover::$app->get($this->db->schemaCache, false) : $this->db->schemaCache;
             if ($schemaCache instanceof Cache) {
                 $cache = $schemaCache;
             }
@@ -757,7 +750,7 @@ abstract class Schema extends BaseObject
      * @param bool $refresh whether to fetch the latest available table metadata. If this is `false`,
      * cached data may be returned if available.
      * @return array array of metadata.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function getSchemaMetadata($schema, $type, $refresh)
     {
@@ -781,7 +774,7 @@ abstract class Schema extends BaseObject
      * @param string $name table name.
      * @param string $type metadata type.
      * @param mixed $data metadata.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function setTableMetadata($name, $type, $data)
     {
@@ -793,7 +786,7 @@ abstract class Schema extends BaseObject
      * @param array $row row's array or an array of row's arrays.
      * @param bool $multiple whether multiple rows or a single row passed.
      * @return array normalized row or rows.
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function normalizePdoRowKeyCase(array $row, $multiple)
     {

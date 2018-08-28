@@ -1,18 +1,11 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
 /**
  * ViewFinderTrait implements the method getViewNames for finding views in a database.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @author Bob Olde Hampsink <b.oldehampsink@nerds.company>
- * @since 2.0.12
+ * @since 1.0
  */
 trait ViewFinderTrait
 {

@@ -1,13 +1,8 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\db;
+namespace cover\db;
 
-use yii\base\BaseObject;
+use cover\base\BaseObject;
 
 /**
  * SqlToken represents SQL tokens produced by [[SqlTokenizer]] or its child classes.
@@ -18,8 +13,7 @@ use yii\base\BaseObject;
  * read-only.
  * @property string $sql SQL code. This property is read-only.
  *
- * @author Sergey Makinen <sergey@makinen.ru>
- * @since 2.0.13
+ * @since 1.0
  */
 class SqlToken extends BaseObject implements \ArrayAccess
 {
@@ -200,7 +194,7 @@ class SqlToken extends BaseObject implements \ArrayAccess
      * Usage Example:
      *
      * ```php
-     * $patternToken = (new \yii\db\sqlite\SqlTokenizer('SELECT any FROM any'))->tokenize();
+     * $patternToken = (new \cover\db\sqlite\SqlTokenizer('SELECT any FROM any'))->tokenize();
      * if ($sqlToken->matches($patternToken, 0, $firstMatchIndex, $lastMatchIndex)) {
      *     // ...
      * }
