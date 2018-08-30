@@ -330,7 +330,7 @@ abstract class Application extends Module
      */
     protected function registerErrorHandler(&$config)
     {
-        if (YII_ENABLE_ERROR_HANDLER) {
+        if (COVER_ENABLE_ERROR_HANDLER) {
             if (!isset($config['components']['errorHandler']['class'])) {
                 echo "Error: no errorHandler component is configured.\n";
                 exit(1);
@@ -649,7 +649,7 @@ abstract class Application extends Module
             $response->send();
         }
 
-        if (YII_ENV_TEST) {
+        if (COVER_ENV_TEST) {
             throw new ExitException($status);
         }
 

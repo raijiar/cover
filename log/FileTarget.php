@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\log;
+namespace cover\log;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\helpers\FileHelper;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\helpers\FileHelper;
 
 /**
  * FileTarget records log messages in a file.
@@ -20,8 +15,7 @@ use yii\helpers\FileHelper;
  * files are moved backwards by one place, i.e., '.2' to '.3', '.1' to '.2', and so on.
  * The property [[maxLogFiles]] specifies how many history files to keep.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class FileTarget extends Target
 {
@@ -34,7 +28,7 @@ class FileTarget extends Target
      * @var bool whether log files should be rotated when they reach a certain [[maxFileSize|maximum size]].
      * Log rotation is enabled by default. This property allows you to disable it, when you have configured
      * an external tools for log rotation on your server.
-     * @since 2.0.3
+     * @since 1.0
      */
     public $enableRotation = true;
     /**
@@ -81,9 +75,9 @@ class FileTarget extends Target
     {
         parent::init();
         if ($this->logFile === null) {
-            $this->logFile = Yii::$app->getRuntimePath() . '/logs/app.log';
+            $this->logFile = Cover::$app->getRuntimePath() . '/logs/app.log';
         } else {
-            $this->logFile = Yii::getAlias($this->logFile);
+            $this->logFile = Cover::getAlias($this->logFile);
         }
         if ($this->maxLogFiles < 1) {
             $this->maxLogFiles = 1;
@@ -95,7 +89,7 @@ class FileTarget extends Target
 
     /**
      * Writes log messages to a file.
-     * Starting from version 2.0.14, this method throws LogRuntimeException in case the log can not be exported.
+     * Starting from version 1.0, this method throws LogRuntimeException in case the log can not be exported.
      * @throws InvalidConfigException if unable to open the log file for writing
      * @throws LogRuntimeException if unable to write complete log to file
      */

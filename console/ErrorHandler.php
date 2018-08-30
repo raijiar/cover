@@ -32,9 +32,9 @@ class ErrorHandler extends \cover\base\ErrorHandler
             } elseif (count($alternatives) > 1) {
                 $message .= "\n\nDid you mean one of these?\n    - " . implode("\n    - ", $alternatives);
             }
-        } elseif ($exception instanceof Exception && ($exception instanceof UserException || !YII_DEBUG)) {
+        } elseif ($exception instanceof Exception && ($exception instanceof UserException || !COVER_DEBUG)) {
             $message = $this->formatMessage($exception->getName() . ': ') . $exception->getMessage();
-        } elseif (YII_DEBUG) {
+        } elseif (COVER_DEBUG) {
             if ($exception instanceof Exception) {
                 $message = $this->formatMessage("Exception ({$exception->getName()})");
             } elseif ($exception instanceof ErrorException) {

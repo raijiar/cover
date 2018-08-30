@@ -1,20 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\log;
+namespace cover\log;
 
-use Yii;
-use yii\helpers\VarDumper;
+use Cover;
+use cover\helpers\VarDumper;
 
 /**
  * SyslogTarget writes log to syslog.
  *
- * @author miramir <gmiramir@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class SyslogTarget extends Target
 {
@@ -30,7 +24,7 @@ class SyslogTarget extends Target
      * @var int openlog options. This is a bitfield passed as the `$option` parameter to [openlog()](http://php.net/openlog).
      * Defaults to `null` which means to use the default options `LOG_ODELAY | LOG_PID`.
      * @see http://php.net/openlog for available options.
-     * @since 2.0.11
+     * @since 1.0
      */
     public $options;
 
@@ -61,7 +55,7 @@ class SyslogTarget extends Target
 
     /**
      * Writes log messages to syslog.
-     * Starting from version 2.0.14, this method throws LogRuntimeException in case the log can not be exported.
+     * Starting from version 1.0, this method throws LogRuntimeException in case the log can not be exported.
      * @throws LogRuntimeException
      */
     public function export()

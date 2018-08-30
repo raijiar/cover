@@ -105,7 +105,7 @@ class Application extends \cover\base\Application
 
             return $response;
         } catch (InvalidRouteException $e) {
-            throw new NotFoundHttpException(Cover::t('yii', 'Page not found.'), $e->getCode(), $e);
+            throw new NotFoundHttpException(Cover::t('cover', 'Page not found.'), $e->getCode(), $e);
         }
     }
 
@@ -186,11 +186,11 @@ class Application extends \cover\base\Application
     public function coreComponents()
     {
         return array_merge(parent::coreComponents(), [
-            'request' => ['class' => 'yii\web\Request'],
-            'response' => ['class' => 'yii\web\Response'],
-            'session' => ['class' => 'yii\web\Session'],
-            'user' => ['class' => 'yii\web\User'],
-            'errorHandler' => ['class' => 'yii\web\ErrorHandler'],
+            'request' => ['class' => 'cover\web\Request'],
+            'response' => ['class' => 'cover\web\Response'],
+            'session' => ['class' => 'cover\web\Session'],
+            'user' => ['class' => 'cover\web\User'],
+            'errorHandler' => ['class' => 'cover\web\ErrorHandler'],
         ]);
     }
 }

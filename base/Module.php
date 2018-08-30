@@ -160,7 +160,7 @@ class Module extends ServiceLocator
     public static function getInstance()
     {
         $class = get_called_class();
-        return isset(Yii::$app->loadedModules[$class]) ? Yii::$app->loadedModules[$class] : null;
+        return isset(Cover::$app->loadedModules[$class]) ? Cover::$app->loadedModules[$class] : null;
     }
 
     /**
@@ -171,9 +171,9 @@ class Module extends ServiceLocator
     public static function setInstance($instance)
     {
         if ($instance === null) {
-            unset(Yii::$app->loadedModules[get_called_class()]);
+            unset(Cover::$app->loadedModules[get_called_class()]);
         } else {
-            Yii::$app->loadedModules[get_class($instance)] = $instance;
+            Cover::$app->loadedModules[get_class($instance)] = $instance;
         }
     }
 
@@ -229,7 +229,7 @@ class Module extends ServiceLocator
      */
     public function setBasePath($path)
     {
-        $path = Yii::getAlias($path);
+        $path = Cover::getAlias($path);
         $p = strncmp($path, 'phar://', 7) === 0 ? $path : realpath($path);
         if ($p !== false && is_dir($p)) {
             $this->_basePath = $p;
@@ -247,7 +247,7 @@ class Module extends ServiceLocator
      */
     public function getControllerPath()
     {
-        return Yii::getAlias('@' . str_replace('\\', '/', $this->controllerNamespace));
+        return Cover::getAlias('@' . str_replace('\\', '/', $this->controllerNamespace));
     }
 
     /**
@@ -270,7 +270,7 @@ class Module extends ServiceLocator
      */
     public function setViewPath($path)
     {
-        $this->_viewPath = Yii::getAlias($path);
+        $this->_viewPath = Cover::getAlias($path);
     }
 
     /**
@@ -293,7 +293,7 @@ class Module extends ServiceLocator
      */
     public function setLayoutPath($path)
     {
-        $this->_layoutPath = Yii::getAlias($path);
+        $this->_layoutPath = Cover::getAlias($path);
     }
 
     /**
@@ -351,7 +351,7 @@ class Module extends ServiceLocator
 
     /**
      * Defines path aliases.
-     * This method calls [[Yii::setAlias()]] to register the path aliases.
+     * This method calls [[Cover::setAlias()]] to register the path aliases.
      * This method is provided so that you can define path aliases when configuring a module.
      * @property array list of path aliases to be defined. The array keys are alias names
      * (must start with `@`) and the array values are the corresponding paths or aliases.
@@ -370,7 +370,7 @@ class Module extends ServiceLocator
     public function setAliases($aliases)
     {
         foreach ($aliases as $name => $alias) {
-            Yii::setAlias($name, $alias);
+            Cover::setAlias($name, $alias);
         }
     }
 
@@ -415,9 +415,9 @@ class Module extends ServiceLocator
             if ($this->_modules[$id] instanceof self) {
                 return $this->_modules[$id];
             } elseif ($load) {
-                Yii::debug("Loading module: $id", __METHOD__);
+                Cover::debug("Loading module: $id", __METHOD__);
                 /* @var $module Module */
-                $module = Yii::createObject($this->_modules[$id], [$id, $this]);
+                $module = Cover::createObject($this->_modules[$id], [$id, $this]);
                 $module->setInstance($module);
                 return $this->_modules[$id] = $module;
             }
@@ -474,7 +474,7 @@ class Module extends ServiceLocator
      *
      * Each sub-module should be specified as a name-value pair, where
      * name refers to the ID of the module and value the module or a configuration
-     * array that can be used to create the module. In the latter case, [[Yii::createObject()]]
+     * array that can be used to create the module. In the latter case, [[Cover::createObject()]]
      * will be used to create the module.
      *
      * If a new sub-module has the same ID as an existing one, the existing one will be overwritten silently.
@@ -516,11 +516,11 @@ class Module extends ServiceLocator
         if (is_array($parts)) {
             /* @var $controller Controller */
             list($controller, $actionID) = $parts;
-            $oldController = Yii::$app->controller;
-            Yii::$app->controller = $controller;
+            $oldController = Cover::$app->controller;
+            Cover::$app->controller = $controller;
             $result = $controller->runAction($actionID, $params);
             if ($oldController !== null) {
-                Yii::$app->controller = $oldController;
+                Cover::$app->controller = $oldController;
             }
 
             return $result;
@@ -573,7 +573,7 @@ class Module extends ServiceLocator
 
         // module and controller map take precedence
         if (isset($this->controllerMap[$id])) {
-            $controller = Yii::createObject($this->controllerMap[$id], [$id, $this]);
+            $controller = Cover::createObject($this->controllerMap[$id], [$id, $this]);
             return [$controller, $route];
         }
         $module = $this->getModule($id);
@@ -632,7 +632,7 @@ class Module extends ServiceLocator
         }
 
         if (is_subclass_of($className, 'yii\base\Controller')) {
-            $controller = Yii::createObject($className, [$id, $this]);
+            $controller = Cover::createObject($className, [$id, $this]);
             return get_class($controller) === $className ? $controller : null;
         } elseif (YII_DEBUG) {
             throw new InvalidConfigException('Controller class must extend from \\yii\\base\\Controller.');

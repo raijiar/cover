@@ -1,18 +1,13 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\log;
+namespace cover\log;
 
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\Connection;
-use yii\db\Exception;
-use yii\di\Instance;
-use yii\helpers\VarDumper;
+use Cover;
+use cover\base\InvalidConfigException;
+use cover\db\Connection;
+use cover\db\Exception;
+use cover\di\Instance;
+use cover\helpers\VarDumper;
 
 /**
  * DbTarget stores log messages in a database table.
@@ -20,15 +15,14 @@ use yii\helpers\VarDumper;
  * The database connection is specified by [[db]]. Database schema could be initialized by applying migration:
  *
  * ```
- * yii migrate --migrationPath=@yii/log/migrations/
+ * cover migrate --migrationPath=@cover/log/migrations/
  * ```
  *
  * If you don't want to use migration and need SQL instead, files for all databases are in migrations directory.
  *
  * You may change the name of the table used to store the data by setting [[logTable]].
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 class DbTarget extends Target
 {
@@ -36,7 +30,7 @@ class DbTarget extends Target
      * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
      * After the DbTarget object is created, if you want to change this property, you should only assign it
      * with a DB connection object.
-     * Starting from version 2.0.2, this can also be a configuration array for creating the object.
+     * Starting from version 1.0, this can also be a configuration array for creating the object.
      */
     public $db = 'db';
     /**
@@ -58,7 +52,7 @@ class DbTarget extends Target
 
     /**
      * Stores log messages to DB.
-     * Starting from version 2.0.14, this method throws LogRuntimeException in case the log can not be exported.
+     * Starting from version 1.0, this method throws LogRuntimeException in case the log can not be exported.
      * @throws Exception
      * @throws LogRuntimeException
      */

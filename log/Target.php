@@ -1,19 +1,14 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
-namespace yii\log;
+namespace cover\log;
 
-use Yii;
-use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\helpers\ArrayHelper;
-use yii\helpers\StringHelper;
-use yii\helpers\VarDumper;
-use yii\web\Request;
+use Cover;
+use cover\base\Component;
+use cover\base\InvalidConfigException;
+use cover\helpers\ArrayHelper;
+use cover\helpers\StringHelper;
+use cover\helpers\VarDumper;
+use cover\web\Request;
 
 /**
  * Target is the base class for all log target classes.
@@ -34,24 +29,23 @@ use yii\web\Request;
  *
  * For more details and usage information on Target, see the [guide article on logging & targets](guide:runtime-logging).
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 1.0
  */
 abstract class Target extends Component
 {
     /**
      * @var array list of message categories that this target is interested in. Defaults to empty, meaning all categories.
      * You can use an asterisk at the end of a category so that the category may be used to
-     * match those categories sharing the same common prefix. For example, 'yii\db\*' will match
-     * categories starting with 'yii\db\', such as 'yii\db\Connection'.
+     * match those categories sharing the same common prefix. For example, 'cover\db\*' will match
+     * categories starting with 'cover\db\', such as 'cover\db\Connection'.
      */
     public $categories = [];
     /**
      * @var array list of message categories that this target is NOT interested in. Defaults to empty, meaning no uninteresting messages.
      * If this property is not empty, then any category listed here will be excluded from [[categories]].
      * You can use an asterisk at the end of a category so that the category can be used to
-     * match those categories sharing the same common prefix. For example, 'yii\db\*' will match
-     * categories starting with 'yii\db\', such as 'yii\db\Connection'.
+     * match those categories sharing the same common prefix. For example, 'cover\db\*' will match
+     * categories starting with 'cover\db\', such as 'cover\db\Connection'.
      * @see categories
      */
     public $except = [];
@@ -61,7 +55,7 @@ abstract class Target extends Component
      *
      * Defaults to `['_GET', '_POST', '_FILES', '_COOKIE', '_SESSION', '_SERVER']`.
      *
-     * Since version 2.0.9 additional syntax can be used:
+     * Since version 1.0 additional syntax can be used:
      * Each element could be specified as one of the following:
      *
      * - `var` - `var` will be logged.
@@ -71,7 +65,7 @@ abstract class Target extends Component
      * Note that if you need $_SESSION to logged regardless if session was used you have to open it right at
      * the start of your request.
      *
-     * @see \yii\helpers\ArrayHelper::filter()
+     * @see \cover\helpers\ArrayHelper::filter()
      */
     public $logVars = ['_GET', '_POST', '_FILES', '_COOKIE', '_SESSION', '_SERVER'];
     /**
@@ -97,7 +91,7 @@ abstract class Target extends Component
     /**
      * @var bool whether to log time with microseconds.
      * Defaults to false.
-     * @since 2.0.13
+     * @since 1.0
      */
     public $microtime = false;
 
@@ -299,23 +293,23 @@ abstract class Target extends Component
             return call_user_func($this->prefix, $message);
         }
 
-        if (Yii::$app === null) {
+        if (Cover::$app === null) {
             return '';
         }
 
-        $request = Yii::$app->getRequest();
+        $request = Cover::$app->getRequest();
         $ip = $request instanceof Request ? $request->getUserIP() : '-';
 
-        /* @var $user \yii\web\User */
-        $user = Yii::$app->has('user', true) ? Yii::$app->get('user') : null;
+        /* @var $user \cover\web\User */
+        $user = Cover::$app->has('user', true) ? Cover::$app->get('user') : null;
         if ($user && ($identity = $user->getIdentity(false))) {
             $userID = $identity->getId();
         } else {
             $userID = '-';
         }
 
-        /* @var $session \yii\web\Session */
-        $session = Yii::$app->has('session', true) ? Yii::$app->get('session') : null;
+        /* @var $session \cover\web\Session */
+        $session = Cover::$app->has('session', true) ? Cover::$app->get('session') : null;
         $sessionID = $session && $session->getIsActive() ? $session->getId() : '-';
 
         return "[$ip][$userID][$sessionID]";
@@ -324,7 +318,7 @@ abstract class Target extends Component
     /**
      * Sets a value indicating whether this log target is enabled.
      * @param bool|callable $value a boolean value or a callable to obtain the value from.
-     * The callable value is available since version 2.0.13.
+     * The callable value is available since version 1.0.
      *
      * A callable may be used to determine whether the log target should be enabled in a dynamic way.
      * For example, to only enable a log if the current user is logged in you can configure the target
@@ -332,7 +326,7 @@ abstract class Target extends Component
      *
      * ```php
      * 'enabled' => function() {
-     *     return !Yii::$app->user->isGuest;
+     *     return !Cover::$app->user->isGuest;
      * }
      * ```
      */
@@ -360,7 +354,7 @@ abstract class Target extends Component
      * If [[microtime]] is configured to true it will return format 'Y-m-d H:i:s.u'.
      * @param float $timestamp
      * @return string
-     * @since 2.0.13
+     * @since 1.0
      */
     protected function getTime($timestamp)
     {

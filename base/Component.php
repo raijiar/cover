@@ -100,7 +100,7 @@ class Component extends BaseObject
     private $_events = [];
     /**
      * @var array the event handlers attached for wildcard patterns (event name wildcard => handlers)
-     * @since 2.0.14
+     * @since 1.0
      */
     private $_eventWildcards = [];
     /**
@@ -488,7 +488,7 @@ class Component extends BaseObject
      *
      * where `$event` is an [[Event]] object which includes parameters associated with the event.
      *
-     * Since 2.0.14 you can specify event name as a wildcard pattern:
+     * Since 1.0 you can specify event name as a wildcard pattern:
      *
      * ```php
      * $component->on('event.group.*', function ($event) {
