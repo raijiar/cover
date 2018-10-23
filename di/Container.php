@@ -89,7 +89,6 @@ use cover\helpers\ArrayHelper;
  * @property array $definitions The list of the object definitions or the loaded shared objects (type or ID =>
  * definition or instance). This property is read-only.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 1.0
  */
 class Container extends Component
